@@ -1,0 +1,23 @@
+{% extends clips/video.html %}
+
+{% block extrahead %}
+<script type="text/javascript" src="http://cdn.clappr.io/latest/clappr.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/clappr.thumbnails-plugin/latest/clappr-thumbnails-plugin.js"></script>
+<!-- <link href="{% static 'videojs/video-js.min.css' %}" rel="stylesheet"> -->
+{% endblock %}
+
+{% block player %}
+<div id="thevideo"></div>
+<script>
+    var player = new Clappr.Player(
+      {source: "{{ clip.hls_url }}", parentId: "thevideo"}
+    );
+</script>
+{% endblock %}
+
+{% block extrabody %}{{ block.super }}
+<!-- <script src="{% static 'videojs/video.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/4.0.2/videojs-contrib-hls.min.js"></script>
+<script src="{% static 'js/videojs.thumbnails.js' %}"></script> -->
+<!-- <script src="{% static 'js/videojs-contrib-quality-levels.min.js' %}"></script> -->
+{% endblock %}

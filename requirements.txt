@@ -1,0 +1,27 @@
+Django<1.10
+
+
+celery[redis]
+django-cacheback
+django-celery-results
+
+# CMS
+django-cms<3.5
+djangocms-text-ckeditor
+djangocms-link
+djangocms-style
+django-sekizai
+djangocms-snippet
+djangocms-picture
+djangocms-column
+cmsplugin-filer
+
+easy_thumbnails
+django-multiselectfield
+
+django-classy-tags
+python-memcached
+requests
+Pillow
+django-select2<5.0six
+pytz

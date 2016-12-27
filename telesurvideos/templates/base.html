@@ -1,0 +1,70 @@
+{% load cms_tags menu_tags sekizai_tags static %}
+{% page_attribute "page_title" as page_title %}
+{% page_attribute "meta_description" as meta_description %}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %}{{ page_title }}{% endblock title %} - teleSUR Videos</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="{% block meta_description %}{{ meta_description|default:'Videos de teleSUR, noticias, reportajes, documentales y todoas nuestras tranmisiones en video grabadas para consulta o descarga' }}{% endblock %}" name="description"/>
+    <meta name="keywords" content="videos de telesur, television venezolana, telesurtv, venezuela, noticias, canal"/>
+    <link rel="shortcut icon" href="http://www.telesurtv.net/arte/favicon.ico" type="image/x-icon"  />
+    
+    {% block social_meta %}
+    <meta property="og:title" content="{{ page_title }}"/>
+    <meta property="og:image" content=""/>
+    <meta property="og:url" content=""/>
+    <meta property="og:site_name" content="teleSUR Videos"/>
+    <meta property="og:description" content="{{ meta_description }}"/>
+    <meta name="twitter:title" content="{{ page_title }}"/>
+    <meta name="twitter:image" content=""/>
+    <meta name="twitter:url" content=""/>
+    <meta name="twitter:card" content=""/>
+    {% endblock %}
+
+    <link href="https://fonts.googleapis.com/css?family=Arimo|Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <script src="{% static 'js/modernizr-2.6.2.min.js' %}"></script>
+    <!-- FOR IE9 below -->
+    <!--[if lt IE 9]>
+    <script src="{% static 'js/respond.min.js' %}"></script>
+    <![endif]-->
+
+    {% block extrahead %}{% endblock %}
+
+    {% render_block "css" %}
+</head>
+<body>
+{% cms_toolbar %}
+<div class="gtco-loader"></div>
+
+<div id="page">
+    {% block header %}{% endblock %}
+
+    {% block content %}{% endblock %}
+
+    {% block footer %}{% endblock %}
+</div>
+
+<div class="gototop js-top">
+    <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+</div>
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+{% render_block "js" %}
+{% block extrabody %}{% endblock %}
+</body>
+</html>

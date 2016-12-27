@@ -1,0 +1,105 @@
+{% extends "simple.html" %}
+{% load cms_tags humanize static %}
+
+{% block title %}{% if clip.tipo.slug == "programa" %}"{{ clip.programa.nombre }}", emisión de {{ clip.fecha.date|date }}{% else %}{{ clip.titulo }}{% endif %}{% endblock %}
+
+{% block content %}
+<div id="gtco-main-solo">
+  <div class="container">
+    <div class="row row-pb-md">
+      <div class="col-md-12">
+        <article itemscope itemtype="http://schema.org/NewsArticle">
+          <div class="text-left content-article">
+            <div class="row row-pb-sm">
+              <div class="col-lg-6 col-md-12 animate-box">
+                {% block player %}
+                <video id="thevideo" autoplay controls poster="{{ clip.thumbnail_gigante }}"
+                       class="img-responsive vjs-default-skin video-js vjs-4-3" data-setup="{}" >
+                  {% if clip.hls_url %}
+                  <source src="{{ clip.hls_url }}" type="application/x-mpegURL">
+                  {% endif %}
+                  <source src="{{ clip.archivo_subtitulado_url|default:clip.archivo_url }}" type="video/mp4">
+                  {% if clip.vtt_url %}
+                  <track kind="metadata" src="{{ clip.vtt_url }}"></track>
+                  {% endif %}
+                </video>
+                {% endblock player %}
+              </div>
+              <div class="col-lg-6 col-md-12 cp-l animate-box">
+                <ul class="nav video-info">
+                  <li class="seccion">
+                    <a href="#"><span itemprop="articleSection" class="label label-primary">{{ clip.tipo.nombre }}</span></a>
+                  </li>
+                  {% if clip.categoria %}
+                  <li class="seccion">
+                    <a href="#"><span class="label label-info">{{ clip.categoria.nombre }}</span></a>
+                  </li>
+                  {% endif %}
+                </ul>
+                <h2 itemprop="headline">{{ clip.titulo }}</h2>
+                <time itemprop="dateCreated">{{ clip.fecha.date }}</time>
+                <p>
+                  {% if clip.pais %}
+                  <a title="País" href="#" class="label label-success">
+                    {{ clip.pais.nombre }}</a>
+                  {% endif %}
+                  {% if clip.tema %}
+                  <a title="Tema"
+                     href="#"
+                     class="label label-danger">{{ clip.tema.nombre }}</a>
+                  {% endif %}
+                  {% if clip.programa %}
+                  <a title="Programa" href="#"
+                     class="label label-warning">{{ clip.programa.nombre }}</a>
+                  {% endif %}
+                </p>
+                <p itemprop="articleBody">{{ clip.descripcion.strip|default:clip.programa.descripcion }}</p>
+
+                <div class="acciones row">
+                  <div class="col-sm-12">
+                  <ul class="gtco-social-icons">
+                    <li><a href="#"><i class="icon-twitter"></i></a></li>
+                    <li><a href="#"><i class="icon-facebook"></i></a></li>
+                    <li><a href="#"><i class="icon-google"></i></a></li>
+                  </ul>
+                  </div>
+                  <!-- <div class="col-sm-6">
+                  <a class="btn btn-default"
+                     href="{{ clip.descarga_url }}"><span
+                      class="glyphicon glyphicon-download-alt"></span> Descargar video</a>
+                    </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    {% if relacionados %}
+    <!--Related Posts-->
+    <div class="row row-pb-md">
+      <div class="col-md-12">
+        <header>
+          <h2 class="related-title animate-box">{% static_placeholder "relacionados-etiqueta" or %}Videos recomendados{% endstatic_placeholder %}</h2>
+        </header>
+        <ul id="gtco-post-list" class="related">
+          {% for relacionado in relacionados %}
+            <li class="one-fourth animate-box entry" data-animate-effect="fadeIn">
+              <a href="{% url 'video' relacionado.slug %}">
+                <div class="entry-img" style="background-image: url({{ relacionado.thumbnail_grande }})"></div>
+                <div class="entry-desc">
+                  <h3>{{ relacionado.titulo|truncatewords:12 }}</h3>
+                  <p>{{ relacionado.descripcion|truncatewords:60 }}</p>
+                </div>
+              </a>
+              <a href="#" class="post-meta"><span class="date-posted">{{ relacionado.fecha|naturaltime }}</span></a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock content %}

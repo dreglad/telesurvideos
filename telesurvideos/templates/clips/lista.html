@@ -1,0 +1,35 @@
+{% load cms_tags static clips_tags humanize %}
+{% if instance.titulo %}<h2>{{ instance.titulo }}</h2>{% endif %}
+<ul id="gtco-post-list">
+{% for l in instance.cleaned_layout|default:"122"|make_list %}
+  {% with clip=instance.clips|index:forloop.counter0 %}
+  {% if clip %}
+  <li class="entry animate-box {% if l == "1" %}full{% endif %}{% if l == "2" %}one-half{% endif %}{% if l == "3" %}one-third{% endif %}{% if l == "4" %}one-fourth{% endif %}{% if l == "6" %}two-third{% endif %}{% if l == "q" %}full video{% endif %}{% if l == "w" %}one-half video{% endif %}{% if l == "e" %}one-third video{% endif %}{% if l == "r" %}one-fourth video{% endif %}{% if l == "y" %}two-third video{% endif %}" data-animate-effect="fadeIn">  
+    <a href="{% url 'video' clip.slug %}">
+      <i class="icon icon-play"></i>
+      <div class="entry-img" style="background-image: url({% static clip.thumbnail_grande %})"></div>
+      <div class="entry-desc">
+        {% if instance.mostrar_titulo %}{% static_placeholder "titulo-"|add:clip.slug or %}<h3>{{ clip.titulo|truncatewords:50 }}</h3>{% endstatic_placeholder %}{% endif %}
+        {% if instance.mostrar_descripcion %}{% static_placeholder "descripcion-"|add:clip.slug or %}<p>{{ clip.descripcion|truncatewords:50 }}</p>{% endstatic_placeholder %}{% endif %}
+      </div>
+    </a>
+    <a class="post-meta" href="{% url 'video' clip.slug %}">
+      {% if not l in "qwerty" or clip.tipo.slug == 'programa' %}
+      <p class="seccion">
+        {% if clip.tipo.slug == "programa" %}
+        <span class="label noticia label-success">{{ clip.programa.nombre }}</span>
+        {% else %}
+        <span class="label noticia label-danger">{{ clip.tipo.nombre }}</span>
+        {% endif %}
+        {% if clip.corresponsal %}
+        <span class="label noticia label-primary">{{ clip.corresponsal.nombre }}</span>
+        {% endif %}
+      </p>
+      {% endif %}
+      <br /><small class="date-posted">{{ clip.fecha|naturaltime }}</small>
+    </a>
+  </li>
+  {% endif %}
+  {% endwith %}
+{% endfor %}
+</ul>
