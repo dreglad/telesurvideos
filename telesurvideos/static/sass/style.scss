@@ -213,6 +213,13 @@ h1, h2, h3, h4, h5, h6, figure {
     @media screen and (max-width: $screen-sm) {
       margin-bottom: 0;
     }
+
+    img {
+      display: inline-block;
+      padding: 0 5px;
+    }
+
+
     a {
       > span {
         color: $brand-white;
@@ -227,6 +234,43 @@ h1, h2, h3, h4, h5, h6, figure {
   .menu-1 {
     @media screen and (max-width: $screen-sm) {
       display: none;
+    }
+  }
+  .search {
+    position: absolute;
+    right: 20px;
+    -webkit-transition: all .5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+    input {
+      border: none;
+      color: #ddd;
+      padding:8px 8px 8px 25px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      background: rgba(0,0,0,.1);
+      width: 25px;
+      -webkit-transition: all .5s;
+      -moz-transition: all 0.5s;
+      -ms-transition: all 0.5s;
+      -o-transition: all 0.5s;
+      transition: all 0.5s;
+      &::-webkit-input-placeholder,&:-moz-placeholder,&:-ms-input-placeholder {
+        color: #ddd;
+      }
+      &.extended {
+        width: auto;
+      }
+    }
+    .icon{
+      position: absolute;
+      top: 8px;
+      margin-left: 8px;
+      z-index: 1;
+      color: #ddd;
     }
   }
   ul {
@@ -359,13 +403,40 @@ h1, h2, h3, h4, h5, h6, figure {
     a {
       color: $brand-white;
     }
+    #gtco-logo {
+      img.logopic {
+        width: 45px; }
+    }
     #heading-page {
       display: none;
     }
-    .menu-1 {
-      padding-top: 15px;
-      width: 83.33333%;
+    .logos {
+      min-width: 285px;
+      width: auto;
+      float: left;
       text-align: right;
+    }
+    .menu-1 {
+      padding-top: 5px;
+      /*width: 69%;*/
+      /*min-width: 460px;*/
+      width: auto;
+      float: right;
+      text-align: right;
+    }
+    .search {
+      top:10px;
+      input.extended {
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ab100e+0,c71411+100 */
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#9d1110+0,c71411+100 */
+        background: rgb(157,17,16); /* Old browsers */
+        background: -moz-linear-gradient(left,  rgba(157,17,16,1) 0%, rgba(199,20,17,1) 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(left,  rgba(157,17,16,1) 0%,rgba(199,20,17,1) 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to right,  rgba(157,17,16,1) 0%,rgba(199,20,17,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9d1110', endColorstr='#c71411',GradientType=1 ); /* IE6-9 */
+
+
+      }
     }
 
     ul {
@@ -719,7 +790,7 @@ figure {
     padding: 0;
     margin: 0 0 20px 2%;
     list-style: none;
-    min-height: 400px;
+    min-height: 250px;
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -747,7 +818,7 @@ figure {
 
     .post-meta {
       position: absolute;
-      bottom: 30px;
+      bottom: 15px;
       display: block;
       padding: 0 30px;
       .seccion {
@@ -761,6 +832,9 @@ figure {
     }
     &.two-third {
       width: 64.6%;
+      h3 {
+        font-size: 30px;
+      }
       @media screen and (max-width: $screen-md) {
         width: 48%;
       }
@@ -770,6 +844,7 @@ figure {
     }
     &.one-third {
       width: 31.3%;
+
       @media screen and (max-width: $screen-md) {
         width: 48%;
       }
@@ -779,6 +854,9 @@ figure {
     }
     &.one-fourth {
       width: 23%;
+      h3 {
+        font-size: 20px;
+      }
       @media screen and (max-width: $screen-md) {
         width: 48%;
       }
@@ -788,6 +866,9 @@ figure {
     }
     &.one-half {
       width: 48%;
+      h3 {
+        font-size: 30px;
+      }
       @media screen and (max-width: $screen-sm) {
         width: 100%;
       }
@@ -815,8 +896,14 @@ figure {
     }
   }
   h3 {
-    font-size: 30px !important;
+    font-size: 25px;
     line-height: 1.2;
+  }
+  @media screen and (max-width: $screen-sm) {
+    h3 {
+      font-size: 25px !important;
+    }
+
   }
   .icon {
     position: absolute;
@@ -830,8 +917,12 @@ figure {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    min-height: 340px;
+    min-height: 250px;
+    @media screen and (max-width: $screen-sm) {
+      height: 300px !important;
+    }
   }
+
   .entry-desc {
     padding: 30px;
     margin-bottom: 40px;
@@ -844,7 +935,7 @@ figure {
     display: table;
     width: 100%;
     h3 {
-      font-size: 50px !important;
+      font-size: 50px;
     }
     @media screen and (max-width: $screen-sm) {
       display: block;
@@ -1904,6 +1995,7 @@ figure {
   }
   a {
     color: rgba(255, 255, 255, .5);
+    padding: 10px 0;
     &:hover {
       color: rgba(255, 255, 255, .8);
     }
@@ -1915,6 +2007,7 @@ figure {
       padding: 0;
       margin: 0;
       list-style: none;
+      height: 40px;
       > ul {
         padding-left: 20px;
         display: none;

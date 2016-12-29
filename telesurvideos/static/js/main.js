@@ -248,7 +248,22 @@
 	};
 
 
-	
+	var reset_minheight = function () {
+		$("#gtco-post-list li.video").each(function( index ){
+			if($(this).find('.entry-desc > p').text().length > 0)
+				$(this).css('min-height','400px');
+
+		});
+	};
+	var search = function(){
+		$('.search').on('click mouseenter mouseover', function(){
+			$(this).find('input').addClass('extended');
+		});
+		$('.search').on('blur mouseout mouseleave',function(){
+			if($(this).find('input').val().length == 0)
+			$(this).find('input').removeClass('extended');
+		});
+	};
 	$(function(){
 		mobileMenuOutsideClick();
 		scrollNavBar();
@@ -260,9 +275,12 @@
 		loaderPage();
 		counterWayPoint();
 		parallax();
+		reset_minheight();
+		search();
 		$(document).on("webkitfullscreenchange mozfullscreenchange fullscreenchange", function( event ) {
 			$('nav, .cp-l').toggle();
 		});
+
 	});
 
 

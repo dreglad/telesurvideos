@@ -145,6 +145,38 @@ h1, h2, h3, h4, h5, h6, figure {
   @media screen and (max-width: 768px) {
     .gtco-nav .menu-1 {
       display: none; } }
+.gtco-nav .search {
+  position: absolute;
+  right: 20px;
+  -webkit-transition: all .5s;
+  -moz-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s; }
+.gtco-nav .search input {
+  border: none;
+  color: #ddd;
+  padding: 8px 8px 8px 25px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.1);
+  width: 25px;
+  -webkit-transition: all .5s;
+  -moz-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s; }
+.gtco-nav .search input::-webkit-input-placeholder, .gtco-nav .search input:-moz-placeholder, .gtco-nav .search input:-ms-input-placeholder {
+  color: #ddd; }
+.gtco-nav .search input.extended {
+  width: auto; }
+.gtco-nav .search .icon {
+  position: absolute;
+  top: 8px;
+  margin-left: 8px;
+  z-index: 1;
+  color: #ddd; }
   .gtco-nav ul {
     padding: 0;
     margin: 7px 0 0 0; }
@@ -266,6 +298,21 @@ h1, h2, h3, h4, h5, h6, figure {
       width: auto;
       float: right;
       text-align: right; }
+.scrolled .gtco-nav .search {
+  top: 10px; }
+.scrolled .gtco-nav .search input.extended {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ab100e+0,c71411+100 */
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#9d1110+0,c71411+100 */
+  background: #9d1110;
+  /* Old browsers */
+  background: -moz-linear-gradient(left, #9d1110 0%, #c71411 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, #9d1110 0%, #c71411 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, #9d1110 0%, #c71411 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9d1110', endColorstr='#c71411',GradientType=1 );
+  /* IE6-9 */ }
     .scrolled .gtco-nav .logos {
       /*padding-top: 1px;*/
       min-width: 285px;
@@ -560,7 +607,7 @@ figure figcaption {
     padding: 0;
     margin: 0 0 20px 2%;
     list-style: none;
-    min-height: 400px;
+    min-height: 250px;
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -585,7 +632,7 @@ figure figcaption {
         font-size: 7rem; }
     #gtco-post-list li .post-meta {
       position: absolute;
-      bottom: 30px;
+      bottom: 15px;
       display: block;
       padding: 0 30px; }
       #gtco-post-list li .post-meta .seccion {
@@ -596,6 +643,8 @@ figure figcaption {
         color: #1a1a1a; }
     #gtco-post-list li.two-third {
       width: 64.6%; }
+#gtco-post-list li.two-third h3 {
+  font-size: 30px; }
       @media screen and (max-width: 992px) {
         #gtco-post-list li.two-third {
           width: 48%; } }
@@ -612,6 +661,8 @@ figure figcaption {
           width: 100%; } }
     #gtco-post-list li.one-fourth {
       width: 23%; }
+#gtco-post-list li.one-fourth h3 {
+  font-size: 20px; }
       @media screen and (max-width: 992px) {
         #gtco-post-list li.one-fourth {
           width: 48%; } }
@@ -620,6 +671,8 @@ figure figcaption {
           width: 100%; } }
     #gtco-post-list li.one-half {
       width: 48%; }
+#gtco-post-list li.one-half h3 {
+  font-size: 30px; }
       @media screen and (max-width: 768px) {
         #gtco-post-list li.one-half {
           width: 100%; } }
@@ -637,8 +690,11 @@ figure figcaption {
     .entry.one-half:last-child {
       margin-right: 0; }
   .entry h3 {
-    font-size: 30px !important;
+    font-size: 25px;
     line-height: 1.2; }
+@media screen and (max-width: 768px) {
+  .entry h3 {
+    font-size: 25px !important; } }
   .entry .icon {
     position: absolute;
     left: 30px;
@@ -650,7 +706,10 @@ figure figcaption {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    min-height: 340px; }
+    min-height: 250px; }
+@media screen and (max-width: 768px) {
+  .entry .entry-img {
+    height: 300px !important; } }
   .entry .entry-desc {
     padding: 30px;
     margin-bottom: 40px; }
@@ -661,7 +720,7 @@ figure figcaption {
     display: table;
     width: 100%; }
     .entry.full h3 {
-      font-size: 40px !important; }
+      font-size: 40px; }
     @media screen and (max-width: 768px) {
       .entry.full {
         display: block; } }
@@ -676,7 +735,7 @@ figure figcaption {
       @media screen and (max-width: 768px) {
         .entry.full .entry-img {
           display: block;
-          width: 100%; } }
+          width: 100%;} }
     .entry.full .entry-desc {
       background: #fff;
       padding: 30px;
@@ -1539,7 +1598,7 @@ figure figcaption {
     -o-transform: translateX(0px);
     transform: translateX(0px); }
   #gtco-offcanvas a {
-    color: rgba(255, 255, 255, 0.5); }
+    color: rgba(255, 255, 255, 0.5); padding: 10px 0; }
     #gtco-offcanvas a:hover {
       color: rgba(255, 255, 255, 0.8); }
   #gtco-offcanvas ul {
@@ -1548,7 +1607,8 @@ figure figcaption {
     #gtco-offcanvas ul li {
       padding: 0;
       margin: 0;
-      list-style: none; }
+      list-style: none;
+    height: 40px}
       #gtco-offcanvas ul li > ul {
         padding-left: 20px;
         display: none; }
