@@ -1938,3 +1938,7 @@ figure figcaption {
   border-bottom-left-radius: 0px !important; }
 
 /*# sourceMappingURL=style.css.map */
+
+.flowplayer .fp-quality-selector li.active {
+  background-color: #c11717 !important;
+}

@@ -1,0 +1,68 @@
+{% extends "clips/video.html" %}
+{% load static %}
+
+{% block extrahead %}
+<style type="text/css">
+.flowplayer {
+  background-color: #000;
+  background-image: url(//flowplayer.org/media/img/demos/minimalist.jpg);
+  margin-bottom: 30px;
+}
+@media(-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+  .flowplayer {
+    background-image: url(//flowplayer.org/media/img/demos/minimalist@x2.jpg);
+  }
+}
+/* hide standard time tool tip */
+.flowplayer .fp-tooltip {
+  display: none !important;
+}
+ 
+/* the preview canvas */
+.flowplayer canvas {
+  outline: 4px solid #fff;
+  position: absolute;
+  z-index: 9999;
+  display: none;
+}
+</style>
+<link rel="stylesheet" href="{% static 'flowplayer/skin/minimalist.css' %}">
+<link rel="stylesheet" href="//releases.flowplayer.org/quality-selector/flowplayer.quality-selector.css">
+
+<!-- <script src="//releases.flowplayer.org/6.0.5/flowplayer.min.js"></script> -->
+<script src="//releases.flowplayer.org/6.0.5/commercial/flowplayer.min.js"></script>
+<script src="//releases.flowplayer.org/hlsjs/flowplayer.hlsjs.min.js"></script>
+<!-- <script src="//s0.2mdn.net/instream/html5/ima3.js"></script> -->
+<!-- <script src="//s0.2mdn.net/instream/html5/ima3_debug.js"></script> -->
+<!-- <script src="//releases.flowplayer.org/vast/flowplayer.org/vast.min.js"></script> -->
+<!-- <script src="//releases.flowplayer.org/thumbnails/flowplayer.thumbnails.min.js"></script> -->
+{% endblock %}
+
+{% block video_wrapper_attrs %}class="no-volume" data-ratio="0.75"{% endblock %}
+
+{% block videoattrs %}{% endblock %}
+
+{% block player %}{{ block.super }}
+<script>
+$(function() {
+    $('#player').flowplayer({
+        autoplay: true,
+        debug: true,
+        hlsjs: true,
+        hlsQualities: true,
+        key: '#$bb4ed033774c4486ada',
+        brand: 'teleSUR',
+        // analytics: "UA-27182341-1",
+        ima: {
+            locale: "es",
+            ads: [{
+                time: 0,
+                // adTag: "https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/48717572/fp-overlay&ciu_szs&impl=s&gdfp_req=1&env=vp&output=xml_vast2&unviewed_position_start=1&url=[referrer_url]&description_url=https%3A%2F%2Fflowplayer.org&correlator=[timestamp]"
+                // adTag: "https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/48717572/fp-preroll-skippable&ciu_szs&impl=s&gdfp_req=1&env=vp&output=xml_vast2&unviewed_position_start=1&url=[referrer_url]&description_url=https%3A%2F%2Fflowplayer.org&correlator=[timestamp]"
+                adTag:   "https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/138871148/telesurtv.dv.vasttag&ciu_szs=160x600,300x250,300x600,728x90&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=[referrer_url]&description_url=http%3A%2F%2Fwww.telesurtv.net%2F&correlator=[timestamp]"
+            }]
+        }
+    });
+});
+</script>
+{% endblock %}

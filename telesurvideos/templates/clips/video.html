@@ -13,16 +13,17 @@
             <div class="row row-pb-sm">
               <div class="col-lg-6 col-md-12 animate-box">
                 {% block player %}
-                <video id="thevideo" autoplay controls poster="{{ clip.thumbnail_gigante }}"
-                       class="img-responsive vjs-default-skin video-js vjs-4-3" data-setup="{}" >
-                  {% if clip.hls_url %}
-                  <source src="{{ clip.hls_url }}" type="application/x-mpegURL">
-                  {% endif %}
-                  <source src="{{ clip.archivo_subtitulado_url|default:clip.archivo_url }}" type="video/mp4">
-                  {% if clip.vtt_url %}
-                  <track kind="metadata" src="{{ clip.vtt_url }}"></track>
-                  {% endif %}
-                </video>
+                <div id="player" {% block video_wrapper_attrs %}class="video"{% endblock %}">
+                  <video {% block videoattrs %}autoplay controls{% endblock %} poster="{{ clip.thumbnail_grande }}">
+                    {% if clip.hls_url %}
+                    <source src="{{ clip.hls_url }}" type="application/x-mpegurl">
+                    {% endif %}
+                    <source src="{{ clip.archivo_subtitulado_url|default:clip.archivo_url }}" type="video/mp4">
+                    {% if clip.vtt_url %}
+                    <!-- <track kind="metadata" src="{{ clip.vtt_url }}"></track> -->
+                    {% endif %}
+                  </video>
+                </div>
                 {% endblock player %}
               </div>
               <div class="col-lg-6 col-md-12 cp-l animate-box">

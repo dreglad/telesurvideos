@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 from .templatetags.clips_tags import get_clip, get_relacionados
 
 class VideoView(TemplateView):
-    template_name = 'clips/video.html'
+    template_name = 'clips/video_flowplayer.html'
 
     def get_context_data(self, **kwargs):
         context = super(VideoView, self).get_context_data(**kwargs)
