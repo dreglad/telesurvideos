@@ -45,9 +45,11 @@ class ClipsListaPlugin(CMSPluginBase):
             'classes': ('collapse',),
             'fields': ('series',),
         }),
-        ('Opciones generales', {
+        ('Opciones de despliegue', {
             'classes': ('wide',),
-            'fields': ('mostrar_titulo', 'mostrar_descripcion', 'tiempo', 'layout'),
+            'fields': (
+                'mostrar_titulo', 'mostrar_descripcion', 'tiempo', 'mostrar_fecha', 'layout'
+            ),
         }),
 
     )

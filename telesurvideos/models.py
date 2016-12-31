@@ -40,6 +40,14 @@ def categorias_choices():
     """temas"""
     return [(c['slug'], c['nombre']) for c in clips_tags.get_categorias()]
 
+MOSTRAR_FECHA_CHOICES = (
+    ('rel', 'Fecha relativa (hace X tiempo)'),
+    ('f', 'Fecha completa'),
+    ('fh', 'Fecha completa y hora'),
+    ('con', 'fecha relativa si es de hoy, fecha completa en caso contrario'),
+    (None, 'No mostrar fecha'),
+)
+MOSTRAR_FECHA_DEFAULT = 'con'
 
 def tiempo_choices():
     return (
@@ -65,6 +73,7 @@ class VideoListPluginModel(CMSPlugin):
     corresponsales = MultiSelectField(choices=lazy(corresponsales_choices, tuple)(), null=True, blank=True)
     paises = MultiSelectField('países', choices=lazy(paises_choices, tuple)(), null=True, blank=True)
     series = MultiSelectField('series', choices=lazy(series_choices, tuple)(), null=True, blank=True)
+    mostrar_fecha = models.CharField(choices=MOSTRAR_FECHA_CHOICES, default=MOSTRAR_FECHA_DEFAULT, max_length=3, null=True, blank=True)
 
     FILTROS = (
         ('tipo', 'tipos'), ('programa', 'programas'),
@@ -138,11 +147,17 @@ class VideoListPluginModel(CMSPlugin):
         if self.tiempo:
             filtros.append('<li>tiempo: <strong>{}</strong></li>'.format(self.get_tiempo_display()))
 
-        return mark_safe('<br><pre style="display:inline-block; float:left;">{}</pre><ul style="margin-left: 10px; display: inline-block; float: left;"><li><h4>{}</h4></li>{}{}</ul>'.format(
-            art(self.layout),
-            self.titulo,
-            ''.join(filtros),
-            '<li>mostrar título y descripción: <strong>{} / {}</strong></li>'.format(
-                self.mostrar_titulo and 'sí' or 'no',
-                self.mostrar_descripcion and 'sí' or 'no'),
-        ))
+        return mark_safe((
+            '<br><pre style="display:inline-block; float:left;">''{}</pre>'
+            '<ul style="max-width: 200px; margin-left: 10px; display: inline-block; float: left;">'
+            '<li><h4>{}</h4></li>{}{}<li>mostrar fecha: <strong>{}</strong></h4></li>'
+            '</ul>').format(
+                art(self.layout),
+                self.titulo,
+                ''.join(filtros),
+                '<li>mostrar título y descripción: <strong>{} / {}</strong></li>'.format(
+                    self.mostrar_titulo and 'sí' or 'no',
+                    self.mostrar_descripcion and 'sí' or 'no'
+                ),
+                self.get_mostrar_fecha_display(),
+            ))

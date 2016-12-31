@@ -107,3 +107,13 @@ def get_tipos(params=''):
 def get_corresponsales(params=''):
     """return corresponsales"""
     return get_api('corresponsal/?ultimo=300&' + params)
+
+@register.filter
+def es_hoy(date):
+    """hoy"""
+    return datetime.date.today() == date
+
+@register.filter
+def es_anoactual(date):
+    """hoy"""
+    return datetime.date.today().year == date.year
