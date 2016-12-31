@@ -9,8 +9,8 @@
       <i class="icon icon-play"></i>
       <div class="entry-img" style="background-image: url({% static clip.thumbnail_grande %})"></div>
       <div class="entry-desc">
-        {% if instance.mostrar_titulo %}{% static_placeholder "titulo-"|add:clip.slug or %}<h3>{{ clip.titulo|truncatewords:50 }}</h3>{% endstatic_placeholder %}{% endif %}
-        {% if instance.mostrar_descripcion %}{% static_placeholder "descripcion-"|add:clip.slug or %}<p>{{ clip.descripcion|truncatewords:50 }}</p>{% endstatic_placeholder %}{% endif %}
+        <h3>{{ clip.titulo|truncatewords:50 }}</h3>
+        <p>{{ clip.descripcion|truncatewords:50 }}</p>
       </div>
     </a>
     <a class="post-meta" href="{% url 'video' clip.slug %}">

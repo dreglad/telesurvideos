@@ -3,6 +3,19 @@
 
 {% block title %}{% if clip.tipo.slug == "programa" %}"{{ clip.programa.nombre }}", emisión de {{ clip.fecha.date|date }}{% else %}{{ clip.titulo }}{% endif %}{% endblock %}
 
+{% block meta_keyworkds %}{{ clip.tags }} {{ clip.hashtags }}{% endblock %}
+
+{% block socialmeta %}{{ block.super }}
+<meta property="og:title" content="{{ clip.titulo }}"/>
+<meta property="og:image" content="{{ clip.thumbnail_grande }}"/>
+<meta property="og:url" content="{{ clip.navegador_url }}"/>
+<meta property="og:description" content="{{ clip.descripcion }}"/>
+<meta name="twitter:title" content="{{ clip.titulo }}"/>
+<meta name="twitter:image" content="{{ clip.thumbnail_grande }}"/>
+<meta name="twitter:url" content="{{ clip.navegador_url }}"/>
+<meta name="twitter:card" content="{{ clip.card_url }}"/>
+{% endblock %}
+
 {% block content %}
 <div id="gtco-main-solo">
   <div class="container">
@@ -31,27 +44,30 @@
                   <li class="seccion">
                     <a href="#"><span itemprop="articleSection" class="label label-primary">{{ clip.tipo.nombre }}</span></a>
                   </li>
-                  {% if clip.categoria %}
+                  {% if clip.corresponsal %}
                   <li class="seccion">
-                    <a href="#"><span class="label label-info">{{ clip.categoria.nombre }}</span></a>
+                    <a href="#"><span class="label label-danger">{{ clip.corresponsal.nombre }}</span></a>
                   </li>
                   {% endif %}
                 </ul>
                 <h2 itemprop="headline">{{ clip.titulo }}</h2>
-                <time itemprop="dateCreated">{{ clip.fecha.date }}</time>
+                <time itemprop="dateCreated">{{ clip.fecha|date:"l j \d\e F \d\e Y"|lower|capfirst }}</time>
                 <p>
+                  {% if clip.categoria %}
+                  <a title="Categoría"
+                     href="#" class="label label-default">{{ clip.categoria.nombre }}</a>
+                  {% endif %}
+                  {% if clip.tema %}
+                  <a title="Tema"
+                     href="#" class="label label-danger">{{ clip.tema.nombre }}</a>
+                  {% endif %}
                   {% if clip.pais %}
                   <a title="País" href="#" class="label label-success">
                     {{ clip.pais.nombre }}</a>
                   {% endif %}
-                  {% if clip.tema %}
-                  <a title="Tema"
-                     href="#"
-                     class="label label-danger">{{ clip.tema.nombre }}</a>
-                  {% endif %}
-                  {% if clip.programa %}
-                  <a title="Programa" href="#"
-                     class="label label-warning">{{ clip.programa.nombre }}</a>
+                  {% if clip.pais_secundario %}
+                  <a title="País" href="#" class="label label-success">
+                    {{ clip.pais_secundario.nombre }}</a>
                   {% endif %}
                 </p>
                 <p itemprop="articleBody">{{ clip.descripcion.strip|default:clip.programa.descripcion }}</p>
@@ -94,7 +110,6 @@
                   <p>{{ relacionado.descripcion|truncatewords:60 }}</p>
                 </div>
               </a>
-              <a href="#" class="post-meta"><span class="date-posted">{{ relacionado.fecha|naturaltime }}</span></a>
             </li>
           {% endfor %}
         </ul>
