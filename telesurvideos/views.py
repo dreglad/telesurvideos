@@ -1,10 +1,13 @@
-from django.http import HttpResponse, Http404
+# -*- coding: utf-8 -*-
+"""telesurvideos views"""
+from django.http import Http404
 from django.views.generic import TemplateView
 from django.shortcuts import get_object_or_404
 from .templatetags.clips_tags import get_clip, get_relacionados
 from .models import VideoListPluginModel
 
 class VideoView(TemplateView):
+    """Sinle video view"""
     template_name = 'clips/video_flowplayer.html'
 
     def get_context_data(self, **kwargs):
@@ -17,6 +20,7 @@ class VideoView(TemplateView):
 
 
 class VideoListView(TemplateView):
+    """video list view for AJAX pagination"""
     template_name = 'clips/lista.html'
 
     def get_context_data(self, **kwargs):

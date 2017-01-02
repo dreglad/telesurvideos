@@ -1,75 +1,74 @@
 # -*- coding: utf-8 -*- #
+"""videostelesur Models"""
 from __future__ import unicode_literals, print_function
 import string
+
+from cms.models.pluginmodel import CMSPlugin
+from django.db import models
+from django.http.request import QueryDict
 from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
 from multiselectfield import MultiSelectField
-from cms.models.pluginmodel import CMSPlugin
-from django.http.request import QueryDict, MultiValueDict
-from django.db import models
-from django.utils.encoding import smart_text
 
 from .templatetags import clips_tags
 
+ASCII_LINES = {
+    "L": "║",
+    "SEP": "\n╠═══════════════════════╣\n",
+    "L1": "           1           ║", 
+    "L2": "     2     ║",
+    "L3": "   3   ║",
+    "L4": "  4  ║",
+    "L6": "        6      ║",
+}
 def _art(layout):
-    """ascii art layout"""
-    L = "║"
-    SEP = "\n╠═══════════════════════╣\n"
-    L1  = "           1           ║"
-    L2  = "     2     ║"
-    L3  = "   3   ║"
-    L4  = "  4  ║"
-    L6  = "        6      ║"
+    """ASCII art layout"""
     lines = []
     for line in layout.split("\n"):
-        linetxt = L
+        linetxt = ASCII_LINES['L']
         for entry in line.strip(',|; '):
-            if   entry in ["1", "q"]: linetxt += L1
-            elif entry in ["2", "w"]: linetxt += L2
-            elif entry in ["3", "e"]: linetxt += L3
-            elif entry in ["4", "r"]: linetxt += L4
-            elif entry in ["6", "y"]: linetxt += L6
-        if linetxt != L:
+            if entry in ["1", "q"]:
+                linetxt += ASCII_LINES['L1']
+            elif entry in ["2", "w"]:
+                linetxt += ASCII_LINES['L2']
+            elif entry in ["3", "e"]:
+                linetxt += ASCII_LINES['L3']
+            elif entry in ["4", "r"]:
+                linetxt += ASCII_LINES['L4']
+            elif entry in ["6", "y"]:
+                linetxt += ASCII_LINES['L6']
+        if linetxt != ASCII_LINES['L']:
             lines.append(linetxt)
     return "╔═══════════════════════╗\n{}\n╚═══════════════════════╝".format(
-        SEP.join(lines))
+        ASCII_LINES['SEP'].join(lines))
 
 def tipos_choices():
-    """tipos"""
+    """tipos choices"""
     return [(c['slug'], c['nombre']) for c in clips_tags.get_tipos()]
 
 def corresponsales_choices():
-    """corresponsales"""
+    """corresponsales choices"""
     return [(c['slug'], c['nombre']) for c in clips_tags.get_corresponsales()]
 
 def programas_choices():
-    """programas"""
+    """programas choices"""
     return [(c['slug'], c['nombre']) for c in clips_tags.get_programas()]
 
 def series_choices():
-    """programas"""
+    """series choices"""
     return [(c['slug'], c['nombre']) for c in clips_tags.get_series()]
 
 def paises_choices():
-    """programas"""
+    """países choices"""
     return [(c['slug'], c['nombre']) for c in clips_tags.get_paises()]
 
 def temas_choices():
-    """temas"""
+    """temas choices"""
     return [(c['slug'], c['nombre']) for c in clips_tags.get_temas()]
 
 def categorias_choices():
-    """temas"""
+    """categorías choices"""
     return [(c['slug'], c['nombre']) for c in clips_tags.get_categorias()]
-
-MOSTRAR_FECHA_CHOICES = (
-    ('rel', 'Fecha relativa (hace X tiempo)'),
-    ('f', 'Fecha completa'),
-    ('fh', 'Fecha completa y hora'),
-    ('con', 'fecha relativa si es de hoy, fecha completa en caso contrario'),
-    (None, 'No mostrar fecha'),
-)
-MOSTRAR_FECHA_DEFAULT = 'con'
 
 def tiempo_choices():
     """tiempo choices"""
@@ -80,8 +79,18 @@ def tiempo_choices():
         ('1e', '1 mes'), ('2e', '2 meses'), ('1a', '1 año'), ('2', '2 años'),
     )
 
+MOSTRAR_FECHA_CHOICES = (
+    ('rel', 'Fecha relativa (hace X tiempo)'),
+    ('f', 'Fecha completa'),
+    ('fh', 'Fecha completa y hora'),
+    ('con', 'fecha relativa si es de hoy, fecha completa en caso contrario'),
+    (None, 'No mostrar fecha'),
+)
+MOSTRAR_FECHA_DEFAULT = 'con'
+
+
 class VideoListPluginModel(CMSPlugin):
-    """VideoLista"""
+    """VideoListPluginModel"""
     layout = models.TextField(blank=True, help_text='1, q => columna completa | 2, w => media columna | 3, e => tercio de columna | 4, r => cuarto de columna | 6, t => dos tercios de columna')
     mostrar_mas = models.TextField('mostrar más', blank=True, help_text='1, q => columna completa | 2, w => media columna | 3, e => tercio de columna | 4, r => cuarto de columna | 6, t => dos tercios de columna')
     mostrar_titulo = models.BooleanField('mostrar_titulo', default=True)
@@ -108,7 +117,7 @@ class VideoListPluginModel(CMSPlugin):
     )
 
     def _cleaned(self, value):
-        """cleaned value"""
+        """cleaned layout value"""
         return str(value).translate(string.maketrans(",.|;\n\r ", '       ')).replace(' ', '')
 
     def get_layout(self, pagina=0):
@@ -142,14 +151,9 @@ class VideoListPluginModel(CMSPlugin):
             opts.update({'ultimo': primeros})
         else:
             segundos = len(self.cleaned_mostrar_mas)
+            opts.update({'primero': primeros + 1 + (segundos * (pagina - 1))})
+            opts.update({'ultimo': opts['primero'] + (segundos-1)})
 
-            opts.update(
-                {'primero': primeros + 1 + (segundos * (pagina - 1))})
-            opts.update(
-                {'ultimo': opts['primero'] + (segundos-1)})
-
-        import pprint
-        pprint.pprint(opts)
         return clips_tags.get_clips(opts.urlencode())
 
     def __unicode__(self):
