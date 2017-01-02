@@ -1,6 +1,5 @@
 {% extends "simple.html" %}
 {% load cms_tags humanize static %}
-
 {% block title %}{% if clip.tipo.slug == "programa" %}"{{ clip.programa.nombre }}", emisión de {{ clip.fecha.date|date }}{% else %}{{ clip.titulo }}{% endif %}{% endblock %}
 
 {% block meta_keyworkds %}{{ clip.tags }} {{ clip.hashtags }}{% endblock %}
@@ -70,7 +69,7 @@
                     {{ clip.pais_secundario.nombre }}</a>
                   {% endif %}
                 </p>
-                <p itemprop="articleBody">{{ clip.descripcion.strip|default:clip.programa.descripcion }}</p>
+                <p itemprop="articleBody">{{ clip.descripcion.strip }}</p>
 
                 <div class="acciones row">
                   <div class="col-sm-12">

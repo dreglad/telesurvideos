@@ -1,29 +1,43 @@
 {% load cms_tags static clips_tags humanize %}
-{% if instance.titulo %}<h2>{{ instance.titulo }}</h2>{% endif %}
+{% get_list_layout instance pagina|default:0 as layout %}
+{% get_list_clips instance pagina|default:0 as clips %}
+
+{% if instance.titulo and not pagina %}
+<h2>{{ instance.titulo }}</h2>
+{% endif %}
+
 <ul id="gtco-post-list">
-{% for l in instance.cleaned_layout|default:"122"|make_list %}
-  {% with clip=instance.clips|index:forloop.counter0 %}
+{% for l in layout|make_list %}
+  {% with clip=clips|index:forloop.counter0 %}
   {% if clip %}
   <li class="entry animate-box {% if l == "1" %}full{% endif %}{% if l == "2" %}one-half{% endif %}{% if l == "3" %}one-third{% endif %}{% if l == "4" %}one-fourth{% endif %}{% if l == "6" %}two-third{% endif %}{% if l == "q" %}full video{% endif %}{% if l == "w" %}one-half video{% endif %}{% if l == "e" %}one-third video{% endif %}{% if l == "r" %}one-fourth video{% endif %}{% if l == "y" %}two-third video{% endif %}" data-animate-effect="fadeIn">  
     <a href="{% url 'video' clip.slug %}">
       <i class="icon icon-play"></i>
       <div class="entry-img" style="background-image: url({% static clip.thumbnail_grande %})"></div>
       <div class="entry-desc">
-        <h3>{{ clip.titulo|truncatewords:50 }}</h3>
-        <p>{{ clip.descripcion|truncatewords:50 }}</p>
+        {% if instance.mostrar_titulo %}<h3>{{ clip.titulo|truncatewords:50 }}</h3>{% endif %}
+        {% if instance.mostrar_descripcion %}<p>{{ clip.descripcion|truncatewords:50 }}</p>{% endif %}
       </div>
     </a>
     <a class="post-meta" href="{% url 'video' clip.slug %}">
       {% if not l in "qwerty" or clip.tipo.slug == 'programa' %}
       <p class="seccion">
-        {% if clip.tipo.slug == "programa" %}
-        <span class="label noticia label-success">{{ clip.programa.nombre }}</span>
-        {% else %}
-        <span class="label noticia label-danger">{{ clip.tipo.nombre }}</span>
+        {% if clip.serie %}
+        <span class="label noticia label-success">{{ clip.serie.nombre }}</span>
         {% endif %}
         {% if clip.corresponsal %}
         <span class="label noticia label-primary">{{ clip.corresponsal.nombre }}</span>
         {% endif %}
+        {% if clip.entrevistado %}
+        <span class="label noticia label-success">{{ clip.entrevistado.nombre }}</span>
+        {% endif %}
+        {% if clip.tipo.slug == "programa" %}
+        <span class="label noticia label-danger">{{ clip.programa.nombre }}</span>
+        {% else %}{% if clip.categoria %}
+        <span class="label noticia label-danger">{{ clip.categoria.nombre }}</span>
+        {% else %}
+        <span class="label noticia label-danger">{{ clip.tipo.nombre }}</span>
+        {% endif %}{% endif %}
       </p>
       {% endif %}
       {% if instance.mostrar_fecha == "rel" %}
@@ -45,3 +59,23 @@
   {% endwith %}
 {% endfor %}
 </ul>
+{% if instance.mostrar_mas and clips|length == layout|length %}
+  <div class="text-center" id="pag-{{ instance.id }}" style="padding-bottom: 2em;">
+    <a href="{% url 'video_list' lista_id=instance.id pagina=pagina|default:0|add:1 %}"
+       role="button" style="text-transform: uppercase;" class="btn btn-md btn-default">Mostrar más {{ instance.titulo }}...</a>
+    <script>
+      $(function() {
+        $("#pag-{{ instance.id }} a").click(function(ev) {
+          ev.preventDefault();
+          $(this).attr('disabled', 'disabled');
+          $(this).text('Cargando más {{ instance.titulo }}...');
+          $.ajax({
+            url: $(this).attr('href'),
+          }).done(function(resp) {
+            $("#pag-{{ instance.id }}").replaceWith(resp);
+          });
+        });
+      });
+    </script>
+  </div>
+{% endif %}

@@ -48,10 +48,10 @@ class ClipsListaPlugin(CMSPluginBase):
         ('Opciones de despliegue', {
             'classes': ('wide',),
             'fields': (
-                'mostrar_titulo', 'mostrar_descripcion', 'tiempo', 'mostrar_fecha', 'layout'
+                'mostrar_titulo', 'mostrar_descripcion', 'tiempo', 'seleccionados',
+                'mostrar_fecha', 'layout', 'mostrar_mas',
             ),
         }),
-
     )
 
     def render(self, context, instance, placeholder):

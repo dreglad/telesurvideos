@@ -108,6 +108,19 @@ def get_corresponsales(params=''):
     """return corresponsales"""
     return get_api('corresponsal/?ultimo=300&' + params)
 
+
+@register.assignment_tag
+def get_list_clips(videolist, pagina=0):
+    """Get paginated clips"""
+    return videolist.get_clips(pagina)
+
+
+@register.assignment_tag
+def get_list_layout(videolist, pagina=0):
+    """Get paginated clips"""
+    return videolist.get_layout(pagina)
+
+
 @register.filter
 def es_hoy(date):
     """hoy"""

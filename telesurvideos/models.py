@@ -11,6 +11,28 @@ from django.utils.encoding import smart_text
 
 from .templatetags import clips_tags
 
+def _art(layout):
+    """ascii art layout"""
+    L = "║"
+    SEP = "\n╠═══════════════════════╣\n"
+    L1  = "           1           ║"
+    L2  = "     2     ║"
+    L3  = "   3   ║"
+    L4  = "  4  ║"
+    L6  = "        6      ║"
+    lines = []
+    for line in layout.split("\n"):
+        linetxt = L
+        for entry in line.strip(',|; '):
+            if   entry in ["1", "q"]: linetxt += L1
+            elif entry in ["2", "w"]: linetxt += L2
+            elif entry in ["3", "e"]: linetxt += L3
+            elif entry in ["4", "r"]: linetxt += L4
+            elif entry in ["6", "y"]: linetxt += L6
+        if linetxt != L:
+            lines.append(linetxt)
+    return "╔═══════════════════════╗\n{}\n╚═══════════════════════╝".format(
+        SEP.join(lines))
 
 def tipos_choices():
     """tipos"""
@@ -50,6 +72,7 @@ MOSTRAR_FECHA_CHOICES = (
 MOSTRAR_FECHA_DEFAULT = 'con'
 
 def tiempo_choices():
+    """tiempo choices"""
     return (
         (None, '- Sin restricción -'),
         ('1h', '1 hora'), ('3h', '3 horas'), ('12h', '12 horas'), ('1d', '1 día'),
@@ -59,12 +82,14 @@ def tiempo_choices():
 
 class VideoListPluginModel(CMSPlugin):
     """VideoLista"""
-    layout = models.TextField(blank=True, help_text='1 => columna completa | 2 => media columna | 3 => tercio de columna | 4 => cuarto de columna | 6 => dos tercios de columna')
+    layout = models.TextField(blank=True, help_text='1, q => columna completa | 2, w => media columna | 3, e => tercio de columna | 4, r => cuarto de columna | 6, t => dos tercios de columna')
+    mostrar_mas = models.TextField('mostrar más', blank=True, help_text='1, q => columna completa | 2, w => media columna | 3, e => tercio de columna | 4, r => cuarto de columna | 6, t => dos tercios de columna')
     mostrar_titulo = models.BooleanField('mostrar_titulo', default=True)
     titulo = models.CharField('título', max_length=255, blank=True, help_text='Título opcional del listado')
     mostrar_descripcion = models.BooleanField('mostrar_descripción', default=True)
     limite = models.PositiveIntegerField('límite', default=20)
     tiempo = models.CharField(choices=tiempo_choices(), max_length=8, null=True, blank=True, help_text='Mostrar videos no más antiguos del tiempo especificado')
+    seleccionados = models.BooleanField(default=False, help_text='Filtrar sólo clips seleccionados (selección del editor)')
     # filtros
     tipos = MultiSelectField(choices=lazy(tipos_choices, tuple)(), null=True, blank=True)
     programas = MultiSelectField(choices=lazy(programas_choices, tuple)(), null=True, blank=True)
@@ -82,67 +107,57 @@ class VideoListPluginModel(CMSPlugin):
         ('tema', 'temas'),
     )
 
+    def _cleaned(self, value):
+        """cleaned value"""
+        return str(value).translate(string.maketrans(",.|;\n\r ", '       ')).replace(' ', '')
+
+    def get_layout(self, pagina=0):
+        """proper layout"""
+        attr = pagina and 'mostrar_mas' or 'layout'
+        return self._cleaned(getattr(self, attr))
+
+    @property
+    def cleaned_mostrar_mas(self):
+        return self._cleaned(self.mostrar_mas)
+
     @property
     def cleaned_layout(self):
         """cleaned layout"""
-        print(self.layout)
-        print('and')
-        #print str(self.layout).translate(None, ",|;\n\r ")
-        print('jum')
-        print(str(self.layout).translate(string.maketrans(",|;\n\r ", '      ')).replace(' ', ''))
-        return str(self.layout).translate(string.maketrans(",|;\n\r ", '      ')).replace(' ', '')
+        return self._cleaned(self.layout)
 
-    @property
-    def clips(self):
-        """clips"""
+    def get_clips(self, pagina=0):
+        """obtiene clips que representan a este objeto"""
         opts = QueryDict('', mutable=True)
 
         for filtro, attr in self.FILTROS:
             for val in getattr(self, attr):
                 opts.appendlist(filtro, val)
-
-        opts.update({'ultimo': str(len(self.layout)) or 10})
-
         if self.tiempo:
             opts.update({'tiempo': self.tiempo})
+        if self.seleccionados:
+            opts.update({'seleccionado': True})
 
+        primeros = len(self.cleaned_layout)
+        if pagina == 0:
+            opts.update({'ultimo': primeros})
+        else:
+            segundos = len(self.cleaned_mostrar_mas)
+
+            opts.update(
+                {'primero': primeros + 1 + (segundos * (pagina - 1))})
+            opts.update(
+                {'ultimo': opts['primero'] + (segundos-1)})
+
+        import pprint
+        pprint.pprint(opts)
         return clips_tags.get_clips(opts.urlencode())
 
     def __unicode__(self):
-        def art(layout):
-            L = "║"
-            SEP = "\n╠═══════════════════════╣\n"
-            L1  = "║           1           ║"
-            L2  = "║     2     ║     2     ║"
-            L3  = "║   3   ║   3   ║   3   ║"
-            L4  = "║  4  ║  4  ║  4  ║  4  ║"
-            L6  = "║        6      ║   3   ║"
-
-            L1  = "           1           ║"
-            L2  = "     2     ║"
-            L3  = "   3   ║"
-            L4  = "  4  ║"
-            L6  = "        6      ║"
-            
-
-            lines = []
-            for line in self.layout.split("\n"):
-                linetxt = L
-                for entry in line.strip(',|; '):
-                    if   entry in ["1", "q"]: linetxt += L1
-                    elif entry in ["2", "w"]: linetxt += L2
-                    elif entry in ["3", "e"]: linetxt += L3
-                    elif entry in ["4", "r"]: linetxt += L4
-                    elif entry in ["6", "y"]: linetxt += L6
-                if linetxt != L:
-                    lines.append(linetxt)
-            return "╔═══════════════════════╗\n{}\n╚═══════════════════════╝".format(
-                SEP.join(lines))
-
         filtros = []
         for filtro, attr in self.FILTROS:
             if getattr(self, attr):
-                filtros.append('<li>{}: <strong>{}</strong></li>'.format(filtro, ' ó '.join(getattr(self, attr))))
+                filtros.append('<li>{}: <strong>{}</strong></li>'.format(
+                    filtro, ' ó '.join(getattr(self, attr))))
 
         if self.tiempo:
             filtros.append('<li>tiempo: <strong>{}</strong></li>'.format(self.get_tiempo_display()))
@@ -150,14 +165,18 @@ class VideoListPluginModel(CMSPlugin):
         return mark_safe((
             '<br><pre style="display:inline-block; float:left;">''{}</pre>'
             '<ul style="max-width: 200px; margin-left: 10px; display: inline-block; float: left;">'
-            '<li><h4>{}</h4></li>{}{}<li>mostrar fecha: <strong>{}</strong></h4></li>'
+            '<li><h4>{}</h4></li>{}{}<li>mostrar fecha: <strong>{}</strong></li>'
+            '<li>sólo seleccionados: <strong>{}</strong></li>'
+            '<li>mostrar más: <strong>{}</strong></li>'
             '</ul>').format(
-                art(self.layout),
-                self.titulo,
+                _art(self.layout),
+                self.titulo or '<i>[sin título]</i>',
                 ''.join(filtros),
                 '<li>mostrar título y descripción: <strong>{} / {}</strong></li>'.format(
                     self.mostrar_titulo and 'sí' or 'no',
                     self.mostrar_descripcion and 'sí' or 'no'
                 ),
                 self.get_mostrar_fecha_display(),
+                self.seleccionados and 'sí' or 'no',
+                self.mostrar_mas and 'sí' or 'no',
             ))

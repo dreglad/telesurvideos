@@ -8,7 +8,7 @@ from django.conf.urls.i18n import i18n_patterns, patterns
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-from .views import VideoView
+from .views import VideoView, VideoListView
 admin.autodiscover()
 
 urlpatterns = [
@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'^select2/', include('django_select2.urls')),
 
     url(r'^video/(?P<slug>.*)/$', VideoView.as_view(), name="video"),
+    url(r'^lista/(?P<lista_id>\d+)/(?P<pagina>\d+)/$', VideoListView.as_view(), name="video_list"),
 ]
 
 #urlpatterns += i18n_patterns('',
