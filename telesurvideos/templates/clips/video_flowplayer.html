@@ -2,35 +2,11 @@
 {% load static %}
 
 {% block extrahead %}
-<style type="text/css">
-.flowplayer {
-  background-color: #000;
-  background-image: url(//flowplayer.org/media/img/demos/minimalist.jpg);
-  margin-bottom: 30px;
-}
-@media(-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
-  .flowplayer {
-    background-image: url(//flowplayer.org/media/img/demos/minimalist@x2.jpg);
-  }
-}
-/* hide standard time tool tip */
-.flowplayer .fp-tooltip {
-  display: none !important;
-}
- 
-/* the preview canvas */
-.flowplayer canvas {
-  outline: 4px solid #fff;
-  position: absolute;
-  z-index: 9999;
-  display: none;
-}
-</style>
 <link rel="stylesheet" href="{% static 'flowplayer/skin/minimalist.css' %}">
 <link rel="stylesheet" href="//releases.flowplayer.org/quality-selector/flowplayer.quality-selector.css">
 
-<!-- <script src="//releases.flowplayer.org/6.0.5/flowplayer.min.js"></script> -->
-<script src="//releases.flowplayer.org/6.0.5/commercial/flowplayer.min.js"></script>
+<script src="//releases.flowplayer.org/6.0.5/flowplayer.min.js"></script>
+<!-- <script src="//releases.flowplayer.org/6.0.5/commercial/flowplayer.min.js"></script> -->
 <script src="//releases.flowplayer.org/hlsjs/flowplayer.hlsjs.min.js"></script>
 <!-- <script src="//s0.2mdn.net/instream/html5/ima3.js"></script> -->
 <!-- <script src="//s0.2mdn.net/instream/html5/ima3_debug.js"></script> -->
@@ -38,9 +14,9 @@
 <!-- <script src="//releases.flowplayer.org/thumbnails/flowplayer.thumbnails.min.js"></script> -->
 {% endblock %}
 
-{% block video_wrapper_attrs %}class="no-volume" data-ratio="0.75"{% endblock %}
+{% block video_wrapper_attrs %}class="no-volume" data-ratio="{{ clip.ratio|default:'0.75' }}"{% endblock %}
 
-{% block videoattrs %}{% endblock %}
+{% block videoattrs %}autoplay{% endblock %}
 
 {% block player %}{{ block.super }}
 <script>
@@ -48,6 +24,7 @@ $(function() {
     $('#player').flowplayer({
         autoplay: true,
         debug: true,
+        splash: true,
         hlsjs: true,
         hlsQualities: true,
         key: '#$bb4ed033774c4486ada',
@@ -63,6 +40,7 @@ $(function() {
             }]
         }
     });
+    flowplayer().toggle();
 });
 </script>
 {% endblock %}
