@@ -272,6 +272,9 @@ h1, h2, h3, h4, h5, h6, figure {
       z-index: 1;
       color: #ddd;
     }
+    @media screen and (max-width: $screen-sm) {
+      display: none;
+    }
   }
   ul {
     padding: 0;
@@ -437,6 +440,7 @@ h1, h2, h3, h4, h5, h6, figure {
 
 
       }
+
     }
 
     ul {
@@ -612,6 +616,27 @@ h1, h2, h3, h4, h5, h6, figure {
   }
   h2 {
     margin-top: 10px;
+    font-size: 40px;
+
+  }
+  @media screen and (max-width: $screen-sm) {
+    h2 {
+      font-size: 30px;
+    }
+  }
+  article {
+    padding: 0;
+    width: 100%;
+    .content-article {
+      padding-top: 0;
+      .cp-l {
+        padding-top: 20px;
+        @media screen and (max-width: $screen-sm) {
+          padding-left: 30px;
+          padding-right: 30px;
+        }
+      }
+    }
   }
   .star {
     position: absolute;
@@ -1055,12 +1080,13 @@ figure {
 }
 
 .pagination {
+  display: block;
   a {
     background: none;
     border: none !important;
     color: lighten($brand-black, 50%) !important;
     &:hover, &:focus, &:active {
-      background: none !important;
+      //background: none !important;
     }
   }
   > li {
@@ -1982,7 +2008,7 @@ figure {
   right: 0;
   top: 0;
   bottom: 0;
-  padding: 45px 40px 40px 40px;
+  padding: 45px 30px 30px 30px;
   overflow-y: auto;
   display: none;
   @include translateX(270px);
@@ -1992,6 +2018,44 @@ figure {
   }
   .offcanvas & {
     @include translateX(0px);
+  }
+  #gtco-logo {
+    margin-bottom: 20px;
+    img {
+      width: 30%;
+      padding-right: 5px;
+    }
+    span {
+      font-size: smaller;
+    }
+  }
+  .search {
+    position: relative;
+    input {
+      border: none;
+      color: #ddd;
+      padding:8px 8px 8px 25px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      background: rgba(255,255,255,.1);
+      -webkit-transition: all .5s;
+      -moz-transition: all 0.5s;
+      -ms-transition: all 0.5s;
+      -o-transition: all 0.5s;
+      transition: all 0.5s;
+      width: 100%;
+      &::-webkit-input-placeholder,&:-moz-placeholder,&:-ms-input-placeholder {
+        color: #ddd;
+      }
+    }
+    .icon{
+      position: absolute;
+      top: 8px;
+      margin-left: 8px;
+      z-index: 1;
+      color: #ddd;
+    }
   }
   a {
     color: rgba(255, 255, 255, .5);
@@ -2104,17 +2168,17 @@ figure {
     display: inline-block;
     width: 25px;
     height: 2px;
-    color: #252525;
+    color: #fff;
     font: bold 14px/.4 Helvetica;
     text-transform: uppercase;
     text-indent: -55px;
-    background: #252525;
+    background: #fff;
     transition: all .2s ease-out;
     &::before, &::after {
       content: '';
       width: 25px;
       height: 2px;
-      background: #252525;
+      background: #fff;
       position: absolute;
       left: 0;
       transition: all .2s ease-out;
@@ -2379,6 +2443,7 @@ figure {
 }
 
 .animate-box {
+  opacity: 0;
   .js & {
     opacity: 0;
   }
@@ -2397,3 +2462,15 @@ figure {
   }
 }
 
+.more {
+  background: #fff !important;
+  -webkit-box-shadow: 4px 11px 35px -14px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 4px 11px 35px -14px rgba(0, 0, 0, 0.5);
+  -ms-box-shadow: 4px 11px 35px -14px rgba(0, 0, 0, 0.5);
+  -o-box-shadow: 4px 11px 35px -14px rgba(0, 0, 0, 0.5);
+  box-shadow: 4px 11px 35px -14px rgba(0, 0, 0, 0.5);
+  color: #666 !important;
+  margin-top: 20px;
+  text-transform: uppercase;
+  white-space: normal;
+}
