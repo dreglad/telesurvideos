@@ -99,7 +99,7 @@
         <header>
           <h3 class="related-title animate-box">{% static_placeholder "relacionados-etiqueta" or %}Videos recomendados{% endstatic_placeholder %}</h3>
         </header>
-        <ul class="gtco-post-list" class="related">
+        <ul class="gtco-post-list related">
           {% for relacionado in relacionados %}
             <li class="one-fourth animate-box entry" data-animate-effect="fadeIn">
               <a href="{% url 'video' relacionado.slug %}">
