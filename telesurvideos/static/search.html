@@ -288,63 +288,63 @@
 
 
 
-                    <div class="text-center pagination" id="pag-627">
-                        <a href="/lista/627/1/" role="button" class="more btn">Mostrar más resultados...</a>
-                        <script>
-                            $(function() {
-                                $("#pag-627 a").click(function(ev) {
-                                    ev.preventDefault();
-                                    $(this).attr('disabled', 'disabled');
-                                    $(this).text('Cargando más resultados...');
-                                    $.ajax({
-                                        url: $(this).attr('href'),
-                                    }).done(function(resp) {
-                                        $("#pag-627").replaceWith(resp);
-                                        var i = 0;
-                                        $('.animate-box').waypoint( function( direction ) {
 
-                                            if( direction === 'down' && !$(this.element).hasClass('animated-fast') ) {
-
-                                                i++;
-
-                                                $(this.element).addClass('item-animate');
-                                                setTimeout(function(){
-
-                                                    $('body .animate-box.item-animate').each(function(k){
-
-                                                        var el = $(this);
-                                                        setTimeout( function () {
-                                                            var effect = el.data('animate-effect');
-                                                            if ( effect === 'fadeIn') {
-                                                                el.addClass('fadeIn animated-fast');
-                                                            } else if ( effect === 'fadeInLeft') {
-                                                                el.addClass('fadeInLeft animated-fast');
-                                                            } else if ( effect === 'fadeInRight') {
-                                                                el.addClass('fadeInRight animated-fast');
-                                                            } else {
-                                                                el.addClass('fadeInUp animated-fast');
-                                                            }
-
-                                                            el.removeClass('item-animate');
-                                                        },  k * 50, 'easeInOutExpo' );
-                                                    });
-
-                                                }, 100);
-
-                                            }
-
-                                        } , { offset: '85%' } );
-                                    });
-                                });
-                            });
-                        </script>
-                    </div>
 
                 </div>
             </div>
 
     </div>
+    <div class="text-center pagination" id="pag-627">
+        <a href="/lista/627/1/" role="button" class="more btn">Mostrar más resultados...</a>
+        <script>
+            $(function() {
+                $("#pag-627 a").click(function(ev) {
+                    ev.preventDefault();
+                    $(this).attr('disabled', 'disabled');
+                    $(this).text('Cargando más resultados...');
+                    $.ajax({
+                        url: $(this).attr('href'),
+                    }).done(function(resp) {
+                        $("#pag-627").replaceWith(resp);
+                        var i = 0;
+                        $('.animate-box').waypoint( function( direction ) {
 
+                            if( direction === 'down' && !$(this.element).hasClass('animated-fast') ) {
+
+                                i++;
+
+                                $(this.element).addClass('item-animate');
+                                setTimeout(function(){
+
+                                    $('body .animate-box.item-animate').each(function(k){
+
+                                        var el = $(this);
+                                        setTimeout( function () {
+                                            var effect = el.data('animate-effect');
+                                            if ( effect === 'fadeIn') {
+                                                el.addClass('fadeIn animated-fast');
+                                            } else if ( effect === 'fadeInLeft') {
+                                                el.addClass('fadeInLeft animated-fast');
+                                            } else if ( effect === 'fadeInRight') {
+                                                el.addClass('fadeInRight animated-fast');
+                                            } else {
+                                                el.addClass('fadeInUp animated-fast');
+                                            }
+
+                                            el.removeClass('item-animate');
+                                        },  k * 50, 'easeInOutExpo' );
+                                    });
+
+                                }, 100);
+
+                            }
+
+                        } , { offset: '85%' } );
+                    });
+                });
+            });
+        </script>
+    </div>
 
     <footer id="gtco-footer">
         <div class="container">
