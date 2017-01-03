@@ -255,7 +255,7 @@
 
 
 	var reset_minheight = function () {
-		$("#gtco-post-list li.video").each(function( index ){
+		$(".gtco-post-list li.video").each(function( index ){
 			if($(this).find('.entry-desc > p').text().length > 0)
 				$(this).css('min-height','400px');
 
