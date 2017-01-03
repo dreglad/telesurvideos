@@ -25,7 +25,7 @@
             <div class="row row-pb-sm">
               <div class="col-lg-6 col-md-12 animate-box">
                 {% block player %}
-                <div id="player" {% block video_wrapper_attrs %}class="video"{% endblock %}">
+                <div id="player" {% block video_wrapper_attrs %}class="video"{% endblock %}>
                   <video {% block videoattrs %}autoplay controls{% endblock %} poster="{{ clip.thumbnail_grande }}">
                     {% if clip.hls_url %}
                     <source src="{{ clip.hls_url }}" type="application/x-mpegurl">
@@ -97,7 +97,7 @@
     <div class="row row-pb-md">
       <div class="col-md-12">
         <header>
-          <h2 class="related-title animate-box">{% static_placeholder "relacionados-etiqueta" or %}Videos recomendados{% endstatic_placeholder %}</h2>
+          <h3 class="related-title animate-box">{% static_placeholder "relacionados-etiqueta" or %}Videos recomendados{% endstatic_placeholder %}</h3>
         </header>
         <ul id="gtco-post-list" class="related">
           {% for relacionado in relacionados %}
