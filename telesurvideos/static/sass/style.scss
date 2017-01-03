@@ -219,7 +219,6 @@ h1, h2, h3, h4, h5, h6, figure {
       padding: 0 5px;
     }
 
-
     a {
       > span {
         color: $brand-white;
@@ -247,25 +246,25 @@ h1, h2, h3, h4, h5, h6, figure {
     input {
       border: none;
       color: #ddd;
-      padding:8px 8px 8px 25px;
+      padding: 8px 8px 8px 25px;
       -webkit-border-radius: 5px;
       -moz-border-radius: 5px;
       border-radius: 5px;
-      background: rgba(0,0,0,.1);
+      background: rgba(0, 0, 0, .1);
       width: 25px;
       -webkit-transition: all .5s;
       -moz-transition: all 0.5s;
       -ms-transition: all 0.5s;
       -o-transition: all 0.5s;
       transition: all 0.5s;
-      &::-webkit-input-placeholder,&:-moz-placeholder,&:-ms-input-placeholder {
+      &::-webkit-input-placeholder, &:-moz-placeholder, &:-ms-input-placeholder {
         color: #ddd;
       }
       &.extended {
         width: auto;
       }
     }
-    .icon{
+    .icon {
       position: absolute;
       top: 8px;
       margin-left: 8px;
@@ -408,7 +407,8 @@ h1, h2, h3, h4, h5, h6, figure {
     }
     #gtco-logo {
       img.logopic {
-        width: 45px; }
+        width: 45px;
+      }
     }
     #heading-page {
       display: none;
@@ -428,16 +428,15 @@ h1, h2, h3, h4, h5, h6, figure {
       text-align: right;
     }
     .search {
-      top:10px;
+      top: 10px;
       input.extended {
         /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ab100e+0,c71411+100 */
         /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#9d1110+0,c71411+100 */
-        background: rgb(157,17,16); /* Old browsers */
-        background: -moz-linear-gradient(left,  rgba(157,17,16,1) 0%, rgba(199,20,17,1) 100%); /* FF3.6-15 */
-        background: -webkit-linear-gradient(left,  rgba(157,17,16,1) 0%,rgba(199,20,17,1) 100%); /* Chrome10-25,Safari5.1-6 */
-        background: linear-gradient(to right,  rgba(157,17,16,1) 0%,rgba(199,20,17,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9d1110', endColorstr='#c71411',GradientType=1 ); /* IE6-9 */
-
+        background: rgb(157, 17, 16); /* Old browsers */
+        background: -moz-linear-gradient(left, rgba(157, 17, 16, 1) 0%, rgba(199, 20, 17, 1) 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(left, rgba(157, 17, 16, 1) 0%, rgba(199, 20, 17, 1) 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to right, rgba(157, 17, 16, 1) 0%, rgba(199, 20, 17, 1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#9d1110', endColorstr='#c71411', GradientType=1); /* IE6-9 */
 
       }
 
@@ -625,15 +624,19 @@ h1, h2, h3, h4, h5, h6, figure {
     }
   }
   article {
-    padding: 0;
+    padding: 2em;
     width: 100%;
+    @media screen and (max-width: $screen-sm) {
+      padding: 0;
+      padding-bottom: 20px;
+    }
     .content-article {
       padding-top: 0;
       .cp-l {
         padding-top: 20px;
         @media screen and (max-width: $screen-sm) {
-          padding-left: 30px;
-          padding-right: 30px;
+          padding-left: 40px;
+          padding-right: 40px;
         }
       }
     }
@@ -1084,11 +1087,13 @@ figure {
     }
   }
 }
+
 .related {
   .entry-img {
     min-height: 200px;
   }
 }
+
 .post-entry {
   > .post-entry,
   > .post-img {
@@ -2078,22 +2083,22 @@ figure {
     input {
       border: none;
       color: #ddd;
-      padding:8px 8px 8px 25px;
+      padding: 8px 8px 8px 25px;
       -webkit-border-radius: 5px;
       -moz-border-radius: 5px;
       border-radius: 5px;
-      background: rgba(255,255,255,.1);
+      background: rgba(255, 255, 255, .1);
       -webkit-transition: all .5s;
       -moz-transition: all 0.5s;
       -ms-transition: all 0.5s;
       -o-transition: all 0.5s;
       transition: all 0.5s;
       width: 100%;
-      &::-webkit-input-placeholder,&:-moz-placeholder,&:-ms-input-placeholder {
+      &::-webkit-input-placeholder, &:-moz-placeholder, &:-ms-input-placeholder {
         color: #ddd;
       }
     }
-    .icon{
+    .icon {
       position: absolute;
       top: 8px;
       margin-left: 8px;
@@ -2518,7 +2523,6 @@ figure {
   text-transform: uppercase;
   white-space: normal;
 }
-
 
 #sidebar {
   width: 30%;
