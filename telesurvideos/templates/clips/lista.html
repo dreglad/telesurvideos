@@ -6,7 +6,7 @@
 <h2>{{ instance.titulo }}</h2>
 {% endif %}
 
-<ul id="gtco-post-list">
+<ul class="gtco-post-list">
 {% for l in layout|make_list %}
   {% with clip=clips|index:forloop.counter0 %}
   {% if clip %}

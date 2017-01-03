@@ -599,7 +599,7 @@ figure figcaption {
   font-family: "Open Sans", sans-serif;
   color: #999999; }
 
-#gtco-post-list {
+.gtco-post-list {
   flex-wrap: wrap;
   -webkit-flex-wrap: wrap;
   -moz-flex-wrap: wrap;
@@ -615,9 +615,9 @@ figure figcaption {
   width: 100%;
   margin-left: -2%; }
   @media screen and (max-width: 768px) {
-    #gtco-post-list {
+    .gtco-post-list {
       margin-left: 0% !important; } }
-  #gtco-post-list li {
+  .gtco-post-list li {
     display: block;
     padding: 0;
     margin: 0 0 20px 2%;
@@ -635,61 +635,61 @@ figure figcaption {
     -moz-box-shadow: 0px 10px 20px -12px rgba(0, 0, 0, 0.5);
     box-shadow: 0px 10px 20px -12px rgba(0, 0, 0, 0.5); }
     @media screen and (max-width: 768px) {
-      #gtco-post-list li {
+      .gtco-post-list li {
         margin-left: 0; } }
-    #gtco-post-list li:hover {
+    .gtco-post-list li:hover {
       text-decoration: none;
       -webkit-box-shadow: 0px 14px 25px -2px rgba(0, 0, 0, 0.14);
       -moz-box-shadow: 0px 14px 25px -2px rgba(0, 0, 0, 0.14);
       box-shadow: 0px 14px 25px -2px rgba(0, 0, 0, 0.14);
       top: -2px; }
-      #gtco-post-list li:hover .icon {
+      .gtco-post-list li:hover .icon {
         font-size: 7rem; }
-    #gtco-post-list li .post-meta {
+    .gtco-post-list li .post-meta {
       position: absolute;
       bottom: 15px;
       display: block;
       padding: 0 30px; }
-      #gtco-post-list li .post-meta .seccion {
+      .gtco-post-list li .post-meta .seccion {
         display: inline; }
-      #gtco-post-list li .post-meta .date-posted {
+      .gtco-post-list li .post-meta .date-posted {
         display: inline;
         margin-left: 0;
         color: #1a1a1a; }
-    #gtco-post-list li.two-third {
+    .gtco-post-list li.two-third {
       width: 64.6%; }
-#gtco-post-list li.two-third h3 {
+.gtco-post-list li.two-third h3 {
   font-size: 30px; }
       @media screen and (max-width: 992px) {
-        #gtco-post-list li.two-third {
+        .gtco-post-list li.two-third {
           width: 48%; } }
       @media screen and (max-width: 768px) {
-        #gtco-post-list li.two-third {
+        .gtco-post-list li.two-third {
           width: 100%; } }
-    #gtco-post-list li.one-third {
+    .gtco-post-list li.one-third {
       width: 31.3%; }
       @media screen and (max-width: 992px) {
-        #gtco-post-list li.one-third {
+        .gtco-post-list li.one-third {
           width: 48%; } }
       @media screen and (max-width: 768px) {
-        #gtco-post-list li.one-third {
+        .gtco-post-list li.one-third {
           width: 100%; } }
-    #gtco-post-list li.one-fourth {
+    .gtco-post-list li.one-fourth {
       width: 23%; }
-#gtco-post-list li.one-fourth h3 {
+.gtco-post-list li.one-fourth h3 {
   font-size: 20px; }
       @media screen and (max-width: 992px) {
-        #gtco-post-list li.one-fourth {
+        .gtco-post-list li.one-fourth {
           width: 48%; } }
       @media screen and (max-width: 768px) {
-        #gtco-post-list li.one-fourth {
+        .gtco-post-list li.one-fourth {
           width: 100%; } }
-    #gtco-post-list li.one-half {
+    .gtco-post-list li.one-half {
       width: 48%; }
-#gtco-post-list li.one-half h3 {
+.gtco-post-list li.one-half h3 {
   font-size: 30px; }
       @media screen and (max-width: 768px) {
-        #gtco-post-list li.one-half {
+        .gtco-post-list li.one-half {
           width: 100%; } }
 
 .entry {
@@ -701,7 +701,7 @@ figure figcaption {
   width: 100%; }
   .entry.one-half {
     width: 50%;
-    margin-right: 20px; }
+    /*margin-right: 20px; */ }
     .entry.one-half:last-child {
       margin-right: 0; }
   .entry h3 {
