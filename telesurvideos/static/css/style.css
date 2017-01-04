@@ -2077,7 +2077,9 @@ figure figcaption {
   overflow-y: scroll; }
 #sidebar .sidebox .filtros a {
   padding: 10px 0; }
-
+#sidebar a {
+  cursor: pointer;
+}
 #search-result {
   width: 70%;
   float: left;
