@@ -27,7 +27,7 @@
                         e.preventDefault();
                         var q = $(this).val();
                         if (q) {
-                            location.href="{% url "search" %}?q=" + q;
+                            location.href="{% url 'search' %}?q=" + q;
                         }
                     }
                 });

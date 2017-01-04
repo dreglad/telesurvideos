@@ -41,11 +41,11 @@
               <div class="col-lg-6 col-md-12 cp-l animate-box">
                 <ul class="nav video-info">
                   <li class="seccion">
-                    <a href="{% url 'search' %}?q={{ clip.tipo.slug }}"><span itemprop="articleSection" class="label label-primary">{{ clip.tipo.nombre }}</span></a>
+                    <a href="{% url 'search' %}?tipo={{ clip.tipo.slug }}"><span itemprop="articleSection" class="label label-primary">{{ clip.tipo.nombre }}</span></a>
                   </li>
                   {% if clip.corresponsal %}
                   <li class="seccion">
-                    <a href="{% url 'search' %}?q={{ clip.corresponsal.slug }}"><span class="label label-danger">{{ clip.corresponsal.nombre }}</span></a>
+                    <a href="{% url 'search' %}?corresponsal={{ clip.corresponsal.slug }}"><span class="label label-danger">{{ clip.corresponsal.nombre }}</span></a>
                   </li>
                   {% endif %}
                 </ul>
@@ -54,18 +54,18 @@
                 <p>
                   {% if clip.categoria %}
                   <a title="Categoría"
-                     href="{% url 'search' %}?q={{ clip.categoria.slug }}" class="label label-default">{{ clip.categoria.nombre }}</a>
+                     href="{% url 'search' %}?categoria={{ clip.categoria.slug }}" class="label label-default">{{ clip.categoria.nombre }}</a>
                   {% endif %}
                   {% if clip.tema %}
                   <a title="Tema"
-                     href="{% url 'search' %}?q={{ clip.tema.slug }}" class="label label-danger">{{ clip.tema.nombre }}</a>
+                     href="{% url 'search' %}?tema={{ clip.tema.slug }}" class="label label-danger">{{ clip.tema.nombre }}</a>
                   {% endif %}
                   {% if clip.pais %}
-                  <a title="País" href="{% url 'search' %}?q={{ clip.pais.slug }}" class="label label-success">
+                  <a title="País" href="{% url 'search' %}?pais= {{ clip.pais.codigo }}" class="label label-success">
                     {{ clip.pais.nombre }}</a>
                   {% endif %}
                   {% if clip.pais_secundario %}
-                  <a title="País" href="{% url 'search' %}?q={{ clip.pais_secundario.slug }}" class="label label-success">
+                  <a title="País" href="{% url 'search' %}?pais={{ clip.pais_secundario.codigo }}" class="label label-success">
                     {{ clip.pais_secundario.nombre }}</a>
                   {% endif %}
                 </p>

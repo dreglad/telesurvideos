@@ -1,0 +1,13 @@
+{% if clip.serie %}
+<span class="label noticia label-success">{{ clip.serie.nombre }}</span>
+{% endif %}
+{% if clip.corresponsal %}
+<a href="{% url 'search' %}?corresponsal={{ clip.corresponsal.slug }}"><span class="label noticia label-primary">{{ clip.corresponsal.nombre }}</span></a>
+{% endif %}
+{% if clip.tipo.slug == "programa" %}
+<a href="{% url 'search' %}?programa={{ clip.programa.slug }}"><span class="label noticia label-danger">{{ clip.programa.nombre }}</span></a>
+{% else %}{% if clip.categoria %}
+<a href="{% url 'search' %}?categoria={{ clip.categoria.slug }}"><span class="label noticia label-danger">{{ clip.categoria.nombre }}</span></a>
+{% else %}
+<a href="{% url 'search' %}?tipo={{ clip.tipo.slug }}"><span class="label noticia label-danger">{{ clip.tipo.nombre }}</span>
+{% endif %}{% endif %}

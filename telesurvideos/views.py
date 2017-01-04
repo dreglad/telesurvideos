@@ -64,13 +64,16 @@ class SearchView(TemplateView):
         if self.request.GET.get('tiempo'):
             context['tiempo'] = self.request.GET.get('tiempo')
             params.update({'tiempo': context['tiempo']})
+
         if context['query']:
             params.update({'texto': context['query']})
 
         params.update({
-            'primero': 1 + (context['page_size']*(context['page']-1)),
-            'ultimo': context['page_size']*context['page'],
+            'primero': 1 + (settings.VIDEOS_PAGE_SIZE*(context['page']-1)),
+            'ultimo': settings.VIDEOS_PAGE_SIZE*context['page'],
         })
 
-        context['clips'] = get_clips(params)
+        print(params)
+
+        context['clips'] = get_clips(params.urlencode())
         return context

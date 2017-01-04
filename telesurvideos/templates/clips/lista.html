@@ -19,25 +19,10 @@
         {% if instance.mostrar_descripcion %}<p>{{ clip.descripcion|truncatewords:50 }}</p>{% endif %}
       </div>
     </a>
-    <a class="post-meta" href="{% url 'video' clip.slug %}">
+    <div class="post-meta">
       {% if not l in "qwerty" or clip.tipo.slug == 'programa' %}
       <p class="seccion">
-        {% if clip.serie %}
-        <span class="label noticia label-success">{{ clip.serie.nombre }}</span>
-        {% endif %}
-        {% if clip.corresponsal %}
-        <span class="label noticia label-primary">{{ clip.corresponsal.nombre }}</span>
-        {% endif %}
-        {% if clip.entrevistado %}
-        <span class="label noticia label-success">{{ clip.entrevistado.nombre }}</span>
-        {% endif %}
-        {% if clip.tipo.slug == "programa" %}
-        <span class="label noticia label-danger">{{ clip.programa.nombre }}</span>
-        {% else %}{% if clip.categoria %}
-        <span class="label noticia label-danger">{{ clip.categoria.nombre }}</span>
-        {% else %}
-        <span class="label noticia label-danger">{{ clip.tipo.nombre }}</span>
-        {% endif %}{% endif %}
+        {% include "includes/tags.html" %}
       </p>
       {% endif %}
       {% if instance.mostrar_fecha == "rel" %}
@@ -53,7 +38,7 @@
           <br /><small class="date-posted">{% if clip.fecha|es_anoactual %}{{ clip.fecha.date|date:"j \d\e F"|lower }}{% else %}{{ clip.fecha.date|date:"j \d\e F \d\e Y"|lower }}{% endif %}</small>
         {% endif %}
       {% endif %}{% endif %}{% endif %}{% endif %}
-    </a>
+    </div>
   </li>
   {% endif %}
   {% endwith %}

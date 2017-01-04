@@ -8,13 +8,12 @@
       <p>{{ clip.descripcion|truncatewords:50 }}</p>
     </div>
   </a>
-  <a class="post-meta" href="{% url "video" clip.slug %}">
+  <div class="post-meta">
     <p class="seccion">
-      <!-- <span class="label noticia label-primary">Camila Sánchez</span> -->
-      <span class="label noticia label-danger">{{ clip.tipo.nombre }}</span>
+      {% include "includes/tags.html" %}
     </p>
-    <small class="date-posted">{{ clip.fecha.date }}</small>
-  </a>
+    <p class="seccion"> | <small class="date-posted">{{ clip.fecha.date }}</small></p>
+  </div>
 </li>
 {% endfor %}
 
