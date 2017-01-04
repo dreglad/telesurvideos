@@ -12,6 +12,13 @@ from multiselectfield import MultiSelectField
 
 from .templatetags import clips_tags
 
+FILTROS = (
+    ('tipo', 'tipos'), ('programa', 'programas'),
+    ('categoria', 'categorias'), ('pais', 'paises'),
+    ('serie', 'series'), ('corresponsal', 'corresponsales'),
+    ('tema', 'temas'),
+)
+
 ASCII_LINES = {
     "L": "║",
     "SEP": "\n╠═══════════════════════╣\n",
@@ -109,13 +116,6 @@ class VideoListPluginModel(CMSPlugin):
     series = MultiSelectField('series', choices=lazy(series_choices, tuple)(), null=True, blank=True)
     mostrar_fecha = models.CharField(choices=MOSTRAR_FECHA_CHOICES, default=MOSTRAR_FECHA_DEFAULT, max_length=3, null=True, blank=True)
 
-    FILTROS = (
-        ('tipo', 'tipos'), ('programa', 'programas'),
-        ('categoria', 'categorias'), ('pais', 'paises'),
-        ('serie', 'series'), ('corresponsal', 'corresponsales'),
-        ('tema', 'temas'),
-    )
-
     def _cleaned(self, value):
         """cleaned layout value"""
         return str(value).translate(string.maketrans(",.|;\n\r ", '       ')).replace(' ', '')
@@ -138,7 +138,7 @@ class VideoListPluginModel(CMSPlugin):
         """obtiene clips que representan a este objeto"""
         opts = QueryDict('', mutable=True)
 
-        for filtro, attr in self.FILTROS:
+        for filtro, attr in FILTROS:
             for val in getattr(self, attr):
                 opts.appendlist(filtro, val)
         if self.tiempo:
@@ -158,7 +158,7 @@ class VideoListPluginModel(CMSPlugin):
 
     def __unicode__(self):
         filtros = []
-        for filtro, attr in self.FILTROS:
+        for filtro, attr in FILTROS:
             if getattr(self, attr):
                 filtros.append('<li>{}: <strong>{}</strong></li>'.format(
                     filtro, ' ó '.join(getattr(self, attr))))
