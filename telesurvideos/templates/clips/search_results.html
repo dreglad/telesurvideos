@@ -1,0 +1,42 @@
+{% for clip in clips %}
+<li class="entry animate-box full" data-animate-effect="fadeIn">
+  <a href="{% url "video" clip.slug %}">
+    <i class="icon icon-play"></i>
+    <div class="entry-img" style="background-image: url({{ clip.thumbnail_mediano }})"></div>
+    <div class="entry-desc">
+      <h3>{{ clip.titulo|truncatewords:15 }}</h3>
+      <p>{{ clip.descripcion|truncatewords:50 }}</p>
+    </div>
+  </a>
+  <a class="post-meta" href="{% url "video" clip.slug %}">
+    <p class="seccion">
+      <!-- <span class="label noticia label-primary">Camila Sánchez</span> -->
+      <span class="label noticia label-danger">{{ clip.tipo.nombre }}</span>
+    </p>
+    <small class="date-posted">{{ clip.fecha.date }}</small>
+  </a>
+</li>
+{% endfor %}
+
+{% if clips|length == page_size %}
+<div id="extra-results" class="container">
+  <div class="text-center pagination">
+    <a href="{% url "search" %}?q={{ query }}&page={{ page|add:1 }}" role="button" class="more btn">Mostrar más resultados</a>
+    <script>
+      $(function() {
+        $('.pagination a').on('click', function(ev) {
+          ev.preventDefault();
+          $(this).text('Cargando más resultados...'),
+          $(this).attr('disabled', 'disabled'),
+          $.ajax({
+            url: $(this).attr('href'),
+          }).done(function(resp) {
+            $('#extra-results').replaceWith(resp);
+            contentWayPoint();
+          });
+        });
+      })
+    </script>
+  </div>
+</div>
+{% endif %}

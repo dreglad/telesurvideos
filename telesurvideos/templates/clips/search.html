@@ -1,0 +1,82 @@
+{% extends "simple.html" %}
+
+{% block extrahead %}{{ block.super }}
+<script>
+$(function() {
+
+    ajax_search = function(q) {
+        $('#results-label').text('Realizando búsqueda...')
+        return $.ajax({
+            url: '{% url "search" %}',
+            method: 'get',
+            data: {q: q}
+        }).done(function(resp) {
+            // debugger;
+            $('#main-results').html(resp);
+            $('#results-label').text($('#main-results li').length ?
+                'Resultados de búsqueda' : 'Búsqueda sin resultados');
+            history.pushState({}, null, this.url);
+            contentWayPoint();
+        });
+    };
+
+    var ant = '{{ query }}';
+    $('.search input[name=q]').on('keypress', function(e){
+        if (e.which == '13') {
+            console.log('resionado 13');
+            e.preventDefault();
+            ajax_search($(this).val());
+        }
+    });
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<div id="sidebar" style="display: none;">
+
+    <div class="sidebox auto-height p-md">
+        <h4>Filtros seleccionados</h4>
+        <p><a href="#" class="remove-filtro"><span class="icon"><i class="icon-cross"></i></span> </a> Programas</p>
+        <p><a href="#" class="remove-filtro"><span class="icon"><i class="icon-cross"></i></span> </a> Pepe Pérez</p>
+        <p><a href="#" class="remove-filtro"><span class="icon"><i class="icon-cross"></i></span> </a> Colombia</p>
+        <p><a href="#" class="remove-all-filtros btn btn-primary"><span class="icon"><i class="icon-trash"></i></span> Limpiar filtros</a></p>
+    </div>
+
+    <div class="sidebox">
+        <h4>Categoría</h4>
+        <ul class="filtros">
+            <li><a href="#">Política</a> </li>
+            <li><a href="#">Economía</a> </li>
+            <li><a href="#">Ciencia</a> </li>
+            <li><a href="#">Salud</a> </li>
+        </ul>
+    </div>
+    <div class="sidebox">
+        <h4>Temas</h4>
+        <ul class="filtros">
+            <li><a href="#">Conflicto en Siria</a> </li>
+            <li><a href="#">Fidel Castro</a> </li>
+            <li><a href="#">Ayotzinapa</a> </li>
+            <li><a href="#">Copa América 2015</a> </li>
+        </ul>
+    </div>
+</div>
+<div id="search-result">
+    <div class="row row-pb-md">
+        <div class="col-md-12">
+
+            <div class="search">
+                <span class="icon"><i class="icon-search"></i></span>
+                <input type="search" name="q" value="{{ query }}" placeholder="Buscar..." />
+            </div>
+
+            <h2 id="results-label">{% if clips|length %}Resultados de la búsqueda{% else %}Búsqueda sin resultados{% endif %}</h2>
+
+            <ul class="gtco-post-list" id="main-results">
+                {% include "clips/search_results.html" %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

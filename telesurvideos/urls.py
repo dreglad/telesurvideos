@@ -8,7 +8,7 @@ from django.conf.urls import include, url, patterns
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-from .views import VideoView, VideoListView
+from .views import SearchView, VideoView, VideoListView
 
 admin.autodiscover()
 
@@ -17,6 +17,7 @@ urlpatterns = [
         {'sitemaps': {'cmspages': CMSSitemap}}),
     url(r'^select2/', include('django_select2.urls')),
 
+    url(r'^search/$', SearchView.as_view(), name="search"),
     url(r'^video/(?P<slug>.*)/$', VideoView.as_view(), name="video"),
     url(r'^lista/(?P<lista_id>\d+)/(?P<pagina>\d+)/$', VideoListView.as_view(), name="video_list"),
 ]

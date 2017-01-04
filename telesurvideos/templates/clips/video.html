@@ -7,11 +7,11 @@
 {% block socialmeta %}{{ block.super }}
 <meta property="og:title" content="{{ clip.titulo }}"/>
 <meta property="og:image" content="{{ clip.thumbnail_grande }}"/>
-<meta property="og:url" content="{{ clip.navegador_url }}"/>
+<meta property="og:url" content="{% url "video" clip.slug %}"/>
 <meta property="og:description" content="{{ clip.descripcion }}"/>
 <meta name="twitter:title" content="{{ clip.titulo }}"/>
 <meta name="twitter:image" content="{{ clip.thumbnail_grande }}"/>
-<meta name="twitter:url" content="{{ clip.navegador_url }}"/>
+<meta name="twitter:url" content="{% url "video" clip.slug %}"/>
 <meta name="twitter:card" content="{{ clip.card_url }}"/>
 {% endblock %}
 
@@ -41,11 +41,11 @@
               <div class="col-lg-6 col-md-12 cp-l animate-box">
                 <ul class="nav video-info">
                   <li class="seccion">
-                    <a href="#"><span itemprop="articleSection" class="label label-primary">{{ clip.tipo.nombre }}</span></a>
+                    <a href="{% url 'search' %}?q={{ clip.tipo.slug }}"><span itemprop="articleSection" class="label label-primary">{{ clip.tipo.nombre }}</span></a>
                   </li>
                   {% if clip.corresponsal %}
                   <li class="seccion">
-                    <a href="#"><span class="label label-danger">{{ clip.corresponsal.nombre }}</span></a>
+                    <a href="{% url 'search' %}?q={{ clip.corresponsal.slug }}"><span class="label label-danger">{{ clip.corresponsal.nombre }}</span></a>
                   </li>
                   {% endif %}
                 </ul>
@@ -54,18 +54,18 @@
                 <p>
                   {% if clip.categoria %}
                   <a title="Categoría"
-                     href="#" class="label label-default">{{ clip.categoria.nombre }}</a>
+                     href="{% url 'search' %}?q={{ clip.categoria.slug }}" class="label label-default">{{ clip.categoria.nombre }}</a>
                   {% endif %}
                   {% if clip.tema %}
                   <a title="Tema"
-                     href="#" class="label label-danger">{{ clip.tema.nombre }}</a>
+                     href="{% url 'search' %}?q={{ clip.tema.slug }}" class="label label-danger">{{ clip.tema.nombre }}</a>
                   {% endif %}
                   {% if clip.pais %}
-                  <a title="País" href="#" class="label label-success">
+                  <a title="País" href="{% url 'search' %}?q={{ clip.pais.slug }}" class="label label-success">
                     {{ clip.pais.nombre }}</a>
                   {% endif %}
                   {% if clip.pais_secundario %}
-                  <a title="País" href="#" class="label label-success">
+                  <a title="País" href="{% url 'search' %}?q={{ clip.pais_secundario.slug }}" class="label label-success">
                     {{ clip.pais_secundario.nombre }}</a>
                   {% endif %}
                 </p>

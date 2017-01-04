@@ -4,6 +4,7 @@ import requests
 import re
 import datetime
 import urllib
+import time
 
 from django import template
 from cacheback.decorators import cacheback
@@ -23,12 +24,17 @@ def datetime_parser(dct):
                 pass
     return dct
 
+@cacheback(lifetime=60, fetch_on_miss=True)
 def get_api(url):
     """gets API parsed JSON response"""
-    request = requests.get(BASE_API + url)
-    if request.status_code == 200:
-        return request.json(object_hook=datetime_parser)
-    else:
+    try:
+        request = requests.get(BASE_API + url)
+        if request.status_code == 200:
+            return request.json(object_hook=datetime_parser)
+        else:
+            return []
+    except:
+        print "ERROR"
         return []
 
 
