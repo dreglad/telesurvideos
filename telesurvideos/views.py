@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 """telesurvideos views"""
+from __future__ import unicode_literals
+
 from urllib import quote_plus
 from django.conf import settings
 from django.http import Http404
+from django.http.request import QueryDict
 from django.views.generic import TemplateView
 from django.shortcuts import get_object_or_404
 from .templatetags.clips_tags import get_clip, get_clips, get_relacionados
@@ -50,23 +53,24 @@ class SearchView(TemplateView):
         context['exclude_tipos'] = settings.VIDEOS_EXCLUDE_TIPOS or []
 
         context['filtros'] = {}
-        params = ''
+
+        params = QueryDict('', mutable=True)
         for filtro, nombre in FILTROS:
             val = self.request.GET.get(filtro)
             if val:
-                params += '{}={}&'.format(filtro, quote_plus(val))
+                params.update({filtro: val})
                 context['filtros'][filtro] = val
 
         if self.request.GET.get('tiempo'):
             context['tiempo'] = self.request.GET.get('tiempo')
-            params += 'tiempo={}&'.format(context['tiempo'])
+            params.update({'tiempo': context['tiempo']})
         if context['query']:
-            params += 'texto={}&'.format(quote_plus(context['query']))
+            params.update({'texto': context['query']})
 
-        params += 'primero={}&ultimo={}'.format(
-            1 + (context['page_size']*(context['page']-1)),
-            context['page_size']*context['page'],
-            )
+        params.update({
+            'primero': 1 + (context['page_size']*(context['page']-1)),
+            'ultimo': context['page_size']*context['page'],
+        })
+
         context['clips'] = get_clips(params)
-
         return context
