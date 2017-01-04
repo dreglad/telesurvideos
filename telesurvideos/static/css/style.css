@@ -464,18 +464,15 @@ h1, h2, h3, h4, h5, h6, figure {
   #gtco-main-solo h2 {
     font-size: 30px; } }
 #gtco-main-solo article {
-  padding: 2em; width: 100% }
-@media screen and (max-width: 768px) {
-  #gtco-main-solo article {
-    padding: 0; padding-bottom: 20px;} }
+  padding: 0; width: 100% }
 #gtco-main-solo article .content-article {
   padding-top: 0; }
 #gtco-main-solo article .content-article .cp-l {
   padding-top: 20px; }
 @media screen and (max-width: 768px) {
   #gtco-main-solo article .content-article .cp-l {
-    padding-left: 40px;
-    padding-right: 40px; } }
+    padding-left: 30px;
+    padding-right: 30px; } }
   #gtco-main-solo .star {
     position: absolute;
     top: 15px;
@@ -2082,7 +2079,7 @@ figure figcaption {
   padding: 10px 0; }
 
 #search-result {
-  width: 100%;
+  width: 70%;
   float: left;
   padding: 20px;
   margin-top: 150px; }

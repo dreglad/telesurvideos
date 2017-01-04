@@ -184,6 +184,19 @@ LOGGING = {
     }
 }
 
+# telesurvideos
+VIDEOS_PAGE_SIZE = 10
+
+VIDEOS_EXCLUDE_CATEGORIAS = (
+    'con-nombre-de-mujer',
+    'zona-verde',
+    'al-pulso-de-venezuela',
+    'al-pulso-de-ecuador',
+    'a-nivel-del-sur',
+)
+
+VIDEOS_EXCLUDE_TIPOS = (
+)
 
 # Django CMS
 
