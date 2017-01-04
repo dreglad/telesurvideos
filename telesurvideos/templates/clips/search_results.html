@@ -21,15 +21,15 @@
 {% if clips|length == page_size %}
 <div id="extra-results" class="container">
   <div class="text-center pagination">
-    <a href="{% url "search" %}?q={{ query }}&page={{ page|add:1 }}" role="button" class="more btn">Mostrar más resultados</a>
+    <a href="#" role="button" class="more btn">Mostrar más resultados</a>
     <script>
       $(function() {
         $('.pagination a').on('click', function(ev) {
           ev.preventDefault();
-          $(this).text('Cargando más resultados...'),
-          $(this).attr('disabled', 'disabled'),
+          $(this).text('Cargando más resultados...');
+          $(this).attr('disabled', 'disabled');
           $.ajax({
-            url: $(this).attr('href'),
+            url: $.query.set('page', (parseInt($.query.get('page')) || 1) + 1).toString(),
           }).done(function(resp) {
             $('#extra-results').replaceWith(resp);
             contentWayPoint();
