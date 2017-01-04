@@ -39,6 +39,10 @@ $(function() {
     location.href = '{{ request.path }}' + $.query.remove($(this).attr('data-filtro')).toString();
   });
 
+  $('a.remove-all-filtros').on('click', function() {
+    location.href = '{{ request.path }}';
+  });
+
   $('#searchinput').focus();
   $('#searchinput').val($('#searchinput').val());
   $('#searchinput').focus(function() {
@@ -63,11 +67,14 @@ $(function() {
     {% for filtro, val in filtros.items %}
     <p><a href="#" data-filtro="{{ filtro }}" data-val="{{ val }}" title="{{ filtro }}: {{ val }}" class="remove-filtro"><span class="icon"><i class="icon-cross"></i></span> </a> {{filtro }}: {{ val }}</p>
     {% endfor %}
+    {% if filtros.items and query or tiempo %}
+    <p><a href="#" class="remove-all-filtros btn-xs btn-link"><span class="icon"><i class="icon-trash"></i></span> Quitar todos los filtros</a></p>
+    {% endif %}
   </div>
   {% endif %}
 
   <div class="sidebox">
-    <h4>Tipo de contenido</h4>
+    <h4>Por tipo de contenido</h4>
     <ul class="filtros" style="height: auto;">
       {% get_tipos as tipos %}
       {% for c in tipos %}
@@ -89,34 +96,34 @@ $(function() {
   </div>
 
   <div class="sidebox">
-    <h4>Categoría</h4>
+    <h4>Programas</h4>
+    <ul class="filtros" style="height: 365px;">
+      {% get_programas as progs %}
+      {% for c in progs %}
+          <li><a title="{{ c.slug }}" data-filtro="programa" data-val="{{ c.slug }}"><img src="{{ c.imagen_url }}" width="30" height="15"> {{ c.nombre }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+
+
+  <div class="sidebox">
+    <h4>Correpsonsales</h4>
+    <ul class="filtros" style="height: 365px;">
+      {% get_corresponsales as corrs %}
+      {% for c in corrs %}
+          <li><a title="{{ c.slug }}" data-filtro="corresponsal" data-val="{{ c.slug }}">{% if c.twitter %}<img src="https://twitter.com/{{ c.twitter }}/profile_image?size=normal" height="15"> {% endif %}{{ c.nombre }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="sidebox">
+    <h4>Categorías</h4>
     <ul class="filtros" style="height: auto;">
       {% get_categorias as cats %}
       {% for c in cats %}
           {% if c.slug not in exclude_categorias %}
           <li><a title="{{ c.slug }}" data-filtro="categoria" data-val="{{ c.slug }}">{{ c.nombre }}</a></li>
           {% endif %}
-      {% endfor %}
-    </ul>
-  </div>
-
-  <div class="sidebox">
-    <h4>Programa</h4>
-    <ul class="filtros" style="height: 365px;">
-      {% get_programas as progs %}
-      {% for c in progs %}
-          <li><a title="{{ c.slug }}" data-filtro="programa" data-val="{{ c.slug }}">{{ c.nombre }}</a></li>
-      {% endfor %}
-    </ul>
-  </div>
-
-
-  <div class="sidebox">
-    <h4>Correpsonsal</h4>
-    <ul class="filtros" style="height: 365px;">
-      {% get_corresponsales as corrs %}
-      {% for c in corrs %}
-          <li><a title="{{ c.slug }}" data-filtro="corresponsal" data-val="{{ c.slug }}">{{ c.nombre }}</a></li>
       {% endfor %}
     </ul>
   </div>
@@ -132,7 +139,7 @@ $(function() {
   </div>
 
   <div class="sidebox">
-    <h4>País</h4>
+    <h4>Países</h4>
     <ul class="filtros" style="height: 365px;">
       {% get_paises as paises %}
       {% for c in paises %}
