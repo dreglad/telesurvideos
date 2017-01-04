@@ -196,6 +196,7 @@ VIDEOS_EXCLUDE_CATEGORIAS = (
 )
 
 VIDEOS_EXCLUDE_TIPOS = (
+    'tematico',
 )
 
 # Django CMS
