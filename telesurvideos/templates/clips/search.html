@@ -136,7 +136,7 @@ $(function() {
     <ul class="filtros" style="height: 365px;">
       {% get_paises as paises %}
       {% for c in paises %}
-          <li><a title="{{ c.slug }}" data-filtro="pais" data-val="{{ c.slug }}">{{ c.nombre }}</a></li>
+          <li><a title="{{ c.slug }}" data-filtro="pais" data-val="{{ c.slug }}"> <img height="14" width="22" src="http://flagpedia.net/data/flags/mini/{{ c.codigo|lower }}.png"> {{ c.nombre }}</a></li>
       {% endfor %}
     </ul>
   </div>
