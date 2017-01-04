@@ -7,18 +7,17 @@ $(function() {
 
   ajax_search = function(q) {
     $('#results-label').text('Realizando búsqueda...')
-    return $.ajax({
-      url: '{% url "search" %}',
-      method: 'get',
-      data: {q: q}
-    }).done(function(resp) {
-      // debugger;
-      $('#main-results').html(resp);
-      $('#results-label').text($('#main-results li').length ?
-        'Resultados de búsqueda' : 'Búsqueda sin resultados');
-      history.pushState({}, null, this.url);
-      contentWayPoint();
-    });
+    location.href = $.query.set('q', q).toString();
+    // return $.ajax({
+    //   url: $.query.set('query', q).toString(),
+    // }).done(function(resp) {
+    //   // debugger;
+    //   $('#main-results').html(resp);
+    //   $('#results-label').text($('#main-results li').length ?
+    //     'Resultados de búsqueda' : 'Búsqueda sin resultados');
+    //   history.pushState({}, null, this.url);
+    //   contentWayPoint();
+    // });
   };
 
   var ant = '{{ query }}';
@@ -38,6 +37,12 @@ $(function() {
     ev.preventDefault();
     console.log($.query.remove($(this).attr('data-filtro')).toString() );
     location.href = '{{ request.path }}' + $.query.remove($(this).attr('data-filtro')).toString();
+  });
+
+  $('#searchinput').focus();
+  $('#searchinput').val($('#searchinput').val());
+  $('#searchinput').focus(function() {
+    $(this).select();
   });
 });
 </script>
@@ -143,7 +148,7 @@ $(function() {
 
       <div class="search">
         <span class="icon"><i class="icon-search"></i></span>
-        <input type="search" name="q" value="{{ query }}" placeholder="Buscar..." />
+        <input type="search" name="q" id="searchinput" value="{{ query }}" placeholder="Buscar..." />
       </div>
 
       <h2 id="results-label">{% if clips|length %}Resultados de la búsqueda{% else %}Búsqueda sin resultados{% endif %}</h2>
