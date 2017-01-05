@@ -1,3 +1,4 @@
+{% load clips_tags %}
 {% for clip in clips %}
 <li class="entry animate-box full" data-animate-effect="fadeIn">
   <a href="{% url "video" clip.slug %}">
@@ -12,7 +13,7 @@
     <p class="seccion">
       {% include "includes/tags.html" %}
     </p>
-    <p class="seccion"> | <small class="date-posted">{{ clip.fecha.date }}</small></p>
+    <small class="date-posted"> | {{ clip.duracion|print_duration }} | {{ clip.fecha.date }}</small>
   </div>
 </li>
 {% endfor %}

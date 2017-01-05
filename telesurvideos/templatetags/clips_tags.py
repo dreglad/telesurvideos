@@ -134,6 +134,13 @@ def get_list_layout(videolist, pagina=0):
 
 
 @register.filter
+def print_duration(date):
+    """format duration"""
+    if date.startswith('00:'):
+        return date[3:]
+    return date
+
+@register.filter
 def es_hoy(date):
     """is today"""
     return datetime.date.today() == date

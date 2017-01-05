@@ -25,19 +25,24 @@
         {% include "includes/tags.html" %}
       </p>
       {% endif %}
-      {% if instance.mostrar_fecha == "rel" %}
-      <br /><small class="date-posted">{{ clip.fecha|naturaltime|capfirst }}</small>
-      {% else %}{% if instance.mostrar_fecha == 'f' %}
-      <br /><small class="date-posted">{% if clip.fecha|es_anoactual %}{{ clip.fecha.date|date:"j \d\e F"|lower }}{% else %}{{ clip.fecha.date|date:"j \d\e F \d\e Y"|lower }}{% endif %}</small>
-      {% else %}{% if instance.mostrar_fecha == 'fh' %}
-      <br /><small class="date-posted">{% if clip.fecha|es_anoactual %}{{ clip.fecha|date:"j \d\e F, H:i \h\r\s."|lower }}{% else %}{{ clip.fecha|date:"j \d\e F \d\e Y, H:i \h\r\s."|lower }}{% endif %}</small>
-      {% else %}{% if instance.mostrar_fecha == 'con' %}
-        {% if clip.fecha.date|es_hoy %}
-          <br /><small class="date-posted">{{ clip.fecha|naturaltime|capfirst }}</small>
-        {% else %}
-          <br /><small class="date-posted">{% if clip.fecha|es_anoactual %}{{ clip.fecha.date|date:"j \d\e F"|lower }}{% else %}{{ clip.fecha.date|date:"j \d\e F \d\e Y"|lower }}{% endif %}</small>
-        {% endif %}
-      {% endif %}{% endif %}{% endif %}{% endif %}
+      {% if instance.mostrar_fecha %}
+      <br /> <small>{{ clip.duracion|print_duration }}</small> | 
+      {% endif %}
+      <em>
+        {% if instance.mostrar_fecha == "rel" %}
+        <small class="date-posted">{{ clip.fecha|naturaltime|capfirst }}</small>
+        {% else %}{% if instance.mostrar_fecha == 'f' %}
+        <small class="date-posted">{% if clip.fecha|es_anoactual %}{{ clip.fecha.date|date:"j \d\e F"|lower }}{% else %}{{ clip.fecha.date|date:"j \d\e F \d\e Y"|lower }}{% endif %}</small>
+        {% else %}{% if instance.mostrar_fecha == 'fh' %}
+        <small class="date-posted">{% if clip.fecha|es_anoactual %}{{ clip.fecha|date:"j \d\e F, H:i \h\r\s."|lower }}{% else %}{{ clip.fecha|date:"j \d\e F \d\e Y, H:i \h\r\s."|lower }}{% endif %}</small>
+        {% else %}{% if instance.mostrar_fecha == 'con' %}
+          {% if clip.fecha.date|es_hoy %}
+            <small class="date-posted">{{ clip.fecha|naturaltime|capfirst }}</small>
+          {% else %}
+            <small class="date-posted">{% if clip.fecha|es_anoactual %}{{ clip.fecha.date|date:"j \d\e F"|lower }}{% else %}{{ clip.fecha.date|date:"j \d\e F \d\e Y"|lower }}{% endif %}</small>
+          {% endif %}
+        {% endif %}{% endif %}{% endif %}{% endif %}
+      </em>
     </div>
   </li>
   {% endif %}
