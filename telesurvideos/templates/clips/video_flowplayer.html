@@ -1,10 +1,16 @@
-{% extends "clips/video.html" %}
-{% load static %}
+{% extends player|yesno:"clips/player.html,clips/video.html" %}
+{% load static compress %}
 
-{% block extrahead %}
+{% block video_wrapper_attrs %}class="no-volume" data-ratio="{{ clip.ratio|default:'0.75' }}"{% endblock %}
+
+{% block stylesheets %}{{ block.super }}
 <link rel="stylesheet" href="{% static 'flowplayer/skin/minimalist.css' %}">
 <link rel="stylesheet" href="//releases.flowplayer.org/quality-selector/flowplayer.quality-selector.css">
+{% endblock %}
 
+{% block videoattrs %}autoplay{% endblock %}
+
+{% block bottom_scripts %}{{ block.super }}
 {% if VIDEOS_FLOWPLAYER_KEY %}
 <script src="//releases.flowplayer.org/6.0.5/commercial/flowplayer.min.js"></script>
 {% else %}
@@ -14,39 +20,31 @@
 <script src="//s0.2mdn.net/instream/html5/ima3.js"></script>
 <script src="//releases.flowplayer.org/vast/telesurtv.net/vast.min.js"></script>
 {# <script src="//releases.flowplayer.org/thumbnails/flowplayer.thumbnails.min.js"></script> #}
-{% endblock %}
-
-{% block video_wrapper_attrs %}class="no-volume" data-ratio="{{ clip.ratio|default:'0.75' }}"{% endblock %}
-
-{% block videoattrs %}autoplay{% endblock %}
-
-{% block player %}{{ block.super }}
+{% compress js inline %}
 <script>
-$(function() {
-    $('#player').flowplayer({
-        autoplay: true,
-        splash: true,
-        hlsjs: true,
-        hlsQualities: true,
-        {% if VIDEOS_FLOWPLAYER_KEY %}
-        key: '{{ VIDEOS_FLOWPLAYER_KEY }}',
-        brand: 'teleSUR',
-        {% endif %}
-        {% if VIDEOS_ANALYTICS %}
-        analytics: '{{ VIDEOS_ANALYTICS }}',
-        {% endif %}
-        ima: {
-            locale: "es",
-            ads: [{
-                time: 0,
-                // adTag: "https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/48717572/fp-overlay&ciu_szs&impl=s&gdfp_req=1&env=vp&output=xml_vast2&unviewed_position_start=1&url=[referrer_url]&description_url=https%3A%2F%2Fflowplayer.org&correlator=[timestamp]"
-                // adTag: "https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/48717572/fp-overlay&ciu_szs&impl=s&gdfp_req=1&env=vp&output=xml_vast2&unviewed_position_start=1&url=[referrer_url]&description_url=https%3A%2F%2Fflowplayer.org&correlator=[timestamp]"
-                adTag: "https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/48717572/fp-preroll-skippable&ciu_szs&impl=s&gdfp_req=1&env=vp&output=xml_vast2&unviewed_position_start=1&url=[referrer_url]&description_url=https%3A%2F%2Fflowplayer.org&correlator=[timestamp]"
-                // adTag: "https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/138871148/telesurtv.dv.vasttag&ciu_szs=160x600,300x250,300x600,728x90&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=[referrer_url]&description_url=http%3A%2F%2Fwww.telesurtv.net%2F&correlator=[timestamp]"
-            }]
-        }
-    });
-    flowplayer().toggle();
-});
+(function($) {
+  $('#player').flowplayer({
+    autoplay: true,
+    splash: true,
+    hlsjs: true,
+    hlsQualities: true,
+    {% if VIDEOS_FLOWPLAYER_KEY %}
+    key: '{{ VIDEOS_FLOWPLAYER_KEY }}',
+    brand: 'teleSUR',
+    {% endif %}
+    {% if VIDEOS_ANALYTICS %}
+    analytics: '{{ VIDEOS_ANALYTICS }}',
+    {% endif %}
+    ima: {
+      locale: "es",
+      ads: [{
+        time: 5,
+        adTag: "https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/138871148/telesurtv.dv.vasttag&ciu_szs=160x600,300x250,300x600,728x90&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=[referrer_url]&description_url=http%3A%2F%2Fwww.telesurtv.net%2F&correlator=[timestamp]"
+      }]
+    }
+  });
+  flowplayer().toggle();
+})(jQuery);
 </script>
+{% endcompress %}
 {% endblock %}

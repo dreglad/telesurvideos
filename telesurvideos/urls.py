@@ -19,6 +19,7 @@ urlpatterns = [
 
     url(r'^search/$', SearchView.as_view(), name="search"),
     url(r'^video/(?P<slug>.*)/$', VideoView.as_view(), name="video"),
+    url(r'^player/(?P<slug>.*)/$', VideoView.as_view(), {'player': True }, name="player"),
     url(r'^lista/(?P<lista_id>\d+)/(?P<pagina>\d+)/$', VideoListView.as_view(), name="video_list"),
 ]
 

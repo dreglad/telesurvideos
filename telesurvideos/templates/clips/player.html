@@ -1,0 +1,14 @@
+{% extends "clips/video.html" %}
+
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block stylesheets %}<style type="text/css">body: { margin: 0; padding: 0; }</style>{% endblock %}
+
+{% block arrowup %}{% endblock %}
+
+{% block content %}
+    {% block player %}{{ block.super }}{% endblock %}
+{% endblock %}
+
+{% block bottom_scripts %}{% endblock %}

@@ -16,6 +16,8 @@ class VideoView(TemplateView):
     """Sinle video view"""
     template_name = 'clips/video_flowplayer.html'
 
+    base_template = 'clips/video.html'
+
     def get_context_data(self, **kwargs):
         context = super(VideoView, self).get_context_data(**kwargs)
         context['clip'] = get_clip(kwargs['slug'])

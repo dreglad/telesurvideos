@@ -26,8 +26,7 @@
       </p>
       {% endif %}
       {% if instance.mostrar_fecha %}
-      <br /> <small>{{ clip.duracion|print_duration }}</small> | 
-      {% endif %}
+      <br /><small class="date-posted">{{ clip.duracion|print_duration }}</small> | 
       <em>
         {% if instance.mostrar_fecha == "rel" %}
         <small class="date-posted">{{ clip.fecha|naturaltime|capfirst }}</small>
@@ -43,6 +42,7 @@
           {% endif %}
         {% endif %}{% endif %}{% endif %}{% endif %}
       </em>
+      {% endif %}
     </div>
   </li>
   {% endif %}
@@ -53,53 +53,5 @@
   <div class="text-center pagination" id="pag-{{ instance.id }}">
     <a href="{% url 'video_list' lista_id=instance.id pagina=pagina|default:0|add:1 %}"
        role="button" class="more btn">Mostrar más {{ instance.titulo }}...</a>
-    <script>
-      $(function() {
-        $("#pag-{{ instance.id }} a").click(function(ev) {
-          ev.preventDefault();
-          $(this).attr('disabled', 'disabled');
-          $(this).text('Cargando más {{ instance.titulo }}...');
-          $.ajax({
-            url: $(this).attr('href'),
-          }).done(function(resp) {
-            $("#pag-{{ instance.id }}").replaceWith(resp);
-            var i = 0;
-            $('.animate-box').waypoint( function( direction ) {
-
-              if( direction === 'down' && !$(this.element).hasClass('animated-fast') ) {
-
-                i++;
-
-                $(this.element).addClass('item-animate');
-                setTimeout(function(){
-
-                  $('body .animate-box.item-animate').each(function(k){
-
-                    var el = $(this);
-                    setTimeout( function () {
-                      var effect = el.data('animate-effect');
-                      if ( effect === 'fadeIn') {
-                        el.addClass('fadeIn animated-fast');
-                      } else if ( effect === 'fadeInLeft') {
-                        el.addClass('fadeInLeft animated-fast');
-                      } else if ( effect === 'fadeInRight') {
-                        el.addClass('fadeInRight animated-fast');
-                      } else {
-                        el.addClass('fadeInUp animated-fast');
-                      }
-
-                      el.removeClass('item-animate');
-                    },  k * 50, 'easeInOutExpo' );
-                  });
-
-                }, 100);
-
-              }
-
-            } , { offset: '85%' } );
-          });
-        });
-      });
-    </script>
   </div>
 {% endif %}

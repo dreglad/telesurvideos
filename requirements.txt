@@ -16,6 +16,10 @@ djangocms-picture
 djangocms-column
 cmsplugin-filer
 
+django-cors-headers
+django-analytical
+django_compressor
+csscompressor
 easy_thumbnails
 django-multiselectfield
 

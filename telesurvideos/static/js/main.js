@@ -271,6 +271,15 @@
 		});
 	};
 	$(function(){
+		$(document).on('keypress', '#header-search input[name=q]', function(e){
+            if (e.which == '13') {
+                e.preventDefault();
+                var q = $(this).val();
+                location.href="{% url 'search' %}" + (q ? '?q='+q : '');
+            }
+        });
+
+
 		loaderPage();
 		mobileMenuOutsideClick();
 		scrollNavBar();
@@ -286,6 +295,17 @@
 		search();
 		$(document).on("webkitfullscreenchange mozfullscreenchange fullscreenchange", function( event ) {
 			$('nav, .cp-l').toggle();
+		});
+
+		$(document).on('click', 'div.pagination a.more', function(ev) {
+		  //$("#pag-{{ instance.id }} a").click(function(ev) {
+		    ev.preventDefault();
+		    var link = $(this);
+		    link.attr('disabled', 'disabled').text('Cargando más videos...');
+		    $.ajax({ url: link.attr('href') }).done(function(resp) {
+		      link.parent().replaceWith(resp);
+		      contentWayPoint();
+		    });
 		});
 
 	});

@@ -16,6 +16,8 @@ SECRET_KEY = 'f%o_$vfpki#3!&)9-t39w8(lyuq(6q1#e!qif5@ca2s=^(g#7d'
 
 DEBUG = True
 
+CORS_ORIGIN_ALLOW_ALL = True
+
 ALLOWED_HOSTS = []
 
 SITE_ID = 1
@@ -33,6 +35,9 @@ INSTALLED_APPS = (
     'cms',
     'menus',
 
+    'analytical',
+    'compressor',
+    'corsheaders',
     'django_celery_results',
     'cacheback',
 
@@ -112,6 +117,12 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'telesurvideos', 'static'),
 )
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -146,12 +157,15 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'cms.middleware.user.CurrentUserMiddleware',
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
-    'cms.middleware.language.LanguageCookieMiddleware'
+    'cms.middleware.language.LanguageCookieMiddleware',
 )
 
 CACHES = {
@@ -185,6 +199,7 @@ LOGGING = {
 }
 
 # telesurvideos
+COMPRESS_ENABLED = True
 
 VIDEOS_ANALYTICS = ''
 VIDEOS_FLOWPLAYER_KEY = ''

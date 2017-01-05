@@ -9,10 +9,19 @@
 <meta property="og:image" content="{{ clip.thumbnail_grande }}"/>
 <meta property="og:url" content="{% url "video" clip.slug %}"/>
 <meta property="og:description" content="{{ clip.descripcion }}"/>
+
 <meta name="twitter:title" content="{{ clip.titulo }}"/>
 <meta name="twitter:image" content="{{ clip.thumbnail_grande }}"/>
 <meta name="twitter:url" content="{% url "video" clip.slug %}"/>
 <meta name="twitter:card" content="{{ clip.card_url }}"/>
+<meta name="twitter:description" content="{{ clip.descripcion }}" />
+
+<meta name="twitter:site" content="@rchoi" />
+<meta name="twitter:player" content="{% url 'player' clip.slug %}" />
+<meta name="twitter:player:width" content="{{ clip.width }}" />
+<meta name="twitter:player:height" content="{{ clip.height }}" />
+<meta name="twitter:player:stream" content="{{ clip.archivo_url }}" />
+<meta name="twitter:player:stream:content_type" content="video/mp4; codecs=&quot;avc1.42E01E1, mp4a.40.2&quot;">
 {% endblock %}
 
 {% block content %}
@@ -26,14 +35,14 @@
               <div class="col-lg-6 col-md-12 animate-box">
                 {% block player %}
                 <div id="player" {% block video_wrapper_attrs %}class="video"{% endblock %}>
-                  <video {% block videoattrs %}autoplay controls{% endblock %} poster="{{ clip.thumbnail_grande }}">
+                  <video data-title="{{ clip.titulo }}" {% block videoattrs %}autoplay controls{% endblock %} poster="{{ clip.thumbnail_grande }}">
                     {% if clip.hls_url %}
                     <source src="{{ clip.hls_url }}" type="application/x-mpegurl">
                     {% endif %}
                     <source src="{{ clip.archivo_subtitulado_url|default:clip.archivo_url }}" type="video/mp4">
-                    {% if clip.vtt_url %}
-                    <!-- <track kind="metadata" src="{{ clip.vtt_url }}"></track> -->
-                    {% endif %}
+                    {# {% if clip.vtt_url %}
+                      <track kind="metadata" src="{{ clip.vtt_url }}"></track>
+                    {% endif %} #}
                   </video>
                 </div>
                 {% endblock player %}
@@ -41,31 +50,34 @@
               <div class="col-lg-6 col-md-12 cp-l animate-box">
                 <ul class="nav video-info">
                   <li class="seccion">
-                    <a href="{% url 'search' %}?tipo={{ clip.tipo.slug }}"><span itemprop="articleSection" class="label label-primary">{{ clip.tipo.nombre }}</span></a>
+                    <a href="{% url 'search' %}?tipo={{ clip.tipo.slug }}"><span itemprop="articleSection" class="label label-danger">{{ clip.tipo.nombre }}</span></a>
                   </li>
+                  {% if clip.programa %}
+                  <li class="seccion">
+                    <a href="{% url 'search' %}?tipo=programa&programa={{ clip.programa.slug }}"><span class="label label-default">{{ clip.programa.nombre }}</span></a>
+                  </li>
+                  {% endif %}
                   {% if clip.corresponsal %}
                   <li class="seccion">
-                    <a href="{% url 'search' %}?corresponsal={{ clip.corresponsal.slug }}"><span class="label label-danger">{{ clip.corresponsal.nombre }}</span></a>
+                    <a href="{% url 'search' %}?corresponsal={{ clip.corresponsal.slug }}"><span class="label label-primary">{{ clip.corresponsal.nombre }}</span></a>
                   </li>
                   {% endif %}
                 </ul>
                 <h2 itemprop="headline">{{ clip.titulo }}</h2>
                 <time itemprop="dateCreated">{{ clip.fecha|date:"l j \d\e F \d\e Y"|lower|capfirst }}</time>
                 <p>
-                  {% if clip.categoria %}
-                  <a title="Categoría"
-                     href="{% url 'search' %}?categoria={{ clip.categoria.slug }}" class="label label-default">{{ clip.categoria.nombre }}</a>
-                  {% endif %}
                   {% if clip.tema %}
                   <a title="Tema"
-                     href="{% url 'search' %}?tema={{ clip.tema.slug }}" class="label label-danger">{{ clip.tema.nombre }}</a>
-                  {% endif %}
+                     href="{% url 'search' %}?tema={{ clip.tema.slug }}" class="label label-success">{{ clip.tema.nombre }}</a>
+                  {% else %}{% if clip.categoria %}
+                  <a title="Categoría"
+                     href="{% url 'search' %}?categoria={{ clip.categoria.slug }}" class="label label-success">{{ clip.categoria.nombre }}</a>
+                  {% endif %}{% endif %}
                   {% if clip.pais %}
-                  <a title="País" href="{% url 'search' %}?pais= {{ clip.pais.codigo }}" class="label label-success">
-                    {{ clip.pais.nombre }}</a>
+                  <a title="País" href="{% url 'search' %}?pais={{ clip.pais.slug }}" class="label label-warning">{{ clip.pais.nombre }}</a>
                   {% endif %}
                   {% if clip.pais_secundario %}
-                  <a title="País" href="{% url 'search' %}?pais={{ clip.pais_secundario.codigo }}" class="label label-success">
+                  <a title="País" href="{% url 'search' %}?pais={{ clip.pais_secundario.slug }}" class="label label-warning">
                     {{ clip.pais_secundario.nombre }}</a>
                   {% endif %}
                 </p>

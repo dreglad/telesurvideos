@@ -17,6 +17,8 @@ register = template.Library()
 def datetime_parser(dct):
     """convert JSON dates into datetime"""
     for k, v in dct.items():
+        dct['width'] = 640
+        dct['height'] = 480
         if isinstance(v, basestring) and re.search(r"^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$", v):
             try:
                 dct[k] = datetime.datetime.strptime(v, "%Y-%m-%d %H:%M:%S")
