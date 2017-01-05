@@ -22,6 +22,10 @@ class VideoView(TemplateView):
         if not context['clip']:
             raise Http404('Clip no existe')
         context['relacionados'] = get_relacionados(context['clip']['slug'])[:4]
+        context.update({
+            'VIDEOS_FLOWPLAYER_KEY': settings.VIDEOS_FLOWPLAYER_KEY,
+            'VIDEOS_ANALYTICS': settings.VIDEOS_ANALYTICS,
+        })
         return context
 
 
