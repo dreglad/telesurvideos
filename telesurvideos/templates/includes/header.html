@@ -20,15 +20,11 @@
                 <span class="icon"><i class="icon-search"></i></span>
                 <input type="search" name="q" id="q" placeholder="Buscar..." />
                 <script>
-
-                var ant = '{{ query }}';
                 $(document).on('keypress', '#header-search input[name=q]', function(e){
                     if (e.which == '13') {
                         e.preventDefault();
                         var q = $(this).val();
-                        if (q) {
-                            location.href="{% url 'search' %}?q=" + q;
-                        }
+                        location.href="{% url 'search' %}" + (q ? '?q='+q : '');
                     }
                 });
                 </script>

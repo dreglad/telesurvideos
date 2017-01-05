@@ -7,7 +7,7 @@ $(function() {
 
   ajax_search = function(q) {
     $('#results-label').text('Realizando búsqueda...')
-    location.href = $.query.set('q', q).toString();
+    location.href = '{% url "search" %}' + $.query.set('q', q).toString();
     // return $.ajax({
     //   url: $.query.set('query', q).toString(),
     // }).done(function(resp) {
@@ -36,11 +36,11 @@ $(function() {
   $('a.remove-filtro').on('click', function(ev) {
     ev.preventDefault();
     console.log($.query.remove($(this).attr('data-filtro')).toString() );
-    location.href = '{{ request.path }}' + $.query.remove($(this).attr('data-filtro')).toString();
+    location.href = '{% url "search" %}' + $.query.remove($(this).attr('data-filtro')).toString();
   });
 
   $('a.remove-all-filtros').on('click', function() {
-    location.href = '{{ request.path }}';
+    location.href = '{% url "search" %}';
   });
 
   $('#searchinput').focus();
@@ -59,13 +59,13 @@ $(function() {
   <div class="sidebox auto-height p-md">
     <h4>Filtros seleccionados</h4>
     {% if query %}
-    <p><a href="#" data-filtro="q" data-val="{{ query }}" title="Búsqueda: {{ val }}" class="remove-filtro"><span class="icon"><i class="icon-cross"></i></span> </a> Búsqueda: {{ query|truncatechars:25 }}</p>
+    <p><a href="#" data-filtro="q" data-val="{{ query }}" title="Búsqueda: {{ val }}" class="remove-filtro"><span class="icon"><i class="icon-cross"></i></span> </a> Búsqueda: <strong>{{ query|truncatechars:25 }}</strong></p>
     {% endif %}
     {% if tiempo %}
-    <p><a href="#" data-filtro="tiempo" data-val="{{ tiempo }}" title="Antigüedad máxima: {{ val }}" class="remove-filtro"><span class="icon"><i class="icon-cross"></i></span> </a> Antigüedad máxima: {{ tiempo }}</p>
+    <p><a href="#" data-filtro="tiempo" data-val="{{ tiempo }}" title="Antigüedad máxima: {{ val }}" class="remove-filtro"><span class="icon"><i class="icon-cross"></i></span> </a> Antigüedad máxima: <strong>{{ tiempo }}</strong></p>
     {% endif %}
     {% for filtro, val in filtros.items %}
-    <p><a href="#" data-filtro="{{ filtro }}" data-val="{{ val }}" title="{{ filtro }}: {{ val }}" class="remove-filtro"><span class="icon"><i class="icon-cross"></i></span> </a> {{filtro }}: {{ val }}</p>
+    <p><a href="#" data-filtro="{{ filtro }}" data-val="{{ val }}" title="{{ filtro }}: {{ val }}" class="remove-filtro"><span class="icon"><i class="icon-cross"></i></span> </a> {{filtro }}: <strong>{{ val }}</strong></p>
     {% endfor %}
     {% if filtros.items and query or tiempo %}
     <p><a href="#" class="remove-all-filtros btn-xs btn-link"><span class="icon"><i class="icon-trash"></i></span> Quitar todos los filtros</a></p>
