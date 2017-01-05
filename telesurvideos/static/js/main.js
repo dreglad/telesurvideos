@@ -298,7 +298,6 @@
 		});
 
 		$(document).on('click', 'div.pagination a.more', function(ev) {
-		  //$("#pag-{{ instance.id }} a").click(function(ev) {
 		    ev.preventDefault();
 		    var link = $(this);
 		    link.attr('disabled', 'disabled').text('Cargando más videos...');

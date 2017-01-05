@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="//releases.flowplayer.org/quality-selector/flowplayer.quality-selector.css">
 {% endblock %}
 
-{% block videoattrs %}autoplay{% endblock %}
+{% block videoattrs %}{% if not player %}autoplay{% endif %}{% endblock %}
 
 {% block bottom_scripts %}{{ block.super }}
 {% if VIDEOS_FLOWPLAYER_KEY %}
@@ -24,7 +24,9 @@
 <script>
 (function($) {
   $('#player').flowplayer({
+    {% if not player %}
     autoplay: true,
+    {% endif %}
     splash: true,
     hlsjs: true,
     hlsQualities: true,
@@ -43,7 +45,9 @@
       }]
     }
   });
+  {% if not player %}
   flowplayer().toggle();
+  {% endif %}
 })(jQuery);
 </script>
 {% endcompress %}

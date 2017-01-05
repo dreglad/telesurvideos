@@ -6,18 +6,22 @@
 
 {% block socialmeta %}{{ block.super }}
 <meta property="og:title" content="{{ clip.titulo }}"/>
-<meta property="og:image" content="{{ clip.thumbnail_grande }}"/>
-<meta property="og:url" content="{% url "video" clip.slug %}"/>
 <meta property="og:description" content="{{ clip.descripcion }}"/>
+<meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{% url "video" clip.slug %}">
+<meta property="og:image" content="{{ clip.thumbnail_grande }}"/>
+<meta property="og:site_name" content="teleSUR Videos"/>
+<meta property="og:video" content="teleSUR Videos"/>
+<meta property="og:video:type" content="video/mp4">
+<meta property="og:type" content="video.other">
+<meta property="og:video" content="{{ clip.archivo_url }}">
 
+<meta name="twitter:site" content="@videosteleSUR" />
 <meta name="twitter:title" content="{{ clip.titulo }}"/>
-<meta name="twitter:image" content="{{ clip.thumbnail_grande }}"/>
-<meta name="twitter:url" content="{% url "video" clip.slug %}"/>
-<meta name="twitter:card" content="{{ clip.card_url }}"/>
 <meta name="twitter:description" content="{{ clip.descripcion }}" />
-
-<meta name="twitter:site" content="@rchoi" />
-<meta name="twitter:player" content="{% url 'player' clip.slug %}" />
+<meta name="twitter:url" content="{{ request.scheme }}://{{ request.get_host }}{% url "video" clip.slug %}"/>
+<meta name="twitter:image" content="{{ clip.thumbnail_grande }}"/>
+<meta name="twitter:card" content="player"/>
+<meta name="twitter:player" content="{{ request.scheme }}://{{ request.get_host }}{% url 'player' clip.slug %}" />
 <meta name="twitter:player:width" content="{{ clip.width }}" />
 <meta name="twitter:player:height" content="{{ clip.height }}" />
 <meta name="twitter:player:stream" content="{{ clip.archivo_url }}" />
@@ -40,9 +44,9 @@
                     <source src="{{ clip.hls_url }}" type="application/x-mpegurl">
                     {% endif %}
                     <source src="{{ clip.archivo_subtitulado_url|default:clip.archivo_url }}" type="video/mp4">
-                    {# {% if clip.vtt_url %}
-                      <track kind="metadata" src="{{ clip.vtt_url }}"></track>
-                    {% endif %} #}
+                    {# {% if clip.vtt_url %} #}
+                    {#  <track kind="metadata" src="{{ clip.vtt_url }}"></track> #}
+                    {# {% endif %} #}
                   </video>
                 </div>
                 {% endblock player %}
