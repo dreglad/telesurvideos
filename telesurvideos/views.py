@@ -20,8 +20,8 @@ class VideoView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(VideoView, self).get_context_data(**kwargs)
-        context['clip'] = get_clip(kwargs['slug'])
-        if not context['clip']:
+        context['clip'] = get_clip(kwargs['clip_slug'])
+        if not context['clip'] or str(context['clip']['id']) != str(kwargs['clip_id']):
             raise Http404('Clip no existe')
         context['relacionados'] = get_relacionados(context['clip']['slug'])[:4]
         context.update({

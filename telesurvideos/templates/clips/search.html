@@ -131,7 +131,7 @@
       {% for c in paises %}
         {% if c.slug not in exclude.paises %}
         <li>
-          <a title="{{ c.slug }}" data-filtro="pais" data-val="{{ c.slug }}" class="{% if filtros.pais == c.slug %}selected{% endif %}"><img height="14" width="22" class="lazy" data-original="//flagpedia.net/data/flags/mini/{{ c.codigo|lower }}.png"> {{ c.nombre }}</a>
+          <a title="{{ c.slug }}" data-filtro="pais" data-val="{{ c.slug }}" class="{% if filtros.pais == c.slug %}selected{% endif %}"><img height="14" width="22" class="lazy" data-original="https://flagpedia.net/data/flags/mini/{{ c.codigo|lower }}.png"> {{ c.nombre }}</a>
           {% if filtros.pais == c.slug %}
           <a data-filtro="pais" class="remove-filtro" title="Eliminar ete filtro"><span class="icon"><i class="icon-cross"></i></span></a>
           {% endif %}

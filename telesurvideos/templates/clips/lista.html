@@ -11,7 +11,7 @@
   {% with clip=clips|index:forloop.counter0 %}
   {% if clip %}
   <li class="entry animate-box {% if l == "1" %}full{% endif %}{% if l == "2" %}one-half{% endif %}{% if l == "3" %}one-third{% endif %}{% if l == "4" %}one-fourth{% endif %}{% if l == "6" %}two-third{% endif %}{% if l == "q" %}full video{% endif %}{% if l == "w" %}one-half video{% endif %}{% if l == "e" %}one-third video{% endif %}{% if l == "r" %}one-fourth video{% endif %}{% if l == "y" %}two-third video{% endif %}" data-animate-effect="fadeIn">  
-    <a href="{% url 'video' clip.slug %}">
+    <a href="{% url 'video' clip.id clip.slug %}">
       <i class="icon icon-play"></i>
       <div class="entry-img" style="background-image: url({% static clip.thumbnail_grande %})"></div>
       <div class="entry-desc">

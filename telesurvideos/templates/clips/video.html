@@ -7,7 +7,7 @@
 {% block socialmeta %}{{ block.super }}
 <meta property="og:title" content="{{ clip.titulo }}"/>
 <meta property="og:description" content="{{ clip.descripcion }}"/>
-<meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{% url "video" clip.slug %}">
+<meta property="og:url" content="{{ clip.navegador_url }}">
 <meta property="og:image" content="{{ clip.thumbnail_grande }}"/>
 <meta property="og:site_name" content="teleSUR Videos"/>
 <meta property="og:video" content="teleSUR Videos"/>
@@ -18,10 +18,10 @@
 <meta name="twitter:site" content="@videosteleSUR" />
 <meta name="twitter:title" content="{{ clip.titulo }}"/>
 <meta name="twitter:description" content="{{ clip.descripcion }}" />
-<meta name="twitter:url" content="{{ request.scheme }}://{{ request.get_host }}{% url "video" clip.slug %}"/>
+<meta name="twitter:url" content="{{ clip.navegador_url }}"/>
 <meta name="twitter:image" content="{{ clip.thumbnail_grande }}"/>
 <meta name="twitter:card" content="player"/>
-<meta name="twitter:player" content="{{ request.scheme }}://{{ request.get_host }}{% url 'player' clip.slug %}" />
+<meta name="twitter:player" content="{{ request.scheme }}://{{ request.get_host }}{% url 'player' clip.id clip.slug %}" />
 <meta name="twitter:player:width" content="{{ clip.width }}" />
 <meta name="twitter:player:height" content="{{ clip.height }}" />
 <meta name="twitter:player:stream" content="{{ clip.archivo_url }}" />
@@ -134,7 +134,7 @@
         <ul class="gtco-post-list related">
           {% for relacionado in relacionados %}
             <li class="one-fourth animate-box entry" data-animate-effect="fadeIn">
-              <a href="{% url 'video' relacionado.slug %}">
+              <a href="{% url 'video' relacionado.id relacionado.slug %}">
                 <div class="entry-img" style="background-image: url({{ relacionado.thumbnail_grande }})"></div>
                 <div class="entry-desc">
                   <h3>{{ relacionado.titulo|truncatewords:12 }}</h3>

@@ -1,7 +1,7 @@
 {% load clips_tags %}
 {% for clip in clips %}
 <li class="entry animate-box full" data-animate-effect="fadeIn">
-  <a href="{% url "video" clip.slug %}">
+  <a href="{% url "video" clip.id clip.slug %}">
     <i class="icon icon-play"></i>
     <div class="entry-img" style="background-image: url({{ clip.thumbnail_mediano }})"></div>
     <div class="entry-desc">
