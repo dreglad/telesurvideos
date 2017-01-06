@@ -93,7 +93,9 @@
                     {{ clip.pais_secundario.nombre }}</a>
                   {% endif %}
                 </p>
-                <p itemprop="articleBody">{{ clip.descripcion.strip }}</p>
+                <p class="text-justify" itemprop="articleBody">
+                  {{ clip.descripcion.strip|default:clip.programa.descripcion.strip }}
+                </p>
 
                 <div class="acciones row">
                   <div class="col-sm-12">
@@ -117,7 +119,7 @@
     </div>
 
     <div class="container">
-    <div class="row row-pb-md">
+    <div class="row">
       <div class="col-md-12">
         <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-width="100%" data-numposts="5"></div>
       </div>
@@ -129,7 +131,7 @@
     <div class="row row-pb-md">
       <div class="col-md-12">
         <header>
-          <h3 class="related-title animate-box">{% static_placeholder "relacionados-etiqueta" or %}Videos recomendados{% endstatic_placeholder %}</h3>
+          <h3 class="related-title animate-box">Videos relacionados</h3>
         </header>
         <ul class="gtco-post-list related">
           {% for relacionado in relacionados %}

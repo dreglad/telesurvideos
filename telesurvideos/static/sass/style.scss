@@ -614,7 +614,7 @@ h1, h2, h3, h4, h5, h6, figure {
     }
   }
   h2 {
-    margin-top: 10px;
+    margin: 0.25em 0;
     font-size: 40px;
 
   }
@@ -633,8 +633,8 @@ h1, h2, h3, h4, h5, h6, figure {
     .content-article {
       padding-top: 0;
       .cp-l {
-        padding-top: 20px;
-        @media screen and (max-width: $screen-sm) {
+        @media screen and (max-width: $screen-lg) {
+          padding-top: 1em;
           padding-left: 40px;
           padding-right: 40px;
         }
@@ -677,21 +677,21 @@ article {
   position: relative;
 
   p {
-    margin-bottom: 30px;
+    margin-bottom: 1em;
   }
 
   @media screen and (max-width: $screen-lg) {
-    margin-bottom: 80px;
+    margin-bottom: 2em;;
     padding-left: 15px;
     padding-right: 15px;
   }
   @media screen and (max-width: $screen-md) {
-    margin-bottom: 80px;
+    margin-bottom: 1em;
     padding-left: 15px;
     padding-right: 15px;
   }
   @media screen and (max-width: $screen-sm) {
-    margin-bottom: 40px;
+    margin-bottom: 1em;
     padding-left: 15px;
     padding-right: 15px;
   }
@@ -713,7 +713,6 @@ article {
     font-family: $font-primary;
     font-size: 34px;
     color: $brand-black;
-    margin-bottom: 30px;
     a {
       color: $brand-black;
     }
@@ -2474,7 +2473,11 @@ figure {
 }
 
 .row-pb-md {
-  padding-bottom: 4em !important;
+  padding-bottom: 2em !important;
+}
+
+._5lm5 {
+  display: none !important;
 }
 
 .row-pb-sm {
