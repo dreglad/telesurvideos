@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="//releases.flowplayer.org/quality-selector/flowplayer.quality-selector.css">
 {% endblock %}
 
-{% block videoattrs %}{% if not player %}autoplay{% endif %}{% endblock %}
+{% block videoattrs %}{% if not player %}autoplay{% endif %} webkit-playsinline="true"  playsinline="true"{% endblock %}
 
 {% block bottom_scripts %}{{ block.super }}
 {% if VIDEOS_FLOWPLAYER_KEY %}

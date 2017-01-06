@@ -25,14 +25,14 @@
     <![endif]-->
     {% endblock %}
 
-    {% block stylesheets %}
-    {% compress css %}
+    {% block stylesheets %}{% compress css %}
     <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
     <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    {% endcompress %}
-    {% endblock %}
+    <link rel="stylesheet" href="{% static 'sass/style.scss' %}" type="text/x-scss">
+    {% endcompress %}{% endblock %}
+
     {% render_block "css" %}
 
     {% block extrahead %}{% endblock %}

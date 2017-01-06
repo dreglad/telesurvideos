@@ -1,0 +1,14 @@
+#sidebar {
+    .filtros {
+        &.large {
+            height: 350px;
+        }
+        &.full {
+            height: auto !important;
+        }
+    }
+
+    a {
+        cursor: pointer;
+    }
+}

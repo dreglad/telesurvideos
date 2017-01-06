@@ -17,6 +17,7 @@ djangocms-column
 cmsplugin-filer
 
 django-cors-headers
+django-libsass
 django-analytical
 django_htmlmin
 django_compressor

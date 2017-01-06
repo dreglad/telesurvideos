@@ -1,5 +1,146 @@
 {% extends "simple.html" %}
-{% load clips_tags static %}
+{% load clips_tags static compress %}
+
+{% block stylesheets %}{{ block.super }}{% compress css %}
+<link rel="stylesheet" href="{% static 'sass/search.scss' %}" type="text/x-scss">
+{% endcompress %}{% endblock %}
+
+{% block content %}
+<div id="sidebar">
+  {% if filtros or query or tiempo %}
+  <div class="sidebox auto-height p-md">
+
+    <h4>Filtros seleccionados</h4>
+    {% if query %}
+    <p>
+      <a data-filtro="q" data-val="{{ query }}" class="remove-filtro" title="Eliminar ete filtro"><span class="icon"><i class="icon-cross"></i></span></a>
+      Búsqueda: <strong>{{ query|truncatechars:25 }}</strong>
+    </p>
+    {% endif %}
+
+    {% if tiempo %}
+    <p>
+      <a data-filtro="tiempo" data-val="{{ tiempo }}" class="remove-filtro" title="Eliminar ete filtro"><span class="icon"><i class="icon-cross"></i></span></a>
+      Antigüedad máxima: <strong>{{ tiempo }}</strong>
+    </p>
+    {% endif %}
+
+    {% for filtro, val in filtros.items %}
+      <p>
+        <a data-filtro="{{ filtro }}" data-val="{{ val }}" class="remove-filtro" title="Eliminar ete filtro"><span class="icon"><i class="icon-cross"></i></span></a>
+        {{ filtro|capfirst }}: <strong>{{ val|capfirst }}</strong>
+      </p>
+    {% endfor %}
+
+    {% if filtros.items and query or tiempo %}
+    <p>
+      <a href="#" class="remove-all-filtros btn-xs btn-link">
+        <span class="icon"><i class="icon-trash"></i></span>
+        Quitar todos los filtros
+      </a>
+    </p>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <div class="sidebox">
+    <h4>Tipos de contenido</h4>
+    <ul class="filtros full">
+      {% get_tipos as tipos %}
+      {% for c in tipos %}
+          {% if c.slug not in exclude_tipos %}
+          <li><a title="{{ c.slug }}" data-filtro="tipo" data-val="{{ c.slug }}">{{ c.nombre }}</a></li>
+          {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+
+  {% if filtros.tipo != 'programa' %}
+  <div class="sidebox">
+    <h4>Temas</h4>
+    <ul class="filtros" style="height: 365px;">
+      {% get_temas as temas %}
+      {% for c in temas %}
+          <li><a title="{{ c.slug }}" data-filtro="tema" data-val="{{ c.slug }}">{{ c.nombre }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <!-- <div class="sidebox">
+    <h4>Antigüedad de la transmisión</h4>
+    <ul class="filtros" style="height: auto;">
+      <li><a title="" data-filtro="tiempo" data-val="1d">Hoy</a></li>
+      <li><a title="" data-filtro="tiempo" data-val="1s">Ultima semana</a></li>
+      <li><a title="" data-filtro="tiempo" data-val="1m">Ultimo mes</a></li>
+      <li><a title="" data-filtro="tiempo" data-val="1a">Ultimo año</a></li>
+    </ul>
+  </div> -->
+
+  <div class="sidebox">
+    <h4>Programas</h4>
+    <ul class="filtros{% if filtros.tipo == 'programa' %} full{% endif %}" id="f_programas">
+      {% get_programas as progs %}
+      {% for c in progs %}
+          <li><a title="{{ c.slug }}" data-filtro="programa" data-val="{{ c.slug }}"><img data-original="{{ c.imagen_url }}" class="lazy" width="30" height="15"> {{ c.nombre }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  {% if filtros.tipo != 'programa' %}
+  <div class="sidebox">
+    <h4>Correpsonsales</h4>
+    <ul class="filtros scrolled" id="f_corresponsales">
+      {% get_corresponsales as corrs %}
+      {% for c in corrs %}
+          <li><a title="{{ c.slug }}" data-filtro="corresponsal" data-val="{{ c.slug }}">{% if c.twitter %}<img class="lazy" data-original="https://twitter.com/{{ c.twitter }}/profile_image?size=normal" height="15" width="15">{% endif %} {{ c.nombre }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="sidebox">
+    <h4>Categorías</h4>
+    <ul class="filtros">
+      {% get_categorias as cats %}
+      {% for c in cats %}
+          {% if c.slug not in exclude_categorias %}
+          <li><a title="{{ c.slug }}" data-filtro="categoria" data-val="{{ c.slug }}">{{ c.nombre }}</a></li>
+          {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="sidebox">
+    <h4>Países</h4>
+    <ul class="filtros large" id="f_paises">
+      {% get_paises as paises %}
+      {% for c in paises %}
+          <li><a title="{{ c.slug }}" data-filtro="pais" data-val="{{ c.slug }}"> <img height="14" width="22" class="lazy" data-original="//flagpedia.net/data/flags/mini/{{ c.codigo|lower }}.png"> {{ c.nombre }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  {% endif %}
+
+</div>
+<div id="search-result">
+  <div class="row row-pb-md">
+    <div class="col-md-12">
+
+      <div class="search">
+        <span class="icon"><i class="icon-search"></i></span>
+        <input type="search" name="q" id="searchinput" value="{{ query }}" placeholder="Buscar..." />
+      </div>
+
+      <h2 id="results-label">{% if clips|length %}Resultados de la búsqueda{% else %}Búsqueda sin resultados{% endif %}</h2>
+
+      <ul class="gtco-post-list" id="main-results">
+        {% include "clips/search_results.html" %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}
 
 {% block extrabody %}{{ block.super }}
 <script src="{% static 'js/jquery.lazyload.min.js' %}"></script>
@@ -49,125 +190,5 @@
     $(this).select();
   });
 })(jQuery);
-
-$(function() {
-
-});
 </script>
-{% endblock %}
-
-{% block content %}
-<div id="sidebar">
-
-  {% if filtros or query or tiempo %}
-  <div class="sidebox auto-height p-md">
-    <h4>Filtros seleccionados</h4>
-    {% if query %}
-    <p><a href="#" data-filtro="q" data-val="{{ query }}" title="Búsqueda: {{ val }}" class="remove-filtro"><span class="icon"><i class="icon-cross"></i></span> </a> Búsqueda: <strong>{{ query|truncatechars:25 }}</strong></p>
-    {% endif %}
-    {% if tiempo %}
-    <p><a href="#" data-filtro="tiempo" data-val="{{ tiempo }}" title="Antigüedad máxima: {{ val }}" class="remove-filtro"><span class="icon"><i class="icon-cross"></i></span> </a> Antigüedad máxima: <strong>{{ tiempo }}</strong></p>
-    {% endif %}
-    {% for filtro, val in filtros.items %}
-    <p><a href="#" data-filtro="{{ filtro }}" data-val="{{ val }}" title="{{ filtro }}: {{ val }}" class="remove-filtro"><span class="icon"><i class="icon-cross"></i></span> </a> {{filtro }}: <strong>{{ val }}</strong></p>
-    {% endfor %}
-    {% if filtros.items and query or tiempo %}
-    <p><a href="#" class="remove-all-filtros btn-xs btn-link"><span class="icon"><i class="icon-trash"></i></span> Quitar todos los filtros</a></p>
-    {% endif %}
-  </div>
-  {% endif %}
-
-  <div class="sidebox">
-    <h4>Por tipo de contenido</h4>
-    <ul class="filtros" style="height: auto;">
-      {% get_tipos as tipos %}
-      {% for c in tipos %}
-          {% if c.slug not in exclude_tipos %}
-          <li><a title="{{ c.slug }}" data-filtro="tipo" data-val="{{ c.slug }}">{{ c.nombre }}</a></li>
-          {% endif %}
-      {% endfor %}
-    </ul>
-  </div>
-
-  <div class="sidebox">
-    <h4>Antigüedad de la transmisión</h4>
-    <ul class="filtros" style="height: auto;">
-      <li><a title="" data-filtro="tiempo" data-val="1d">Hoy</a></li>
-      <li><a title="" data-filtro="tiempo" data-val="1s">Ultima semana</a></li>
-      <li><a title="" data-filtro="tiempo" data-val="1m">Ultimo mes</a></li>
-      <li><a title="" data-filtro="tiempo" data-val="1a">Ultimo año</a></li>
-    </ul>
-  </div> -->
-
-  <div class="sidebox">
-    <h4>Programas</h4>
-    <ul class="filtros" id="f_programas" style="height: 365px;">
-      {% get_programas as progs %}
-      {% for c in progs %}
-          <li><a title="{{ c.slug }}" data-filtro="programa" data-val="{{ c.slug }}"><img data-original="{{ c.imagen_url }}" class="lazy" width="30" height="15"> {{ c.nombre }}</a></li>
-      {% endfor %}
-    </ul>
-  </div>
-
-
-  <div class="sidebox">
-    <h4>Correpsonsales</h4>
-    <ul class="filtros" id="f_corresponsales" style="height: 365px;">
-      {% get_corresponsales as corrs %}
-      {% for c in corrs %}
-          <li><a title="{{ c.slug }}" data-filtro="corresponsal" data-val="{{ c.slug }}">{% if c.twitter %}<img class="lazy" data-original="https://twitter.com/{{ c.twitter }}/profile_image?size=normal" height="15" width="15"> {% endif %}{{ c.nombre }}</a></li>
-      {% endfor %}
-    </ul>
-  </div>
-
-  <div class="sidebox">
-    <h4>Categorías</h4>
-    <ul class="filtros" style="height: auto;">
-      {% get_categorias as cats %}
-      {% for c in cats %}
-          {% if c.slug not in exclude_categorias %}
-          <li><a title="{{ c.slug }}" data-filtro="categoria" data-val="{{ c.slug }}">{{ c.nombre }}</a></li>
-          {% endif %}
-      {% endfor %}
-    </ul>
-  </div>
-
-  <div class="sidebox">
-    <h4>Temas</h4>
-    <ul class="filtros" style="height: 365px;">
-      {% get_temas as temas %}
-      {% for c in temas %}
-          <li><a title="{{ c.slug }}" data-filtro="tema" data-val="{{ c.slug }}">{{ c.nombre }}</a></li>
-      {% endfor %}
-    </ul>
-  </div>
-
-  <div class="sidebox">
-    <h4>Países</h4>
-    <ul class="filtros" id="f_paises" style="height: 365px;">
-      {% get_paises as paises %}
-      {% for c in paises %}
-          <li><a title="{{ c.slug }}" data-filtro="pais" data-val="{{ c.slug }}"> <img height="14" width="22" class="lazy" data-original="//flagpedia.net/data/flags/mini/{{ c.codigo|lower }}.png"> {{ c.nombre }}</a></li>
-      {% endfor %}
-    </ul>
-  </div>
-
-</div>
-<div id="search-result">
-  <div class="row row-pb-md">
-    <div class="col-md-12">
-
-      <div class="search">
-        <span class="icon"><i class="icon-search"></i></span>
-        <input type="search" name="q" id="searchinput" value="{{ query }}" placeholder="Buscar..." />
-      </div>
-
-      <h2 id="results-label">{% if clips|length %}Resultados de la búsqueda{% else %}Búsqueda sin resultados{% endif %}</h2>
-
-      <ul class="gtco-post-list" id="main-results">
-        {% include "clips/search_results.html" %}
-      </ul>
-    </div>
-  </div>
-</div>
 {% endblock %}

@@ -201,8 +201,13 @@ LOGGING = {
     }
 }
 
-# telesurvideos
 COMPRESS_ENABLED = True
+COMPRESS_PRECOMPILERS = (
+    ('text/x-scss', 'django_libsass.SassCompiler'),
+)
+
+# telesurvideos
+
 
 VIDEOS_ANALYTICS = ''
 VIDEOS_FLOWPLAYER_KEY = ''
