@@ -293,10 +293,13 @@
 		parallax();
 		reset_minheight();
 		search();
+
+		// Fullscreen with fixed items bugfix
 		$(document).on("webkitfullscreenchange mozfullscreenchange fullscreenchange", function( event ) {
 			$('nav, .cp-l').toggle();
 		});
 
+		// List pagination
 		$(document).on('click', 'div.pagination a.more', function(ev) {
 		    ev.preventDefault();
 		    var link = $(this);
@@ -306,6 +309,19 @@
 		      contentWayPoint();
 		    });
 		});
+
+		// Search pagination
+		$(document).on('click', '#extra-results .pagination a', function(ev) {
+		    ev.preventDefault();
+		    $(this).text('Cargando más resultados...');
+		    $(this).attr('disabled', 'disabled');
+		    $.ajax({
+		      url: $.query.set('page', (parseInt($.query.get('page')) || 1) + 1).toString(),
+		    }).done(function(resp) {
+		      $('#extra-results').replaceWith(resp);
+		      contentWayPoint();
+		    });
+		  });
 
 	});
 

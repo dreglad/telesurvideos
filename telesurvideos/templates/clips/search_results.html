@@ -22,21 +22,6 @@
 <div id="extra-results" class="container">
   <div class="text-center pagination">
     <a href="#" role="button" class="more btn">Mostrar más resultados</a>
-    <script>
-    (function($) {
-       $('.pagination a').on('click', function(ev) {
-        ev.preventDefault();
-        $(this).text('Cargando más resultados...');
-        $(this).attr('disabled', 'disabled');
-        $.ajax({
-          url: $.query.set('page', (parseInt($.query.get('page')) || 1) + 1).toString(),
-        }).done(function(resp) {
-          $('#extra-results').replaceWith(resp);
-          contentWayPoint();
-        });
-      });
-    })(jQuery);
-    </script>
   </div>
 </div>
 {% endif %}
