@@ -323,6 +323,14 @@
 		    });
 		  });
 
+		// Search filter lazy loaded
+		$('#f_paises, #f_programas, #f_corresponsales').each(function() {
+			$(this).find('img.lazy').lazyload({
+				container: $(this),
+				threshold: 50
+			});
+		});
+
 	});
 
 
