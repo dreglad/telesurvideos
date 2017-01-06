@@ -1,23 +1,21 @@
 {% if clip.tipo.slug == "programa" %}
-    <a href="{% url 'search' %}?tipo=programa&programa={{ clip.programa.slug }}"><span class="label noticia label-danger">{{ clip.programa.nombre }}</span></a>
+<a href="{% url 'search' %}?tipo=programa&programa={{ clip.programa.slug }}"><span class="label label-danger">{{ clip.programa.nombre }}</span></a>
 {% else %}
-    <a href="{% url 'search' %}?tipo={{ clip.tipo.slug }}"><span class="label noticia label-danger">{{ clip.tipo.nombre }}</span>
+<a href="{% url 'search' %}?tipo={{ clip.tipo.slug }}"><span class="label label-danger">{{ clip.tipo.nombre }}</span></a>
 {% endif %}
 
 {% if clip.corresponsal %}
-<a href="{% url 'search' %}?corresponsal={{ clip.corresponsal.slug }}"><span class="label noticia label-primary">{{ clip.corresponsal.nombre }}</span></a>
+<a href="{% url 'search' %}?corresponsal={{ clip.corresponsal.slug }}"><span class="label label-primary">{{ clip.corresponsal.nombre }}</span></a>
 {% endif %}
 
 {% if clip.serie %}
-<span class="label noticia label-warning">{{ clip.serie.nombre }}</span>
+<a href="{% url 'search' %}?serie={{ clip.serie.slug }}"><span class="label label-warning">{{ clip.serie.nombre }}</span></a>
 {% endif %}
 
 {% if clip.tema %}
-<a href="{% url 'search' %}?tema={{ clip.tema.slug }}"><span class="label noticia label-success">{{ clip.tema.nombre }}</span></a>
-{% else %}{% if clip.categoria %}
-<a href="{% url 'search' %}?categoria={{ clip.categoria.slug }}"><span class="label noticia label-success">{{ clip.categoria.nombre }}</span></a>
-{% endif %}{% endif %}
+<a href="{% url 'search' %}?tema={{ clip.tema.slug }}"><span class="label label-success">{{ clip.tema.nombre }}</span></a>
+{% endif %}
 
-{% if clip.categoria %}
-
+{% if clip.categoria and not clip.serie and not clip.tema %}
+<a href="{% url 'search' %}?categoria={{ clip.categoria.slug }}"><span class="label label-success">{{ clip.categoria.nombre }}</span></a>
 {% endif %}
