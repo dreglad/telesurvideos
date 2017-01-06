@@ -235,11 +235,9 @@ h1, h2, h3, h4, h5, h6, figure {
   .search {
     position: absolute;
     right: 20px;
-    // -webkit-transition: all .5s;
-    // -moz-transition: all 0.5s;
-    // -ms-transition: all 0.5s;
-    // -o-transition: all 0.5s;
-    // transition: all 0.5s;
+    top: 12px;
+    // @transition(.5s);
+    z-index: 10;
     input {
       border: none;
       color: #ddd;
@@ -407,6 +405,8 @@ h1, h2, h3, h4, h5, h6, figure {
           // padding-top: 5px;
           width: auto;
           float: right;
+          margin-top: 6px;
+          margin-right: 20px;
           text-align: right;
         }
       }
@@ -416,11 +416,11 @@ h1, h2, h3, h4, h5, h6, figure {
       input.extended {
         /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ab100e+0,c71411+100 */
         /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#9d1110+0,c71411+100 */
-        // background: rgb(157, 17, 16); /* Old browsers */
-        // background: -moz-linear-gradient(left, rgba(157, 17, 16, 1) 0%, rgba(199, 20, 17, 1) 100%); /* FF3.6-15 */
-        // background: -webkit-linear-gradient(left, rgba(157, 17, 16, 1) 0%, rgba(199, 20, 17, 1) 100%); Chrome10-25,Safari5.1-6
-        // background: linear-gradient(to right, rgba(157, 17, 16, 1) 0%, rgba(199, 20, 17, 1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-        // filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#9d1110', endColorstr='#c71411', GradientType=1); /* IE6-9 */
+        background: rgb(157, 17, 16); /* Old browsers */
+        background: -moz-linear-gradient(left, rgba(157, 17, 16, 1) 0%, rgba(199, 20, 17, 1) 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(left, rgba(157, 17, 16, 1) 0%, rgba(199, 20, 17, 1) 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to right, rgba(157, 17, 16, 1) 0%, rgba(199, 20, 17, 1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#9d1110', endColorstr='#c71411', GradientType=1); /* IE6-9 */
         // @include transition(0.5s);
       }
 
