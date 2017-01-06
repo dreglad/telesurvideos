@@ -215,15 +215,15 @@ VIDEOS_FLOWPLAYER_KEY = ''
 VIDEOS_PAGE_SIZE = 10
 
 VIDEOS_EXCLUDE_CATEGORIAS = (
-    'con-nombre-de-mujer',
-    'zona-verde',
-    'al-pulso-de-venezuela',
-    'al-pulso-de-ecuador',
-    'a-nivel-del-sur',
+    'con-nombre-de-mujer', 'zona-verde', 'al-pulso-de-venezuela',
+    'al-pulso-de-ecuador', 'a-nivel-del-sur',
 )
-
 VIDEOS_EXCLUDE_TIPOS = ('tematico',)
 VIDEOS_EXCLUDE_TEMAS = ()
+VIDEOS_EXCLUDE_CATEGORIAS = ()
+VIDEOS_EXCLUDE_CORRESPONSALES = ()
+VIDEOS_EXCLUDE_PAISES = ()
+VIDEOS_EXCLUDE_SERIES = ()
 
 # Django CMS
 

@@ -58,7 +58,7 @@
   {% if filtros.tipo != 'programa' %}
   <div class="sidebox">
     <h4>Temas</h4>
-    <ul class="filtros" style="height: 365px;">
+    <ul class="filtros large">
       {% get_temas as temas %}
       {% for c in temas %}
         {% if c.slug not in exclude.temas %}
@@ -76,14 +76,14 @@
 
   <div class="sidebox">
     <h4>Programas</h4>
-    <ul class="filtros{% if filtros.tipo == 'programa' %} full{% endif %}" id="f_programas">
+    <ul class="filtros {% if filtros.tipo == 'programa' %}full{% else %}large{% endif %}" id="f_programas">
       {% get_programas as progs %}
       {% for c in progs %}
           <li>
+            <a title="{{ c.slug }}" data-filtro="programa" data-val="{{ c.slug }}" class="{% if filtros.programa == c.slug %}selected{%endif %}"><img data-original="{{ c.imagen_url }}" class="lazy" width="30" height="15"> {{ c.nombre }}</a>
             {% if filtros.programa == c.slug %}
             <a data-filtro="programa" data-val="{{ filtros.programa }}" class="remove-filtro" title="Eliminar ete filtro"><span class="icon"><i class="icon-cross"></i></span></a>
             {% endif %}
-            <a title="{{ c.slug }}" data-filtro="programa" data-val="{{ c.slug }}" class="{% if filtros.programa == c.slug %}selected{%endif %}"><img data-original="{{ c.imagen_url }}" class="lazy" width="30" height="15"> {{ c.nombre }}</a>
           </li>
       {% endfor %}
     </ul>
@@ -92,22 +92,34 @@
   {% if filtros.tipo != 'programa' %}
   <div class="sidebox">
     <h4>Correpsonsales</h4>
-    <ul class="filtros scrolled" id="f_corresponsales">
+    <ul class="filtros large" id="f_corresponsales">
       {% get_corresponsales as corrs %}
       {% for c in corrs %}
-          <li><a title="{{ c.slug }}" data-filtro="corresponsal" data-val="{{ c.slug }}">{% if c.twitter %}<img class="lazy" data-original="https://twitter.com/{{ c.twitter }}/profile_image?size=normal" height="15" width="15">{% endif %} {{ c.nombre }}</a></li>
+        {% if c.slug not in exclude.corresponsales %}
+        <li>
+          <a title="{{ c.slug }}" data-filtro="corresponsal" data-val="{{ c.slug }}" class="{% if filtros.corresponsal == c.slug %}selected{% endif %}">{% if c.twitter %}<img class="lazy" data-original="https://twitter.com/{{ c.twitter }}/profile_image?size=normal" height="15" width="15">{% endif %} {{ c.nombre }}</a>
+          {% if filtros.corresponsal == c.slug %}
+          <a data-filtro="corresponsal" class="remove-filtro" title="Eliminar ete filtro"><span class="icon"><i class="icon-cross"></i></span></a>
+          {% endif %}
+        </li>
+        {% endif %}
       {% endfor %}
     </ul>
   </div>
 
   <div class="sidebox">
     <h4>Categorías</h4>
-    <ul class="filtros">
+    <ul class="filtros full">
       {% get_categorias as cats %}
       {% for c in cats %}
-          {% if c.slug not in exclude.categorias %}
-          <li><a title="{{ c.slug }}" data-filtro="categoria" data-val="{{ c.slug }}">{{ c.nombre }}</a></li>
+        {% if c.slug not in exclude.categorias %}
+        <li>
+          <a title="{{ c.slug }}" data-filtro="categoria" data-val="{{ c.slug }}" class="{% if filtros.categoria == c.slug %}selected{% endif %}">{{ c.nombre }}</a>
+          {% if filtros.categoria == c.slug %}
+          <a data-filtro="categoria" class="remove-filtro" title="Eliminar ete filtro"><span class="icon"><i class="icon-cross"></i></span></a>
           {% endif %}
+        </li>
+        {% endif %}
       {% endfor %}
     </ul>
   </div>
@@ -117,7 +129,14 @@
     <ul class="filtros large" id="f_paises">
       {% get_paises as paises %}
       {% for c in paises %}
-          <li><a title="{{ c.slug }}" data-filtro="pais" data-val="{{ c.slug }}"> <img height="14" width="22" class="lazy" data-original="//flagpedia.net/data/flags/mini/{{ c.codigo|lower }}.png"> {{ c.nombre }}</a></li>
+        {% if c.slug not in exclude.paises %}
+        <li>
+          <a title="{{ c.slug }}" data-filtro="pais" data-val="{{ c.slug }}" class="{% if filtros.pais == c.slug %}selected{% endif %}"><img height="14" width="22" class="lazy" data-original="//flagpedia.net/data/flags/mini/{{ c.codigo|lower }}.png"> {{ c.nombre }}</a>
+          {% if filtros.pais == c.slug %}
+          <a data-filtro="pais" class="remove-filtro" title="Eliminar ete filtro"><span class="icon"><i class="icon-cross"></i></span></a>
+          {% endif %}
+        </li>
+        {% endif %}
       {% endfor %}
     </ul>
   </div>

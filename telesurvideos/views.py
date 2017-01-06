@@ -61,6 +61,9 @@ class SearchView(TemplateView):
                 'tipos': settings.VIDEOS_EXCLUDE_TIPOS,
                 'categorias': settings.VIDEOS_EXCLUDE_CATEGORIAS,
                 'temas': settings.VIDEOS_EXCLUDE_TEMAS,
+                'corresponsales': settings.VIDEOS_EXCLUDE_CORRESPONSALES,
+                'paises': settings.VIDEOS_EXCLUDE_PAISES,
+                'series': settings.VIDEOS_EXCLUDE_SERIES,
             },
         })
         context['filtros'].update({
