@@ -275,7 +275,7 @@
             if (e.which == '13') {
                 e.preventDefault();
                 var q = $(this).val();
-                location.href="{% url 'search' %}" + (q ? '?q='+q : '');
+                location.href= $(this).attr('data-url') + (q ? '?q='+q : '');
             }
         });
 
