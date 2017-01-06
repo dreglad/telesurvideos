@@ -52,34 +52,30 @@ class SearchView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(SearchView, self).get_context_data(**kwargs)
-        context['page_size'] = settings.VIDEOS_PAGE_SIZE
-        context['page'] = int(self.request.GET.get('page', 1))
-        context['query'] = self.request.GET.get('q', '')
-        context['exclude_categorias'] = settings.VIDEOS_EXCLUDE_CATEGORIAS or []
-        context['exclude_tipos'] = settings.VIDEOS_EXCLUDE_TIPOS or []
-
-        context['filtros'] = {}
-
-        params = QueryDict('', mutable=True)
-        for filtro, nombre in FILTROS:
-            val = self.request.GET.get(filtro)
-            if val:
-                params.update({filtro: val})
-                context['filtros'][filtro] = val
-
-        if self.request.GET.get('tiempo'):
-            context['tiempo'] = self.request.GET.get('tiempo')
-            params.update({'tiempo': context['tiempo']})
-
-        if context['query']:
-            params.update({'texto': context['query']})
-
-        params.update({
+        context.update({
+            'page_size': settings.VIDEOS_PAGE_SIZE,
+            'page': int(self.request.GET.get('page', 1)),
+            'filtros': QueryDict('', mutable=True),
+            'query': self.request.GET.get('q', ''),
+            'tiempo': self.request.GET.get('tiempo'),
+            'exclude': {
+                'tipos': settings.VIDEOS_EXCLUDE_TIPOS,
+                'categorias': settings.VIDEOS_EXCLUDE_CATEGORIAS,
+                'temas': settings.VIDEOS_EXCLUDE_TEMAS,
+            },
+        })
+        context['filtros'].update({
             'primero': 1 + (settings.VIDEOS_PAGE_SIZE*(context['page']-1)),
             'ultimo': settings.VIDEOS_PAGE_SIZE*context['page'],
         })
+        if context['query']:
+            context['filtros']['texto'] = context['query']
+        if context['tiempo']:
+            context['filtros']['tiempo'] = context['tiempo']
+        for filtro in FILTROS:
+            val = self.request.GET.get(filtro[0])
+            if val:
+                context['filtros'][filtro[0]] = val
+        context['clips'] = get_clips(context['filtros'].urlencode())
 
-        print(params)
-
-        context['clips'] = get_clips(params.urlencode())
         return context

@@ -10,5 +10,10 @@
 
     a {
         cursor: pointer;
+
+        &.selected {
+            cursor: none;
+            color: black;
+        }
     }
 }

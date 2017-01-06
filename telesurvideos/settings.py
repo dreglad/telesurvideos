@@ -222,9 +222,8 @@ VIDEOS_EXCLUDE_CATEGORIAS = (
     'a-nivel-del-sur',
 )
 
-VIDEOS_EXCLUDE_TIPOS = (
-    'tematico',
-)
+VIDEOS_EXCLUDE_TIPOS = ('tematico',)
+VIDEOS_EXCLUDE_TEMAS = ()
 
 # Django CMS
 
