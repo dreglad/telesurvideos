@@ -238,11 +238,7 @@ h1, h2, h3, h4, h5, h6, figure {
   .search {
     position: absolute;
     right: 20px;
-    -webkit-transition: all .5s;
-    -moz-transition: all 0.5s;
-    -ms-transition: all 0.5s;
-    -o-transition: all 0.5s;
-    transition: all 0.5s;
+   @include transition(1s);
     input {
       border: none;
       color: #ddd;
@@ -252,11 +248,7 @@ h1, h2, h3, h4, h5, h6, figure {
       border-radius: 5px;
       background: rgba(0, 0, 0, .1);
       width: 25px;
-      -webkit-transition: all .5s;
-      -moz-transition: all 0.5s;
-      -ms-transition: all 0.5s;
-      -o-transition: all 0.5s;
-      transition: all 0.5s;
+      @include transition(1s);
       &::-webkit-input-placeholder, &:-moz-placeholder, &:-ms-input-placeholder {
         color: #ddd;
       }
@@ -2086,11 +2078,7 @@ figure {
       -moz-border-radius: 5px;
       border-radius: 5px;
       background: rgba(255, 255, 255, .1);
-      -webkit-transition: all .5s;
-      -moz-transition: all 0.5s;
-      -ms-transition: all 0.5s;
-      -o-transition: all 0.5s;
-      transition: all 0.5s;
+      @include transition(1s);
       width: 100%;
       &::-webkit-input-placeholder, &:-moz-placeholder, &:-ms-input-placeholder {
         color: #ddd;
