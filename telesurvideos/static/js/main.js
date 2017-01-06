@@ -263,11 +263,11 @@
 	};
 	var search = function(){
 		$('.gtco-nav .search').on('click mouseenter mouseover', function(){
-			$(this).find('input').addClass('extended');
-		});
-		$('.gtco-nav .search').on('blur',function(){
-			if($(this).find('input').val().length == 0)
-				$(this).find('input').removeClass('extended');
+			var input = $(this).find('input');
+			input.addClass('extended').focus().on('blur', function() {
+				if (!input.val())
+				    input.removeClass('extended');
+			});
 		});
 	};
 	$(function(){
