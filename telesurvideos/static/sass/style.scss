@@ -955,7 +955,7 @@ figure {
     display: table;
     width: 100%;
     h3 {
-      font-size: 50px;
+      font-size: 35px;
     }
     @media screen and (max-width: $screen-sm) {
       display: block;
@@ -1142,9 +1142,9 @@ figure {
       -o-border-radius: 50% !important;
       border-radius: 50% !important;
 
-      height: 50px;
-      width: 50px;
-      line-height: 50px;
+      height: 35px;
+      width: 35px;
+      line-height: 35px;
       display: table-cell;
       vertical-align: middle;
       z-index: 10;
@@ -1457,7 +1457,7 @@ figure {
       &.author {
         color: lighten($brand-black, 70%);
         img {
-          width: 50px;
+          width: 35px;
           margin-right: 10px;
           @include border-radius(50%);
         }
@@ -1488,7 +1488,7 @@ figure {
     padding: 3em 0;
   }
   .counter {
-    font-size: 50px;
+    font-size: 35px;
     margin-bottom: 10px;
     color: $brand-primary;
     font-weight: 100;
@@ -1665,7 +1665,7 @@ figure {
   margin-bottom: 40px;
   @include transition(.3s);
   @media screen and (max-width: $screen-sm) {
-    margin-bottom: 50px;
+    margin-bottom: 35px;
   }
 
   .desc {
@@ -1739,7 +1739,7 @@ figure {
   background-repeat: no-repeat;
   position: relative;
   overflow: hidden;
-  height: 350px;
+  height: 335px;
   margin-bottom: 40px;
 
   &:before {
@@ -1982,7 +1982,7 @@ figure {
     color: $brand-white;
   }
   .footer-heading {
-    margin-bottom: 50px;
+    margin-bottom: 35px;
   }
   .post-meta {
     position: relative !important;
@@ -2169,15 +2169,15 @@ figure {
     visibility: visible;
   }
   a {
-    width: 50px;
-    height: 50px;
+    width: 35px;
+    height: 35px;
     display: table;
     background: rgba(0, 0, 0, .5);
     color: $brand-white;
     text-align: center;
     @include border-radius(50%);
     i {
-      height: 50px;
+      height: 35px;
       display: table-cell;
       vertical-align: middle;
 
@@ -2437,7 +2437,7 @@ figure {
     @include transition(.2s);
   }
   &:hover {
-    padding-right: 50px;
+    padding-right: 35px;
     i {
       color: $brand-white;
       right: 18px;
