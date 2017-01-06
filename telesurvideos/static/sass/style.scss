@@ -184,7 +184,7 @@ h1, h2, h3, h4, h5, h6, figure {
   background-image: url(../images/logo/bg_top.jpg);
   -webkit-background-size: cover;
   background-size: cover;
-  padding: 0.5em 0 0 0;
+  padding: 0.5em 0;
   @include transition(.5s);
 
   > .container {
@@ -207,13 +207,13 @@ h1, h2, h3, h4, h5, h6, figure {
     margin: 0;
     text-transform: uppercase;
     font-weight: bold;
-    @media screen and (max-width: $screen-sm) {
-      margin-bottom: 0;
-    }
 
     img {
       display: inline-block;
       padding: 0 5px;
+      &.logopic {
+        width: 45px;
+      }
     }
 
     a {
@@ -389,41 +389,32 @@ h1, h2, h3, h4, h5, h6, figure {
     background-image: url(../images/logo/bg_top.jpg);
     -webkit-background-size: cover;
     background-size: cover;
-
-    padding: 10px 0;
     -webkit-box-shadow: 0px 5px 7px -7px rgba(0, 0, 0, 0.15);
     -moz-box-shadow: 0px 5px 7px -7px rgba(0, 0, 0, 0.15);
     box-shadow: 0px 5px 7px -7px rgba(0, 0, 0, 0.15);
 
-    > .container {
-      padding-bottom: 0px;
-      border-bottom: 1px solid transparent;
-    }
     a {
       color: $brand-white;
-    }
-    #gtco-logo {
-      img.logopic {
-        width: 45px;
-      }
     }
     #heading-page {
       display: none;
     }
-    .logos {
-      min-width: 285px;
-      width: auto;
-      float: left;
-      text-align: right;
-    }
-    .menu-1 {
-      padding-top: 5px;
-      /*width: 69%;*/
-      /*min-width: 460px;*/
-      width: auto;
-      float: right;
-      text-align: right;
-    }
+
+      @media screen and (min-width: $screen-lg) {
+        .logos {
+          min-width: 285px;
+          width: auto;
+          float: left;
+          text-align: right;
+        }
+        .menu-1 {
+          // padding-top: 5px;
+          width: auto;
+          float: right;
+          text-align: right;
+        }
+      }
+    
     .search {
       top: 10px;
       input.extended {
@@ -844,9 +835,9 @@ figure {
 
     .post-meta {
       position: absolute;
-      bottom: 15px;
+      bottom: 5px;
       display: block;
-      padding: 0 30px;
+      padding: 0 20px;
       .seccion {
         display: inline;
       }
@@ -949,8 +940,8 @@ figure {
   }
 
   .entry-desc {
-    padding: 30px;
-    margin-bottom: 40px;
+    padding: 20px;
+    margin-bottom: 50px;
   }
   p, small {
     color: lighten($brand-black, 10%);
@@ -980,7 +971,8 @@ figure {
     }
     .entry-desc {
       background: $brand-white;
-      padding: 30px;
+      padding: 20px;
+      padding-top: 15px;
       display: table-cell;
       width: 50%;
       margin-bottom: 40px;
@@ -1024,7 +1016,7 @@ figure {
     }
     .entry-desc {
       background: $brand-white;
-      padding: 30px;
+      padding: 20px;
       display: table-cell;
       width: 70%;
       margin-bottom: 40px;
@@ -1213,7 +1205,7 @@ figure {
     margin: 0;
     li {
       padding: 0 0 0 70px;
-      margin: 0 0 30px 0;
+      margin: 0 0 20px 0;
       list-style: none;
       position: relative;
       &:before {
@@ -2071,7 +2063,11 @@ figure {
     img {
       width: 30%;
       padding-right: 5px;
+      &.logopic {
+        width: 45px;
+      }
     }
+
     span {
       font-size: smaller;
     }
@@ -2283,7 +2279,7 @@ figure {
 .gtco-nav-toggle {
   position: fixed;
   right: 0px;
-  top: 18px;
+  top: 9px;
   z-index: 21;
   padding: 6px 0 0 0;
   display: block;
@@ -2294,9 +2290,6 @@ figure {
   width: 44px;
   z-index: 2001;
   border-bottom: none !important;
-  .scrolled & {
-    top: 5px;
-  }
   @media screen and (max-width: $screen-sm) {
     display: block;
   }
