@@ -57,7 +57,6 @@ class SearchView(TemplateView):
             'page': int(self.request.GET.get('page', 1)),
             'filtros': QueryDict('', mutable=True),
             'query': self.request.GET.get('q', ''),
-            'tiempo': self.request.GET.get('tiempo'),
             'exclude': {
                 'tipos': settings.VIDEOS_EXCLUDE_TIPOS,
                 'categorias': settings.VIDEOS_EXCLUDE_CATEGORIAS,
@@ -70,8 +69,6 @@ class SearchView(TemplateView):
         })
         if context['query']:
             context['filtros']['texto'] = context['query']
-        if context['tiempo']:
-            context['filtros']['tiempo'] = context['tiempo']
         for filtro in FILTROS:
             val = self.request.GET.get(filtro[0])
             if val:

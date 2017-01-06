@@ -18,13 +18,6 @@
     </p>
     {% endif %}
 
-    {% if tiempo %}
-    <p>
-      <a data-filtro="tiempo" data-val="{{ tiempo }}" class="remove-filtro" title="Eliminar ete filtro"><span class="icon"><i class="icon-cross"></i></span></a>
-      Antigüedad máxima: <strong>{{ tiempo }}</strong>
-    </p>
-    {% endif %}
-
     {% for filtro, val in filtros.items %}
     {% if filtro != 'primero' and filtro != 'ultimo' and filtro != 'texto' %}
       <p>
@@ -80,16 +73,6 @@
     </ul>
   </div>
   {% endif %}
-
-  <!-- <div class="sidebox">
-    <h4>Antigüedad de la transmisión</h4>
-    <ul class="filtros" style="height: auto;">
-      <li><a title="" data-filtro="tiempo" data-val="1d">Hoy</a></li>
-      <li><a title="" data-filtro="tiempo" data-val="1s">Ultima semana</a></li>
-      <li><a title="" data-filtro="tiempo" data-val="1m">Ultimo mes</a></li>
-      <li><a title="" data-filtro="tiempo" data-val="1a">Ultimo año</a></li>
-    </ul>
-  </div> -->
 
   <div class="sidebox">
     <h4>Programas</h4>
