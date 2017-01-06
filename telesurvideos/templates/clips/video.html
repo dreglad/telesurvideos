@@ -100,16 +100,11 @@
                 <div class="acciones row">
                   <div class="col-sm-12">
                   <ul class="gtco-social-icons text-right">
-                    <li><a href="#" title="compartir en Twitter" class="twitter" target="popup" onclick="event.preventDefault();window.open('https://twitter.com/intent/tweet?text={{ clip.titulo }}&via=teleSURtv&original_referer={{ request.build_absolute_uri }}&url={{ clip.navegador_url }}','Twitter','width=640,height=240')"><i class="icon-twitter"></i></a></li>
-                    <li><a href="#" title="compartir en Facebook" class="facebook" target="popup" onclick="event.preventDefault();window.open('https://www.facebook.com/sharer/sharer.php?u={{ clip.navegador_url }}','Facebook','width=640,height=480')"><i class="icon-facebook"></i></a></li>
-                    <li><a href="#" title="compartir en Google Plus" class="gplus" target="popup" onclick="event.preventDefault();window.open('https://plus.google.com/share?url={{ clip.navegador_url }}','G+','width=400,height=400')"><i class="icon-google"></i></a></li>
+                    <li><a href="#" title="compartir en Twitter" target="popup" onclick="event.preventDefault();window.open('https://twitter.com/intent/tweet?text={{ clip.titulo }}&via=teleSURtv&original_referer={{ request.build_absolute_uri }}&url={{ clip.navegador_url }}','Twitter','width=640,height=240')"><i class="icon-twitter"></i></a></li>
+                    <li><a href="#" title="compartir en Facebook" target="popup" onclick="event.preventDefault();window.open('https://www.facebook.com/sharer/sharer.php?u={{ clip.navegador_url }}','Facebook','width=640,height=480')"><i class="icon-facebook"></i></a></li>
+                    <li><a href="#" title="compartir en Google Plus" target="popup" onclick="event.preventDefault();window.open('https://plus.google.com/share?url={{ clip.navegador_url }}','G+','width=400,height=400')"><i class="icon-google"></i></a></li>
                   </ul>
                   </div>
-                  <!-- <div class="col-sm-6">
-                  <a class="btn btn-default"
-                     href="{{ clip.descarga_url }}"><span
-                      class="glyphicon glyphicon-download-alt"></span> Descargar video</a>
-                    </div> -->
                 </div>
               </div>
             </div>
