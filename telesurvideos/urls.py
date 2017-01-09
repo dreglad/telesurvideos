@@ -7,6 +7,7 @@ from django.conf import settings
 from django.conf.urls import include, url, patterns
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView
 
 from .views import SearchView, VideoView, VideoListView
@@ -22,11 +23,15 @@ urlpatterns = [
         TemplateView.as_view(template_name='opensearch.xml', content_type='application/opensearchdescription+xml'),
         name='opensearch'),
 
-    url(r'^search/$', SearchView.as_view(), name="search"),
-    url(r'^lista/(?P<lista_id>\d+)/(?P<pagina>\d+)/$', VideoListView.as_view(), name="video_list"),
-    url(r'^video/(?P<clip_id>\d+)/(?P<clip_slug>.+)/$', VideoView.as_view(), name="video"),
-    url(r'^player/(?P<clip_id>\d+)/(?P<clip_slug>.+)/$', VideoView.as_view(), {'player': True }, name="player"),
-    
+    # Translators: search URL, should be prefixed with en/
+    url(r'^{}$'.format(_('busqueda/')), SearchView.as_view(), name="search"),
+    # Translators: list URL, should be prefixed with en/
+    url(r'^{}(?P<lista_id>\d+)/(?P<pagina>\d+)/$'.format(_('lista/')), VideoListView.as_view(), name="video_list"),
+    # Translators: video URL, should be prefixed with en/
+    url(r'^{}(?P<clip_id>\d+)/(?P<clip_slug>.+)/$'.format(_('video/')), VideoView.as_view(), name="video"),
+    # Translators: player URL, should be prefixed with en/
+    url(r'^{}(?P<clip_id>\d+)/(?P<clip_slug>.+)/$'.format(_('player/')), VideoView.as_view(), {'player': True }, name="player"),
+
 ]
 
 urlpatterns += patterns('',

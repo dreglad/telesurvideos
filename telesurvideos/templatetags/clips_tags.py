@@ -30,7 +30,7 @@ def clip_parser(dct):
             pass
 
         if 'idioma' in dct:
-            if dct['idioma'] != 'en' or (dct.get('programa') and (dct['programa']['idioma'] == 'es' or dct['programa'].get('slug') in ['just-cause'])):
+            if dct['idioma'] != 'en' or (dct.get('programa') and (dct['programa']['idioma'] == 'es' or dct['programa'].get('slug') in ['know-your-body', 'just-cause'])):
                 dct['width'] = 640
                 dct['height'] = 480
             else:
