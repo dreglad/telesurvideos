@@ -2574,6 +2574,10 @@ figure {
   float: left;
   padding: 20px;
   margin-top: 7em;
+  @media screen and (max-width: $screen-xs) {
+    width: 100%;
+    margin-top: 0;
+  }
   .sidebox {
     margin-bottom: 20px;
     float: left;
@@ -2612,9 +2616,13 @@ figure {
       padding: 15px 10px;
       height: 200px;
       overflow-y: scroll;
-      a {
-        padding: 10px 0;
+      li {
+        min-height: 30px;
+        a {
+          padding: 10px 0;
+        }
       }
+
     }
   }
 }
@@ -2630,8 +2638,13 @@ figure {
 #search-result {
   width: 70%;
   float: left;
-  padding: 20px;
-  margin-top: 7em;;
+  padding: 20px 10px 20px 40px;
+  margin-top: 7em;
+  @media screen and (max-width: $screen-xs) {
+    width: 100%;
+    margin-top: 5em;
+padding: 20px;
+  }
   .search {
     margin-bottom: 20px;
     .icon {

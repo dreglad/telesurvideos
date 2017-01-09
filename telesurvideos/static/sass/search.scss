@@ -1,10 +1,17 @@
+$screen-xs: 480px !default;
 #sidebar {
     .filtros {
         &.large {
             height: 360px;
+            @media screen and (max-width: $screen-xs) {
+                height: 200px;
+            }
         }
         &.full {
             height: auto !important;
+            @media screen and (max-width: $screen-xs) {
+                height: 200px !important;
+            }
         }
     }
 
