@@ -690,6 +690,9 @@ article {
       img {
         opacity: .4;
       }
+      img.banner {
+        opacity: 1;
+      }
     }
   }
   figure {
@@ -799,6 +802,34 @@ figure {
     margin-left: 0% !important;
   }
   li {
+    &.banner {
+      background: none;
+      border: none;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+      text-align: center;
+      min-height: auto;
+      width: 100%;
+      &:hover {
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+      }
+      img {
+        width: 100%;
+        max-height: 150px;
+        height: auto;
+        display: block;
+      }
+      h1 {
+        margin-top: 1.5em;
+        margin-bottom: 1em;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    }
     display: block;
     padding: 0;
     margin: 0 0 1em 2%;

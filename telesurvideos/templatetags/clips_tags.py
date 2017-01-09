@@ -101,7 +101,14 @@ def get_categorias(params=''):
 @cacheback(lifetime=60*60*48, fetch_on_miss=True)
 def get_programas(params=''):
     """programas list"""
-    return get_api('programa/?detalle=normal&ultimo=300&{}'.format(params))
+    return get_api('programa/?detalle=completo&ultimo=300&{}'.format(params))
+
+
+@register.assignment_tag
+@cacheback(lifetime=60*60*24, fetch_on_miss=True)
+def get_programa(slug):
+    """single programa"""
+    return get_api('programa/{}/'.format(slug))
 
 
 @register.assignment_tag
