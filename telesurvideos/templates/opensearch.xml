@@ -1,0 +1,17 @@
+{% load static %}<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+  <ShortName>Videos teleSUR</ShortName>
+  <LongName>Búsqueda en teleSUR Videos</LongName>
+  <Description>Búsqueda en videos y grabaciones completas de teleSUR</Description>
+  <Tags>videos telesur noticias programas docuemtnales reportajes corresponsales television tv</Tags>
+  <Contact>webtelesurtv@gmail.com</Contact>
+  <Language>{{ LANGUAGE_CODE }}</Language>
+  <OutputEncoding>UTF-8</OutputEncoding>
+  <InputEncoding>UTF-8</InputEncoding>
+  <SyndicationRight>open</SyndicationRight>
+  <AdultContent>false</AdultContent>
+  <Image width="16" height="16" type="image/x-icon">{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% static "favicon.ico" %}</Image>
+  <Url type="text/html" method="get" template="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url 'search' %}?q={searchTerms}&amp;page={startPage?}"/>
+  <Url type="application/atom+xml" template="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url 'search' %}?q={searchTerms}&amp;page={startPage?}&amp;format=atom"/>
+  <Query role="example" searchTerms="venezuela" startPage="1" />
+</OpenSearchDescription>

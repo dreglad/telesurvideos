@@ -12,9 +12,13 @@
     <meta content="{% block meta_description %}{{ meta_description|default:'Videos de teleSUR, noticias, reportajes, documentales y todoas nuestras tranmisiones en video grabadas para consulta o descarga' }}{% endblock %}" name="description"/>
     <meta name="keywords" content="{% block meta_keyworkds %}videos de telesur, television venezolana, telesurtv, venezuela, noticias, canal{% endblock %}"/>
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon"  />
+    <link rel="search" type="application/opensearchdescription+xml" href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url 'opensearch' %}" title="Búsqueda de videos en teleSUR" />
     
     {% block socialmeta %}
     <meta property="og:site_name" content="teleSUR Videos"/>
+    <meta property="fb:app_id" content="380208352371240">
+
+    <meta name="twitter:site" content="@videosteleSUR" />
     {% endblock %}
 
     {% block scripts %}

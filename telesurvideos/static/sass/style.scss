@@ -1008,7 +1008,10 @@ figure {
       background-repeat: no-repeat;
       background-position: 50% 50%;
       width: 50%;
-      height: 500px;
+      height: 415px;;
+      @media screen and (max-width: $screen-lg) {
+        height: 350px;
+      }
       @media screen and (max-width: $screen-sm) {
         display: block;
         width: 100%;

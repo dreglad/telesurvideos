@@ -7,6 +7,7 @@ from django.conf import settings
 from django.conf.urls import include, url, patterns
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.views.generic import TemplateView
 
 from .views import SearchView, VideoView, VideoListView
 
@@ -16,6 +17,10 @@ urlpatterns = [
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap',
         {'sitemaps': {'cmspages': CMSSitemap}}),
     url(r'^select2/', include('django_select2.urls')),
+
+    url(r'^opensearch\.xml$',
+        TemplateView.as_view(template_name='opensearch.xml', content_type='application/opensearchdescription+xml'),
+        name='opensearch'),
 
     url(r'^search/$', SearchView.as_view(), name="search"),
     url(r'^lista/(?P<lista_id>\d+)/(?P<pagina>\d+)/$', VideoListView.as_view(), name="video_list"),

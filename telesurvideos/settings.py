@@ -153,18 +153,15 @@ TEMPLATES = [
 MIDDLEWARE_CLASSES = (
     'htmlmin.middleware.HtmlMinifyMiddleware',
     'htmlmin.middleware.MarkRequestMiddleware',
-
     'cms.middleware.utils.ApphookReloadMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-
     'corsheaders.middleware.CorsMiddleware',
-
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'cms.middleware.user.CurrentUserMiddleware',
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',

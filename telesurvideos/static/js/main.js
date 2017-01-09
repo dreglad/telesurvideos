@@ -296,7 +296,7 @@
 
 		// Fullscreen with fixed items bugfix
 		$(document).on("webkitfullscreenchange mozfullscreenchange fullscreenchange", function( event ) {
-			$('nav, .cp-l').toggle();
+			$('nav, .cp-l, .related, #cms-top, #gtco-footer').toggle();
 		});
 
 		// List pagination

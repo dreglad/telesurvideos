@@ -1,6 +1,13 @@
 {% extends "simple.html" %}
 {% load clips_tags static compress i18n %}
 
+{% block socialmeta %}{{ block.super }}
+<meta name="startIndex" content="{{ page }}"/>
+<meta name="itemsPerPage" content="{{ page_size }}"/>
+{% endblock %}
+
+{% block title %}{% title_for_search %}{% endblock %}
+
 {% block stylesheets %}{{ block.super }}{% compress css %}
 <link rel="stylesheet" href="{% static 'sass/search.scss' %}" type="text/x-scss">
 {% endcompress %}{% endblock %}
@@ -205,7 +212,14 @@
 
   $('ul.filtros a').on('click', function(ev) {
     ev.preventDefault();
-    location.href = $.query.set($(this).attr('data-filtro'), $(this).attr('data-val')).toString();
+    if ($(this).attr('data-filtro') == 'tipo') {
+      var qs = '?tipo=' + $(this).attr('data-val');
+      if ($.query.get('q'))
+        qs += '&q=' + $.query.get('q');
+      location.href = qs;
+    } else {
+      location.href = $.query.set($(this).attr('data-filtro'), $(this).attr('data-val')).toString();
+    }
   });
 
   $('a.remove-filtro').on('click', function(ev) {
