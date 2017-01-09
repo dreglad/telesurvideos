@@ -23,6 +23,7 @@ Vagrant.configure("2") do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   config.vm.network "forwarded_port", guest: 8080, host: 8080
+  config.vm.network "forwarded_port", guest: 8081, host: 8081
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -91,10 +92,11 @@ Vagrant.configure("2") do |config|
     /vagrant/manage.py migrate
 
     echo "\nRunning django development server at port 8080...\n\n"
-    python /vagrant/manage.py runserver 0.0.0.0:8080 &
+    python /vagrant/manage.py runserver 0.0.0.0:8080 --settings telesurvideos.settings_es &
+    python /vagrant/manage.py runserver 0.0.0.0:8081 --settings telesurvideos.settings_en &
 
     echo "\nListo!\n  Para utilizar, apunta tu navegador hacia:\n\n"
-    echo "    Frontend:\n      http://127.0.0.1:8080/\n\n    Backend:\n      http://127.0.0.1:8080/?edit"
+    echo "    Frontend:\n      http://127.0.0.1:8080/ (Español)\n      http://127.0.0.1:8081/ (English)\n\n    Backend:\n      http://127.0.0.1:8080/?edit (Español)\n      http://127.0.0.1:8081/?edit (English)"
     echo "           usuario: admin\n        contraseña: telesur\n\n.\n"
   SHELL
 end

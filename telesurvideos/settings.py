@@ -20,8 +20,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 ALLOWED_HOSTS = []
 
-SITE_ID = 1
-
 INSTALLED_APPS = (
     'djangocms_admin_style',
     'django.contrib.auth',
@@ -76,35 +74,39 @@ DATABASES = {
 ROOT_URLCONF = 'telesurvideos.urls'
 WSGI_APPLICATION = 'telesurvideos.wsgi.application'
 
-# Languages
+CELERY_RESULT_BACKEND = 'django-db'
 
-LANGUAGE_CODE = 'es'
+# Languages
+# CMS_LANGUAGES = {
+#     'default': {
+#         'public': True,
+#         'hide_untranslated': False,
+#         'redirect_on_fallback': True,
+#     },
+#     1: [ # es
+#         {
+#             'public': True,
+#             'code': 'es',
+#             'hide_untranslated': False,
+#             'name': gettext('es'),
+#             'redirect_on_fallback': True,
+#         },
+#     ],
+#     2: [ # en
+#         {
+#             'public': True,
+#             'code': 'en',
+#             'hide_untranslated': False,
+#             'name': gettext('en'),
+#             'redirect_on_fallback': True,
+#         },
+#     ],
+# }
+
 TIME_ZONE = 'America/Mexico_City'
 USE_I18N = True
-USE_L10N = True
+USE_L10N = False
 USE_TZ = True
-
-LANGUAGES = (
-    ('es', gettext('es')),
-)
-
-CMS_LANGUAGES = {
-    'default': {
-        'public': True,
-        'hide_untranslated': False,
-        'redirect_on_fallback': True,
-    },
-    1: [
-        {
-            'public': True,
-            'code': 'es',
-            'hide_untranslated': False,
-            'name': gettext('es'),
-            'redirect_on_fallback': True,
-        },
-    ],
-}
-
 
 # Static files
 
@@ -172,6 +174,7 @@ CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
         'LOCATION': '127.0.0.1:11211',
+        'KEY_PREFIX': '',
     }
 }
 
@@ -205,12 +208,9 @@ COMPRESS_PRECOMPILERS = (
 
 # telesurvideos
 
-
 VIDEOS_ANALYTICS = ''
 VIDEOS_FLOWPLAYER_KEY = ''
-
 VIDEOS_PAGE_SIZE = 10
-
 VIDEOS_EXCLUDE_CATEGORIAS = (
     'con-nombre-de-mujer', 'zona-verde', 'al-pulso-de-venezuela',
     'al-pulso-de-ecuador', 'a-nivel-del-sur',
@@ -237,10 +237,6 @@ CMS_PLACEHOLDER_CONF = {
         'text_only_plugins': ['LinkPlugin', 'PicturePlugin'],
     }
 }
-
-# Celery
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'django-db'
 
 THUMBNAIL_PROCESSORS = (
     'easy_thumbnails.processors.colorspace',
