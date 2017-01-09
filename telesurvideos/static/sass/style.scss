@@ -576,7 +576,7 @@ h1, h2, h3, h4, h5, h6, figure {
 
 #gtco-main-solo {
   .related {
-    margin: 0.5em;
+    // margin: 0.5em;
 
     .entry-desc {
       margin:0;
@@ -601,7 +601,7 @@ h1, h2, h3, h4, h5, h6, figure {
   }
   h2 {
     margin: 0.25em 0;
-    font-size: 40px;
+    font-size: 35px;
 
   }
   @media screen and (max-width: $screen-sm) {
@@ -644,7 +644,16 @@ h1, h2, h3, h4, h5, h6, figure {
   }
   time {
     color: #999999;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    display: block;
+    float: left;
+    width: 70%;
+    font-size: 15px;
+    line-height: 15px;
+  }
+  p.description {
+    text-align: justify;
+    clear: both;
   }
 }
 
@@ -862,7 +871,7 @@ figure {
 
     .post-meta {
       position: absolute;
-      bottom: 5px;
+      bottom: 10px;
       display: block;
       padding: 0 20px;
       .seccion {
@@ -960,7 +969,7 @@ figure {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    min-height: 250px;
+    min-height: 190px;
     @media screen and (max-width: $screen-sm) {
       height: 300px !important;
     }
@@ -974,11 +983,20 @@ figure {
     color: lighten($brand-black, 10%);
     line-height: 1.9;
   }
+
+  &.one-half {
+    .entry-img {
+      height: 410px;
+    }
+  }
   &.full {
     display: table;
     width: 100%;
     h3 {
       font-size: 35px;
+      @media screen and (max-width: $screen-md) {
+        font-size: 30px;
+      }
     }
     @media screen and (max-width: $screen-sm) {
       display: block;
@@ -1036,6 +1054,7 @@ figure {
       background-position: 50% 50%;
       width: 30%;
       height: 200px;
+      width: 257px;
       @media screen and (max-width: $screen-sm) {
         display: block;
         width: 100%;
@@ -1108,6 +1127,9 @@ figure {
   .entry-img {
     min-height: 200px;
   }
+}
+.en .related .entry-img {
+  min-height: 145px;
 }
 
 .post-entry {
@@ -2550,7 +2572,7 @@ figure {
   width: 30%;
   float: left;
   padding: 20px;
-  margin-top: 150px;
+  margin-top: 7em;
   .sidebox {
     margin-bottom: 20px;
     float: left;
@@ -2596,11 +2618,19 @@ figure {
   }
 }
 
+#results-label {
+  img {
+    width: 100%;
+    max-height: 200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+}
 #search-result {
   width: 70%;
   float: left;
   padding: 20px;
-  margin-top: 150px;
+  margin-top: 7em;;
   .search {
     margin-bottom: 20px;
     .icon {

@@ -147,12 +147,13 @@
                 <div class="entry-img" style="background-image: url({{ relacionado.thumbnail_grande }})"></div>
                 <div class="entry-desc">
                   <h3>{{ relacionado.titulo|truncatewords:12 }}</h3>
-                  <p>{{ relacionado.descripcion|truncatewords:60 }}</p>
+                  <p>{{ relacionado.descripcion|truncatewords:40 }}</p>
                 </div>
               </a>
             </li>
           {% endfor %}
         </ul>
+      </div>
       </div>
     </div>
     {% endif %}
