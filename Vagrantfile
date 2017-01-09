@@ -79,7 +79,7 @@ Vagrant.configure("2") do |config|
     apt-get -qq -y dist-upgrade
 
     echo "\nInstalling required APT packages...\n\n"
-    apt-get install -qq -y python-pip python-dev git memcached redis-server supervisor
+    apt-get install -qq -y python-pip python-dev git memcached redis-server supervisor gettext
 
     echo "\nUpgrade pip...\n\n"
     pip install -q --upgrade pip

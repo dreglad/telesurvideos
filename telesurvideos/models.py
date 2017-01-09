@@ -8,6 +8,7 @@ from django.db import models
 from django.http.request import QueryDict
 from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext as _
 from multiselectfield import MultiSelectField
 
 from .templatetags import clips_tags
@@ -161,10 +162,11 @@ class VideoListPluginModel(CMSPlugin):
         for filtro, attr in FILTROS:
             if getattr(self, attr):
                 filtros.append('<li>{}: <strong>{}</strong></li>'.format(
-                    filtro, ' ó '.join(getattr(self, attr))))
+                    filtro, _(' ó ').join(getattr(self, attr))))
 
         if self.tiempo:
-            filtros.append('<li>tiempo: <strong>{}</strong></li>'.format(self.get_tiempo_display()))
+            filtros.append('<li>{}: <strong>{}</strong></li>'.format(
+                _('tiempo'), self.get_tiempo_display()))
 
         return mark_safe((
             '<br><pre style="display:inline-block; float:left;">''{}</pre>'
@@ -174,13 +176,14 @@ class VideoListPluginModel(CMSPlugin):
             '<li>mostrar más: <strong>{}</strong></li>'
             '</ul>').format(
                 _art(self.layout),
-                self.titulo or '<i>[sin título]</i>',
+                self.titulo or '<i>[{}]</i>'.format(_('sin título')),
                 ''.join(filtros),
-                '<li>mostrar título y descripción: <strong>{} / {}</strong></li>'.format(
-                    self.mostrar_titulo and 'sí' or 'no',
-                    self.mostrar_descripcion and 'sí' or 'no'
+                '<li>{}: <strong>{} / {}</strong></li>'.format(
+                    _('mostrar títulos y descripciones'),
+                    self.mostrar_titulos and _('sí') or _('no'),
+                    self.mostrar_descripciones and _('sí') or _('no')
                 ),
                 self.get_mostrar_fecha_display(),
-                self.seleccionados and 'sí' or 'no',
-                self.mostrar_mas and 'sí' or 'no',
+                self.seleccionados and _('sí') or _('no'),
+                self.mostrar_mas and _('sí') or _('no'),
             ))

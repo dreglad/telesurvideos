@@ -1,4 +1,4 @@
-{% load cms_tags static clips_tags humanize %}
+{% load cms_tags static clips_tags humanize i18n %}
 {% get_list_layout instance pagina|default:0 as layout %}
 {% get_list_clips instance pagina|default:0 as clips %}
 
@@ -52,6 +52,6 @@
 {% if instance.mostrar_mas and clips|length == layout|length %}
   <div class="text-center pagination" id="pag-{{ instance.id }}">
     <a href="{% url 'video_list' lista_id=instance.id pagina=pagina|default:0|add:1 %}"
-       role="button" class="more btn">Mostrar más {{ instance.titulo }}...</a>
+       role="button" class="more btn">{% trans "mostrar más" %}{% if instance.titulo %} {{ instance.titulo }}{% endif %}...</a>
   </div>
 {% endif %}

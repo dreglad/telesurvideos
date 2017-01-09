@@ -1,4 +1,4 @@
-{% load static menu_tags %}
+{% load static menu_tags i18n %}
 <nav class="gtco-nav" role="navigation">
     <div class="container">
         <!-- <div id="heading-page">
@@ -18,7 +18,7 @@
             </div>
             <div class="search" id="header-search">
                 <span class="icon"><i class="icon-search"></i></span>
-                <input type="search" data-url="{% url 'search' %}" name="q" id="q" placeholder="Buscar..." />
+                <input type="search" data-url="{% url 'search' %}" name="q" id="q" placeholder="{% trans 'Buscar...' %}" />
             </div>
         </div>
     </div>

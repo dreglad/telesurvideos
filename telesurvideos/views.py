@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 """telesurvideos views"""
 from __future__ import unicode_literals
-
 from urllib import quote_plus
+
 from django.conf import settings
 from django.http import Http404
 from django.http.request import QueryDict
 from django.views.generic import TemplateView
 from django.shortcuts import get_object_or_404
+from django.utils.translation import ugettext as _
 from .templatetags.clips_tags import get_clip, get_clips, get_relacionados
 from .models import FILTROS, VideoListPluginModel
 
@@ -22,7 +23,7 @@ class VideoView(TemplateView):
         context = super(VideoView, self).get_context_data(**kwargs)
         context['clip'] = get_clip(kwargs['clip_slug'])
         if not context['clip'] or str(context['clip']['id']) != str(kwargs['clip_id']):
-            raise Http404('Clip no existe')
+            raise Http404(_('Video no existente'))
         context['relacionados'] = get_relacionados(context['clip']['slug'])[:4]
         context.update({
             'VIDEOS_FLOWPLAYER_KEY': settings.VIDEOS_FLOWPLAYER_KEY,

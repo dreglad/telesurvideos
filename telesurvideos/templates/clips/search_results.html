@@ -1,4 +1,4 @@
-{% load clips_tags %}
+{% load clips_tags i18n %}
 {% for clip in clips %}
 <li class="entry animate-box full" data-animate-effect="fadeIn">
   <a href="{% url "video" clip.id clip.slug %}">
@@ -21,7 +21,7 @@
 {% if clips|length == page_size %}
 <div id="extra-results" class="container">
   <div class="text-center pagination">
-    <a href="#" role="button" class="more btn">Mostrar más resultados</a>
+    <a href="#" role="button" class="more btn">{% trans "Mostrar más resultados" %}</a>
   </div>
 </div>
 {% endif %}
