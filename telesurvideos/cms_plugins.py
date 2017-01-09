@@ -9,7 +9,6 @@ from django.utils.translation import ugettext_lazy as _
 from .models import VideoListPluginModel
 
 
-
 class ClipsListaPlugin(CMSPluginBase):
     """Clips lista plugin class"""
     name = _("Listado de videos teleSUR")
@@ -23,6 +22,17 @@ class ClipsListaPlugin(CMSPluginBase):
     fieldsets = (
         (None, {
             'fields': ('titulo',),
+        }),
+        (_('Opciones de despliegue'), {
+            'classes': ('wide',),
+            'fields': (
+                'mostrar_titulos', 'mostrar_descripciones', 'mostrar_tags', 'mostrar_fecha',
+                'mostrar_banner', 'layout', 'mostrar_mas',
+            ),
+        }),
+        (_('Filtros varios'), {
+            'classes': ('collapse',),
+            'fields': ('seleccionados', 'tiempo'),
         }),
         (_('Filtrar por tipo'), {
             'classes': ('collapse',),
@@ -47,13 +57,6 @@ class ClipsListaPlugin(CMSPluginBase):
         (_('Filtrar por serie'), {
             'classes': ('collapse',),
             'fields': ('series',),
-        }),
-        (_('Opciones de despliegue'), {
-            'classes': ('wide',),
-            'fields': (
-                'mostrar_titulo', 'mostrar_descripcion', 'tiempo', 'seleccionados',
-                'mostrar_fecha', 'layout', 'mostrar_mas',
-            ),
         }),
     )
 

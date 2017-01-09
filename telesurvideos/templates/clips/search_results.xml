@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/">
+  <title>{% trans "Búsqueda de videos de teleSUR" %}</title>
+  <opensearch:totalResults>230000</opensearch:totalResults> 
+  <opensearch:startIndex>{{ page }}</opensearch:startIndex> 
+  <opensearch:itemsPerPage>{{ page_size }}</opensearch:itemsPerPage> 
+  <link rel="self" href="{{ request.build_absolute_uri }}" type="application/atom+xml"/>
+  <atom:link rel="search" type="application/opensearchdescription+xml" href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url 'opensearch' %}" title="Búsqueda de videos de teleSUR"/>
+  <opensearch:Query role="request" searchTerms="{{ query }}" startPage="{{ page }}" />
+  <opensearch:Query role="example" searchTerms="venezuela" startPage="1" />
+  {% for clip in clips %}
+  <entry> 
+    <title>{{ clip.titulo }}</title> 
+    <link>{{ clip.navegador_url }}</link> 
+    <summary>{% if clip.descripcion %}{{ clip.descripcion }}{% else %}{% if clip.programa %}{{ clip.programa.descripcion }}{% else %}{{ clip.tipo.nombre }}{% endif %}{% endif %}</summary>
+    <updated>{{ clip.fecha|date:"c" }}</updated>
+    <id>urn:slug:{{ clip.slug }}id{{ clip.id }}</id>
+  </entry> 
+  {% endfor %}
+
+</feed>

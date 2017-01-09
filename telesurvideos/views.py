@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 """telesurvideos views"""
 from __future__ import unicode_literals
-
 from urllib import quote_plus
+
 from django.conf import settings
 from django.http import Http404
 from django.http.request import QueryDict
-from django.views.generic import TemplateView
 from django.shortcuts import get_object_or_404
+from django.utils.translation import ugettext as _
+from django.views.generic import TemplateView
+
 from .templatetags.clips_tags import get_clip, get_clips, get_relacionados
 from .models import FILTROS, VideoListPluginModel
 
@@ -22,7 +24,7 @@ class VideoView(TemplateView):
         context = super(VideoView, self).get_context_data(**kwargs)
         context['clip'] = get_clip(kwargs['clip_slug'])
         if not context['clip'] or str(context['clip']['id']) != str(kwargs['clip_id']):
-            raise Http404('Clip no existe')
+            raise Http404(_('Video no existente'))
         context['relacionados'] = get_relacionados(context['clip']['slug'])[:4]
         context.update({
             'VIDEOS_FLOWPLAYER_KEY': settings.VIDEOS_FLOWPLAYER_KEY,
@@ -45,16 +47,23 @@ class VideoListView(TemplateView):
 class SearchView(TemplateView):
     """search view for AJAX pagination"""
     def get_template_names(self):
-        if self.request.is_ajax():
+        if self.request.GET.get('format') == 'atom':
+            return ['clips/search_results.xml']
+        elif self.request.is_ajax():
             return ['clips/search_results.html']
         else:
             return ['clips/search.html']
+
+    def render_to_response(self, context, **response_kwargs):
+        if self.request.GET.get('format') == 'atom':
+            response_kwargs['content_type'] = 'application/rss+atom'
+        return super(SearchView, self).render_to_response(context, **response_kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(SearchView, self).get_context_data(**kwargs)
         context.update({
             'page_size': settings.VIDEOS_PAGE_SIZE,
-            'page': int(self.request.GET.get('page', 1)),
+            'page': int(self.request.GET.get('page') or 1),
             'filtros': QueryDict('', mutable=True),
             'query': self.request.GET.get('q', ''),
             'exclude': {

@@ -1,4 +1,4 @@
-{% load cms_tags static clips_tags humanize %}
+{% load cms_tags static clips_tags humanize i18n %}
 {% get_list_layout instance pagina|default:0 as layout %}
 {% get_list_clips instance pagina|default:0 as clips %}
 
@@ -10,40 +10,40 @@
 {% for l in layout|make_list %}
   {% with clip=clips|index:forloop.counter0 %}
   {% if clip %}
+  {% if forloop.first and not pagina and instance.mostrar_banner and clip.programa %}
+  <li class="banner full">
+    <a href="{% url 'search' %}?tipo=programa&programa={{ clip.programa.slug }}">
+      {% if clip.programa.banner_url and 'placeholder.gif' not in clip.programa.banner_url %}
+      <img src="{{ clip.programa.banner_url }}" />
+      {% elif clip.programa.imagen_url %}
+      <img src="{{ clip.programa.imagen_url }}" />
+      {% else %}
+      <h2>{{ clip.programa.nombre }}</h2>
+      {% endif %}
+    </a>
+  </li>
+  {% endif %}
   <li class="entry animate-box {% if l == "1" %}full{% endif %}{% if l == "2" %}one-half{% endif %}{% if l == "3" %}one-third{% endif %}{% if l == "4" %}one-fourth{% endif %}{% if l == "6" %}two-third{% endif %}{% if l == "q" %}full video{% endif %}{% if l == "w" %}one-half video{% endif %}{% if l == "e" %}one-third video{% endif %}{% if l == "r" %}one-fourth video{% endif %}{% if l == "y" %}two-third video{% endif %}" data-animate-effect="fadeIn">  
-    <a href="{% url 'video' clip.id clip.slug %}">
+    <a itemprop="mainEntityOfPage" href="{% url 'video' clip.id clip.slug %}">
       <i class="icon icon-play"></i>
       <div class="entry-img" style="background-image: url({% static clip.thumbnail_grande %})"></div>
       <div class="entry-desc">
-        {% if instance.mostrar_titulo %}<h3>{{ clip.titulo|truncatewords:50 }}</h3>{% endif %}
-        {% if instance.mostrar_descripcion %}<p>{{ clip.descripcion|truncatewords:50 }}</p>{% endif %}
+        {% if instance.mostrar_titulos %}<h3 itemprop="name">{{ clip.titulo|truncatewords:12 }}</h3>{% endif %}
+        {% if instance.mostrar_descripciones or l == '1' %}<p>{{ clip.descripcion|truncatewords:45 }}</p>{% endif %}
       </div>
     </a>
+    {% if instance.mostrar_tags or instance.mostrar_fecha %}
     <div class="post-meta">
-      {% if not l in "qwerty" or clip.tipo.slug == 'programa' %}
-      <p class="seccion">
-        {% include "includes/tags.html" %}
-      </p>
+      {% if instance.mostrar_tags %}
+      <p class="seccion">{% include "includes/tags.html" %}</p>
       {% endif %}
       {% if instance.mostrar_fecha %}
-      <br /><small class="date-posted">{{ clip.duracion|print_duration }}</small> | 
-      <em>
-        {% if instance.mostrar_fecha == "rel" %}
-        <small class="date-posted">{{ clip.fecha|naturaltime|capfirst }}</small>
-        {% else %}{% if instance.mostrar_fecha == 'f' %}
-        <small class="date-posted">{% if clip.fecha|es_anoactual %}{{ clip.fecha.date|date:"j \d\e F"|lower }}{% else %}{{ clip.fecha.date|date:"j \d\e F \d\e Y"|lower }}{% endif %}</small>
-        {% else %}{% if instance.mostrar_fecha == 'fh' %}
-        <small class="date-posted">{% if clip.fecha|es_anoactual %}{{ clip.fecha|date:"j \d\e F, H:i \h\r\s."|lower }}{% else %}{{ clip.fecha|date:"j \d\e F \d\e Y, H:i \h\r\s."|lower }}{% endif %}</small>
-        {% else %}{% if instance.mostrar_fecha == 'con' %}
-          {% if clip.fecha.date|es_hoy %}
-            <small class="date-posted">{{ clip.fecha|naturaltime|capfirst }}</small>
-          {% else %}
-            <small class="date-posted">{% if clip.fecha|es_anoactual %}{{ clip.fecha.date|date:"j \d\e F"|lower }}{% else %}{{ clip.fecha.date|date:"j \d\e F \d\e Y"|lower }}{% endif %}</small>
-          {% endif %}
-        {% endif %}{% endif %}{% endif %}{% endif %}
-      </em>
+      <br />
+      <small class="date-posted">{{ clip.duracion|print_duration }}</small> | 
+      <em><small class="date-posted">{{ clip.fecha|print_fecha:instance|capfirst }}</small></em>
       {% endif %}
     </div>
+    {% endif %}
   </li>
   {% endif %}
   {% endwith %}
@@ -52,6 +52,6 @@
 {% if instance.mostrar_mas and clips|length == layout|length %}
   <div class="text-center pagination" id="pag-{{ instance.id }}">
     <a href="{% url 'video_list' lista_id=instance.id pagina=pagina|default:0|add:1 %}"
-       role="button" class="more btn">Mostrar más {{ instance.titulo }}...</a>
+       role="button" class="more btn">{% trans "mostrar más" %}{% if instance.titulo %} {{ instance.titulo }}{% endif %}...</a>
   </div>
 {% endif %}

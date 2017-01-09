@@ -2,7 +2,7 @@
 {% page_attribute "page_title" as page_title %}
 {% page_attribute "meta_description" as meta_description %}
 <!DOCTYPE HTML>
-<html lang="es">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="utf-8">
     {% analytical_head_top %}
@@ -12,9 +12,13 @@
     <meta content="{% block meta_description %}{{ meta_description|default:'Videos de teleSUR, noticias, reportajes, documentales y todoas nuestras tranmisiones en video grabadas para consulta o descarga' }}{% endblock %}" name="description"/>
     <meta name="keywords" content="{% block meta_keyworkds %}videos de telesur, television venezolana, telesurtv, venezuela, noticias, canal{% endblock %}"/>
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon"  />
+    <link rel="search" type="application/opensearchdescription+xml" href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url 'opensearch' %}" title="Búsqueda de videos en teleSUR" />
     
     {% block socialmeta %}
     <meta property="og:site_name" content="teleSUR Videos"/>
+    <meta property="fb:app_id" content="380208352371240">
+
+    <meta name="twitter:site" content="@videosteleSUR" />
     {% endblock %}
 
     {% block scripts %}
@@ -37,8 +41,15 @@
 
     {% block extrahead %}{% endblock %}
     {% analytical_head_bottom %}
+    <script type="text/javascript">
+    var cX = cX || {}; cX.callQueue = cX.callQueue || [];
+    cX.callQueue.push(['setSiteId', '9222358407259870873']);
+    cX.callQueue.push(['sendPageViewEvent']);
+    </script>
+
+    {% include "includes/newrelic.html" %}
 </head>
-<body>
+<body class="{{ LANGUAGE_CODE }}">
 {% analytical_body_top %}
 {% cms_toolbar %}
 {% block cms_toolbar %}{% endblock %}
@@ -70,6 +81,11 @@
 <script src="{% static 'js/jquery.query-object.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
 {% endcompress js %}
+<script type="text/javascript">
+(function(d,s,e,t){e=d.createElement(s);e.type='text/java'+s;e.async='async';
+e.src='http'+('https:'===location.protocol?'s://s':'://')+'cdn.cxense.com/cx.js';
+t=d.getElementsByTagName(s)[0];t.parentNode.insertBefore(e,t);})(document,'script');
+</script>
 {% endblock %}
 {% render_block "js" %}
 

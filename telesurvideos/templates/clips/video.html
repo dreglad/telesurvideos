@@ -1,23 +1,22 @@
 {% extends "simple.html" %}
-{% load cms_tags humanize static %}
-{% block title %}{% if clip.tipo.slug == "programa" %}"{{ clip.programa.nombre }}", emisión de {{ clip.fecha.date|date }}{% else %}{{ clip.titulo }}{% endif %}{% endblock %}
+{% load cms_tags humanize static i18n %}
+{% block title %}{% if clip.tipo.slug == "programa" %}"{{ clip.programa.nombre }}", emisión del {{ clip.fecha.date|date:"l j \d\e F \d\e Y" }}{% else %}{{ clip.titulo }}{% endif %}{% endblock %}
 
-{% block meta_keyworkds %}{{ clip.tags }} {{ clip.hashtags }}{% endblock %}
+{% block meta_keyworkds %}{{ clip.tags }} {{ clip.hashtags }}{% if clip.tipo.slug == "programa" %} grabación, programa completo, sin comerciales, telesur, tv{% endif %}{% endblock %}
+
+{% block meta_description %}{{ clip.descripcion.strip }}{% endblock %}
 
 {% block socialmeta %}{{ block.super }}
-<meta property="og:title" content="{{ clip.titulo }}"/>
-<meta property="og:description" content="{{ clip.descripcion }}"/>
+<meta property="og:title" content="{% if clip.tipo.slug == 'programa' %}'{{ clip.programa.nombre.strip }}', emisión del {{ clip.fecha.date|date:'l j \d\e F \d\e Y' }}{% else %}{{ clip.titulo.strip }}{% endif %}"/>
+<meta property="og:description" content="{{ clip.descripcion.strip }}"/>
+<meta property="og:type" content="video.other">
 <meta property="og:url" content="{{ clip.navegador_url }}">
 <meta property="og:image" content="{{ clip.thumbnail_grande }}"/>
-<meta property="og:site_name" content="teleSUR Videos"/>
-<meta property="og:video" content="teleSUR Videos"/>
-<meta property="og:video:type" content="video/mp4">
-<meta property="og:type" content="video.other">
 <meta property="og:video" content="{{ clip.archivo_url }}">
-
-<meta name="twitter:site" content="@videosteleSUR" />
-<meta name="twitter:title" content="{{ clip.titulo }}"/>
-<meta name="twitter:description" content="{{ clip.descripcion }}" />
+<meta property="og:video:type" content="video/mp4">
+<meta name="content-language" content="{{ LANGUAGE_CODE }}" />
+<meta name="twitter:title" content="{% if clip.tipo.slug == 'programa' %}'{{ clip.programa.nombre }}', emisión del {{ clip.fecha.date|date:'l j \d\e F \d\e Y' }}{% else %}{{ clip.titulo }}{% endif %}"/>
+<meta name="twitter:description" content="{{ clip.descripcion.strip|default:clip.programa }}" />
 <meta name="twitter:url" content="{{ clip.navegador_url }}"/>
 <meta name="twitter:image" content="{{ clip.thumbnail_grande }}"/>
 <meta name="twitter:card" content="player"/>
@@ -26,6 +25,30 @@
 <meta name="twitter:player:height" content="{{ clip.height }}" />
 <meta name="twitter:player:stream" content="{{ clip.archivo_url }}" />
 <meta name="twitter:player:stream:content_type" content="video/mp4; codecs=&quot;avc1.42E01E1, mp4a.40.2&quot;">
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "VideoObject",
+  "name": "{% if clip.tipo.slug == 'programa' %}\"{{ clip.programa.nombre }}\", emisión del {{ clip.fecha.date|date:'l j \d\e F \d\e Y' }}{% else %}{{ clip.titulo.strip }}{% endif %}",
+  "description": "{{ clip.descripcion.strip|default:clip.tipo.nombre }}",
+  "thumbnailUrl": "{{ clip.thumbnail_grande }}",
+  "uploadDate": "{{ clip.fecha|date:'c' }}-06:00",
+  {# "duration": "PT1M33S", #}
+  "publisher": {
+    "@type": "Organization",
+    "name": "teleSUR",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a8/TeleSur.png",
+      "width": "400",
+      "height": "200"
+    }
+  },
+  "contentUrl": "{{ clip.archivo_url }}",
+  "encodingFormat": "mp4",
+  "embedUrl": "{{ clip.player_html_url }}"
+}
+</script>
 {% endblock %}
 
 {% block content %}
@@ -34,83 +57,90 @@
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.8&appId=380208352371240";
+  js.src = "//connect.facebook.net/{{ LANGUAGE_CODE }}_LA/sdk.js#xfbml=1&version=v2.8&appId=380208352371240";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
+
 <div id="gtco-main-solo">
   <div class="container">
+    
     <div class="row row-pb-md">
       <div class="col-md-12">
-        <article itemscope itemtype="http://schema.org/NewsArticle">
+        <article>
           <div class="text-left content-article">
             <div class="row">
               <div class="col-lg-6 col-md-12 animate-box">
                 {% block player %}
-                <div id="player" {% block video_wrapper_attrs %}class="video"{% endblock %}>
+                <div data-ratio="{{ clip.aspectratio }}" id="player" {% block video_wrapper_attrs %}class="video"{% endblock %}>
                   <video data-title="{{ clip.titulo }}" {% block videoattrs %}autoplay controls{% endblock %} poster="{{ clip.thumbnail_grande }}">
                     {% if clip.hls_url %}
                     <source src="{{ clip.hls_url }}" type="application/x-mpegurl">
                     {% endif %}
                     <source src="{{ clip.archivo_subtitulado_url|default:clip.archivo_url }}" type="video/mp4">
-                    {# {% if clip.vtt_url %} #}
-                    {#  <track kind="metadata" src="{{ clip.vtt_url }}"></track> #}
-                    {# {% endif %} #}
+                    {# comment #}
+                    {% if clip.vtt_url %}
+                      <track kind="metadata" src="{{ clip.vtt_url }}"></track> #}
+                    {% endif %}
+                    {# endcomment #}
                   </video>
                 </div>
                 {% endblock player %}
               </div>
               <div class="col-lg-6 col-md-12 cp-l animate-box">
+                {% if clip.tipo.slug == 'programa' and clip.programa and clip.programa.banner_url %}
+                <a title="{{ clip.programa.nombre }}" href="{% url 'search' %}?tipo=programa&programa={{ clip.programa.slug }}"><img src="{{ clip.programa.banner_url }}" alt="{{ clip.programa.nombre }}" class="banner img-responsive" /></a>
+                {% else %}
                 <ul class="nav video-info">
                   <li class="seccion">
-                    <a href="{% url 'search' %}?tipo={{ clip.tipo.slug }}"><span itemprop="articleSection" class="label label-danger">{{ clip.tipo.nombre }}</span></a>
+                    <a title="{% trans 'Tipo' %}" href="{% url 'search' %}?tipo={{ clip.tipo.slug }}"><span class="label label-danger">{{ clip.tipo.nombre }}</span></a>
                   </li>
                   {% if clip.programa %}
                   <li class="seccion">
-                    <a href="{% url 'search' %}?tipo=programa&programa={{ clip.programa.slug }}"><span class="label label-default">{{ clip.programa.nombre }}</span></a>
+                    <a title="{% trans 'Programa' %}" href="{% url 'search' %}?tipo=programa&programa={{ clip.programa.slug }}"><span class="label label-default">{{ clip.programa.nombre }}</span></a>
                   </li>
                   {% endif %}
                   {% if clip.corresponsal %}
                   <li class="seccion">
-                    <a href="{% url 'search' %}?corresponsal={{ clip.corresponsal.slug }}"><span class="label label-primary">{{ clip.corresponsal.nombre }}</span></a>
+                    <a title="{% trans 'Corresponsal' %}" href="{% url 'search' %}?corresponsal={{ clip.corresponsal.slug }}"><span class="label label-primary">{{ clip.corresponsal.nombre }}</span></a>
+                  </li>
+                  {% endif %}
+                  {% if clip.tema %}
+                  <li class="seccion">
+                    <a title="{% trans 'Tema' %}" href="{% url 'search' %}?tema={{ clip.tema.slug }}" class="label label-success">{{ clip.tema.nombre }}</a>
+                  </li>
+                  {% else %}{% if clip.categoria %}
+                  <li class="seccion">
+                    <a title="{% trans 'Categoría' %}" href="{% url 'search' %}?categoria={{ clip.categoria.slug }}" class="label label-success">{{ clip.categoria.nombre }}</a>
+                  </li>
+                  {% endif %}{% endif %}
+                  {% if clip.pais %}
+                  <li class="seccion">
+                    <a title="{% trans 'País' %}" href="{% url 'search' %}?pais={{ clip.pais.slug }}" class="label label-warning">{{ clip.pais.nombre }}</a>
+                  </li>
+                  {% endif %}
+                  {% if clip.pais_secundario %}
+                  <li class="seccion">
+                    <a title="{% trans 'País' %}" href="{% url 'search' %}?pais={{ clip.pais_secundario.slug }}" class="label label-warning">{{ clip.pais_secundario.nombre }}</a>
                   </li>
                   {% endif %}
                 </ul>
-                <h2 itemprop="headline">{{ clip.titulo }}</h2>
-                <time itemprop="dateCreated">{{ clip.fecha|date:"l j \d\e F \d\e Y"|lower|capfirst }}</time>
-                <p>
-                  {% if clip.tema %}
-                  <a title="Tema"
-                     href="{% url 'search' %}?tema={{ clip.tema.slug }}" class="label label-success">{{ clip.tema.nombre }}</a>
-                  {% else %}{% if clip.categoria %}
-                  <a title="Categoría"
-                     href="{% url 'search' %}?categoria={{ clip.categoria.slug }}" class="label label-success">{{ clip.categoria.nombre }}</a>
-                  {% endif %}{% endif %}
-                  {% if clip.pais %}
-                  <a title="País" href="{% url 'search' %}?pais={{ clip.pais.slug }}" class="label label-warning">{{ clip.pais.nombre }}</a>
-                  {% endif %}
-                  {% if clip.pais_secundario %}
-                  <a title="País" href="{% url 'search' %}?pais={{ clip.pais_secundario.slug }}" class="label label-warning">
-                    {{ clip.pais_secundario.nombre }}</a>
-                  {% endif %}
-                </p>
-                <p class="text-justify" itemprop="articleBody">
-                  {{ clip.descripcion.strip|default:clip.programa.descripcion.strip }}
-                </p>
+                {% endif %}
 
-                <div class="acciones row">
-                  <div class="col-sm-12">
-                  <ul class="gtco-social-icons text-right">
-                    <li><a href="#" title="compartir en Twitter" class="twitter" target="popup" onclick="event.preventDefault();window.open('https://twitter.com/intent/tweet?text={{ clip.titulo }}&via=teleSURtv&original_referer={{ request.build_absolute_uri }}&url={{ clip.navegador_url }}','Twitter','width=640,height=240')"><i class="icon-twitter"></i></a></li>
-                    <li><a href="#" title="compartir en Facebook" class="facebook" target="popup" onclick="event.preventDefault();window.open('https://www.facebook.com/sharer/sharer.php?u={{ clip.navegador_url }}','Facebook','width=640,height=480')"><i class="icon-facebook"></i></a></li>
-                    <li><a href="#" title="compartir en Google Plus" class="gplus" target="popup" onclick="event.preventDefault();window.open('https://plus.google.com/share?url={{ clip.navegador_url }}','G+','width=400,height=400')"><i class="icon-google"></i></a></li>
-                  </ul>
-                  </div>
-                  <!-- <div class="col-sm-6">
-                  <a class="btn btn-default"
-                     href="{{ clip.descarga_url }}"><span
-                      class="glyphicon glyphicon-download-alt"></span> Descargar video</a>
-                    </div> -->
-                </div>
+                <h2>{{ clip.titulo }}</h2>
+
+                {% comment %}Translators: Single video page, full date{% endcomment %}
+                {% trans "l j \d\e F \d\e Y" as format %}
+                <time><i class="icon-calendar"></i> {{ clip.fecha|date:format|lower|capfirst }}</time>
+
+                <ul class="gtco-social-icons text-right" style="float:right;">
+                  <li><a title="{% trans 'Compartir en' %} Twitter" target="popup" onclick="event.preventDefault();window.open('https://twitter.com/intent/tweet?text={{ clip.titulo }}&via=teleSURtv&original_referer={{ request.build_absolute_uri }}&url={{ clip.navegador_url }}','Twitter','width=640,height=240')" href="#"><i class="icon-twitter"></i></a></li>
+                  <li><a title="{% trans 'Compartir en' %} Facebook" target="popup" onclick="event.preventDefault();window.open('https://www.facebook.com/sharer/sharer.php?u={{ clip.navegador_url }}','Facebook','width=640,height=480')" href="#"><i class="icon-facebook"></i></a></li>
+                  <li><a title="{% trans 'Compartir en' %} G+" target="popup" onclick="event.preventDefault();window.open('https://plus.google.com/share?url={{ clip.navegador_url }}','G+','width=400,height=520')"><i class="icon-google" href="#"></i></a></li>
+                  <li><a title="{% trans 'Compartir en' %} Whatsapp" href="whatsapp://send?text={{ clip.navegador_url }}"><img width="25" height="25" style="display: inline-block; margin-top:-16px;" src="{% static 'images/whatsapp-24.png' %}" href="#"></a></li>
+                </ul>
+
+                <p class="description">{{ clip.descripcion.strip }}</p>
+              </div>
               </div>
             </div>
           </div>
@@ -119,19 +149,19 @@
     </div>
 
     <div class="container">
-    <div class="row">
-      <div class="col-md-12 related">
-        <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-width="100%" data-numposts="5"></div>
+      <div class="row row-pb-md">
+        <div class="col-md-12 related">
+          <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-width="100%" data-numposts="5"></div>
+        </div>
       </div>
-    </div>
     </div>
 
     {% if relacionados %}
-    <!--Related Posts-->
-    <div class="row row-pb-md related">
+    <div class="container">
+      <div class="row row-pb-md related">
       <div class="col-md-12">
         <header>
-          <h3 class="related-title animate-box">Videos relacionados</h3>
+          <h3 class="related-title animate-box">{% trans "Videos relacionados" %}</h3>
         </header>
         <ul class="gtco-post-list">
           {% for relacionado in relacionados %}
@@ -140,12 +170,13 @@
                 <div class="entry-img" style="background-image: url({{ relacionado.thumbnail_grande }})"></div>
                 <div class="entry-desc">
                   <h3>{{ relacionado.titulo|truncatewords:12 }}</h3>
-                  <p>{{ relacionado.descripcion|truncatewords:60 }}</p>
+                  <p>{{ relacionado.descripcion|truncatewords:40 }}</p>
                 </div>
               </a>
             </li>
           {% endfor %}
         </ul>
+      </div>
       </div>
     </div>
     {% endif %}

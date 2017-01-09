@@ -184,7 +184,7 @@ h1, h2, h3, h4, h5, h6, figure {
   background-image: url(../images/logo/bg_top.jpg);
   -webkit-background-size: cover;
   background-size: cover;
-  padding: 0.5em 0 0 0;
+  padding: 0.5em 0;
   @include transition(.5s);
 
   > .container {
@@ -207,13 +207,13 @@ h1, h2, h3, h4, h5, h6, figure {
     margin: 0;
     text-transform: uppercase;
     font-weight: bold;
-    @media screen and (max-width: $screen-sm) {
-      margin-bottom: 0;
-    }
 
     img {
       display: inline-block;
       padding: 0 5px;
+      &.logopic {
+        width: 45px;
+      }
     }
 
     a {
@@ -235,7 +235,9 @@ h1, h2, h3, h4, h5, h6, figure {
   .search {
     position: absolute;
     right: 20px;
-   @include transition(1s);
+    top: 12px;
+    // @transition(.5s);
+    z-index: 10;
     input {
       border: none;
       color: #ddd;
@@ -250,7 +252,8 @@ h1, h2, h3, h4, h5, h6, figure {
         color: #ddd;
       }
       &.extended {
-        width: auto;
+        width: 100%;
+        @include transition(0.5s);
       }
     }
     .icon {
@@ -381,43 +384,36 @@ h1, h2, h3, h4, h5, h6, figure {
     background-image: url(../images/logo/bg_top.jpg);
     -webkit-background-size: cover;
     background-size: cover;
-
-    padding: 10px 0;
     -webkit-box-shadow: 0px 5px 7px -7px rgba(0, 0, 0, 0.15);
     -moz-box-shadow: 0px 5px 7px -7px rgba(0, 0, 0, 0.15);
     box-shadow: 0px 5px 7px -7px rgba(0, 0, 0, 0.15);
 
-    > .container {
-      padding-bottom: 0px;
-      border-bottom: 1px solid transparent;
-    }
     a {
       color: $brand-white;
-    }
-    #gtco-logo {
-      img.logopic {
-        width: 45px;
-      }
     }
     #heading-page {
       display: none;
     }
-    .logos {
-      min-width: 285px;
-      width: auto;
-      float: left;
-      text-align: right;
-    }
-    .menu-1 {
-      padding-top: 5px;
-      /*width: 69%;*/
-      /*min-width: 460px;*/
-      width: auto;
-      float: right;
-      text-align: right;
-    }
+
+      @media screen and (min-width: $screen-lg) {
+        .logos {
+          min-width: 285px;
+          width: auto;
+          float: left;
+          text-align: right;
+        }
+        .menu-1 {
+          // padding-top: 5px;
+          width: auto;
+          float: right;
+          margin-top: 6px;
+          margin-right: 20px;
+          text-align: right;
+        }
+      }
+    
     .search {
-      top: 10px;
+      // top: 10px;
       input.extended {
         /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ab100e+0,c71411+100 */
         /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#9d1110+0,c71411+100 */
@@ -426,7 +422,7 @@ h1, h2, h3, h4, h5, h6, figure {
         background: -webkit-linear-gradient(left, rgba(157, 17, 16, 1) 0%, rgba(199, 20, 17, 1) 100%); /* Chrome10-25,Safari5.1-6 */
         background: linear-gradient(to right, rgba(157, 17, 16, 1) 0%, rgba(199, 20, 17, 1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
         filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#9d1110', endColorstr='#c71411', GradientType=1); /* IE6-9 */
-
+        // @include transition(0.5s);
       }
 
     }
@@ -581,7 +577,12 @@ h1, h2, h3, h4, h5, h6, figure {
 
 #gtco-main-solo {
   .related {
-    margin: 0.5em;
+    // margin: 0.5em;
+
+    .entry-desc {
+      margin:0;
+    }
+    p { margin-bottom: 0 }
   }
   ul.video-info {
     text-transform: uppercase;
@@ -601,7 +602,7 @@ h1, h2, h3, h4, h5, h6, figure {
   }
   h2 {
     margin: 0.25em 0;
-    font-size: 40px;
+    font-size: 35px;
 
   }
   @media screen and (max-width: $screen-sm) {
@@ -644,7 +645,16 @@ h1, h2, h3, h4, h5, h6, figure {
   }
   time {
     color: #999999;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    display: block;
+    float: left;
+    width: 70%;
+    font-size: 15px;
+    line-height: 15px;
+  }
+  p.description {
+    text-align: justify;
+    clear: both;
   }
 }
 
@@ -689,6 +699,9 @@ article {
     &:hover {
       img {
         opacity: .4;
+      }
+      img.banner {
+        opacity: 1;
       }
     }
   }
@@ -799,6 +812,34 @@ figure {
     margin-left: 0% !important;
   }
   li {
+    &.banner {
+      background: none;
+      border: none;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+      text-align: center;
+      min-height: auto;
+      width: 100%;
+      &:hover {
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+      }
+      img {
+        width: 100%;
+        max-height: 150px;
+        height: auto;
+        display: block;
+      }
+      h1 {
+        margin-top: 1.5em;
+        margin-bottom: 1em;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    }
     display: block;
     padding: 0;
     margin: 0 0 1em 2%;
@@ -831,9 +872,9 @@ figure {
 
     .post-meta {
       position: absolute;
-      bottom: 15px;
+      bottom: 10px;
       display: block;
-      padding: 0 30px;
+      padding: 0 20px;
       .seccion {
         display: inline;
       }
@@ -929,25 +970,34 @@ figure {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    min-height: 250px;
+    min-height: 190px;
     @media screen and (max-width: $screen-sm) {
       height: 300px !important;
     }
   }
 
   .entry-desc {
-    padding: 30px;
-    margin-bottom: 40px;
+    padding: 20px;
+    margin-bottom: 50px;
   }
   p, small {
     color: lighten($brand-black, 10%);
     line-height: 1.9;
   }
+
+  &.one-half {
+    .entry-img {
+      height: 410px;
+    }
+  }
   &.full {
     display: table;
     width: 100%;
     h3 {
-      font-size: 50px;
+      font-size: 35px;
+      @media screen and (max-width: $screen-md) {
+        font-size: 30px;
+      }
     }
     @media screen and (max-width: $screen-sm) {
       display: block;
@@ -959,7 +1009,10 @@ figure {
       background-repeat: no-repeat;
       background-position: 50% 50%;
       width: 50%;
-      height: 500px;
+      height: 415px;;
+      @media screen and (max-width: $screen-lg) {
+        height: 350px;
+      }
       @media screen and (max-width: $screen-sm) {
         display: block;
         width: 100%;
@@ -967,7 +1020,8 @@ figure {
     }
     .entry-desc {
       background: $brand-white;
-      padding: 30px;
+      padding: 20px;
+      padding-top: 15px;
       display: table-cell;
       width: 50%;
       margin-bottom: 40px;
@@ -1004,6 +1058,7 @@ figure {
       background-position: 50% 50%;
       width: 30%;
       height: 200px;
+      width: 257px;
       @media screen and (max-width: $screen-sm) {
         display: block;
         width: 100%;
@@ -1011,7 +1066,7 @@ figure {
     }
     .entry-desc {
       background: $brand-white;
-      padding: 30px;
+      padding: 20px;
       display: table-cell;
       width: 70%;
       margin-bottom: 40px;
@@ -1077,6 +1132,9 @@ figure {
     min-height: 200px;
   }
 }
+.en .related .entry-img {
+  min-height: 145px;
+}
 
 .post-entry {
   > .post-entry,
@@ -1134,9 +1192,9 @@ figure {
       -o-border-radius: 50% !important;
       border-radius: 50% !important;
 
-      height: 50px;
-      width: 50px;
-      line-height: 50px;
+      height: 35px;
+      width: 35px;
+      line-height: 35px;
       display: table-cell;
       vertical-align: middle;
       z-index: 10;
@@ -1200,7 +1258,7 @@ figure {
     margin: 0;
     li {
       padding: 0 0 0 70px;
-      margin: 0 0 30px 0;
+      margin: 0 0 20px 0;
       list-style: none;
       position: relative;
       &:before {
@@ -1327,10 +1385,10 @@ figure {
 #gtco-team,
 #gtco-contact,
 #gtco-footer {
-  padding: 6em 0;
+  padding: 5em 0;
   clear: both;
   @media screen and (max-width: $screen-sm) {
-    padding: 3em 0;
+    padding: 2em 0;
   }
 }
 
@@ -1449,7 +1507,7 @@ figure {
       &.author {
         color: lighten($brand-black, 70%);
         img {
-          width: 50px;
+          width: 35px;
           margin-right: 10px;
           @include border-radius(50%);
         }
@@ -1480,7 +1538,7 @@ figure {
     padding: 3em 0;
   }
   .counter {
-    font-size: 50px;
+    font-size: 35px;
     margin-bottom: 10px;
     color: $brand-primary;
     font-weight: 100;
@@ -1657,7 +1715,7 @@ figure {
   margin-bottom: 40px;
   @include transition(.3s);
   @media screen and (max-width: $screen-sm) {
-    margin-bottom: 50px;
+    margin-bottom: 35px;
   }
 
   .desc {
@@ -1731,7 +1789,7 @@ figure {
   background-repeat: no-repeat;
   position: relative;
   overflow: hidden;
-  height: 350px;
+  height: 335px;
   margin-bottom: 40px;
 
   &:before {
@@ -1974,7 +2032,7 @@ figure {
     color: $brand-white;
   }
   .footer-heading {
-    margin-bottom: 50px;
+    margin-bottom: 35px;
   }
   .post-meta {
     position: relative !important;
@@ -2042,7 +2100,7 @@ figure {
   right: 0;
   top: 0;
   bottom: 0;
-  padding: 45px 30px 30px 30px;
+  padding: 10px 30px 30px 30px;
   overflow-y: auto;
   display: none;
   @include translateX(270px);
@@ -2058,7 +2116,11 @@ figure {
     img {
       width: 30%;
       padding-right: 5px;
+      &.logopic {
+        width: 45px;
+      }
     }
+
     span {
       font-size: smaller;
     }
@@ -2157,15 +2219,15 @@ figure {
     visibility: visible;
   }
   a {
-    width: 50px;
-    height: 50px;
+    width: 35px;
+    height: 35px;
     display: table;
     background: rgba(0, 0, 0, .5);
     color: $brand-white;
     text-align: center;
     @include border-radius(50%);
     i {
-      height: 50px;
+      height: 35px;
       display: table-cell;
       vertical-align: middle;
 
@@ -2266,7 +2328,7 @@ figure {
 .gtco-nav-toggle {
   position: fixed;
   right: 0px;
-  top: 18px;
+  top: 10px;
   z-index: 21;
   padding: 6px 0 0 0;
   display: block;
@@ -2277,9 +2339,6 @@ figure {
   width: 44px;
   z-index: 2001;
   border-bottom: none !important;
-  .scrolled & {
-    top: 5px;
-  }
   @media screen and (max-width: $screen-sm) {
     display: block;
   }
@@ -2425,7 +2484,7 @@ figure {
     @include transition(.2s);
   }
   &:hover {
-    padding-right: 50px;
+    padding-right: 35px;
     i {
       color: $brand-white;
       right: 18px;
@@ -2513,7 +2572,7 @@ figure {
   width: 30%;
   float: left;
   padding: 20px;
-  margin-top: 150px;
+  margin-top: 7em;
   .sidebox {
     margin-bottom: 20px;
     float: left;
@@ -2559,11 +2618,19 @@ figure {
   }
 }
 
+#results-label {
+  img {
+    width: 100%;
+    max-height: 200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+}
 #search-result {
   width: 70%;
   float: left;
   padding: 20px;
-  margin-top: 150px;
+  margin-top: 7em;;
   .search {
     margin-bottom: 20px;
     .icon {

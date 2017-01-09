@@ -1,5 +1,12 @@
 {% extends "simple.html" %}
-{% load clips_tags static compress %}
+{% load clips_tags static compress i18n %}
+
+{% block socialmeta %}{{ block.super }}
+<meta name="startIndex" content="{{ page }}"/>
+<meta name="itemsPerPage" content="{{ page_size }}"/>
+{% endblock %}
+
+{% block title %}{% title_for_search %}{% endblock %}
 
 {% block stylesheets %}{{ block.super }}{% compress css %}
 <link rel="stylesheet" href="{% static 'sass/search.scss' %}" type="text/x-scss">
@@ -10,19 +17,21 @@
   {% if filtros|length > 2 %}
   <div class="sidebox auto-height p-md">
 
-    <h4>Filtros seleccionados</h4>
+    <h4>{% trans "Filtros seleccionados" %}</h4>
     {% if query %}
     <p>
       <a data-filtro="q" data-val="{{ query }}" class="remove-filtro" title="Eliminar ete filtro"><span class="icon"><i class="icon-cross"></i></span></a>
-      Búsqueda: <strong>{{ query|truncatechars:25 }}</strong>
+      {% trans "Búsqueda" %}: <strong>{{ query|truncatechars:25 }}</strong>
     </p>
     {% endif %}
 
     {% for filtro, val in filtros.items %}
     {% if filtro != 'primero' and filtro != 'ultimo' and filtro != 'texto' %}
+    {% if filtro == 'programa' %}{% get_programa val as obj %}{% endif %}
+    {% if filtro == 'corresponsal' %}{% get_corresponsal val as obj %}{% endif %}
       <p>
         <a data-filtro="{{ filtro }}" data-val="{{ val }}" class="remove-filtro" title="Eliminar ete filtro"><span class="icon"><i class="icon-cross"></i></span></a>
-        {{ filtro|capfirst }}: <strong>{{ val|capfirst }}</strong>
+        {{ filtro|capfirst }}: <strong>{% if obj %}{{ obj.nombre }}{% else %}{{ val|capfirst }}{% endif %}</strong>
       </p>
     {% endif %}
     {% endfor %}
@@ -31,7 +40,7 @@
     <p>
       <a href="#" class="remove-all-filtros btn-xs btn-link">
         <span class="icon"><i class="icon-trash"></i></span>
-        Quitar todos los filtros
+        {% trans "Quitar todos los filtros" %}
       </a>
     </p>
     {% endif %}
@@ -39,7 +48,7 @@
   {% endif %}
 
   <div class="sidebox">
-    <h4>Tipos de contenido</h4>
+    <h4>{% trans "Tipos de contenido" %}</h4>
     <ul class="filtros full">
       {% get_tipos as tipos %}
       {% for c in tipos %}
@@ -55,91 +64,92 @@
     </ul>
   </div>
 
-  {% if filtros.tipo != 'programa' %}
-  <div class="sidebox">
-    <h4>Temas</h4>
-    <ul class="filtros large">
-      {% get_temas as temas %}
-      {% for c in temas %}
-        {% if c.slug not in exclude.temas %}
-        <li>
-          <a title="{{ c.slug }}" data-filtro="tema" data-val="{{ c.slug }}" class="{% if filtros.tema == c.slug %}selected{% endif %}">{{ c.nombre }}</a>
-          {% if filtros.tema == c.slug %}
-          <a data-filtro="tema" class="remove-filtro" title="Eliminar ete filtro"><span class="icon"><i class="icon-cross"></i></span></a>
-          {% endif %}
-        </li>
-        {% endif %}
-      {% endfor %}
-    </ul>
-  </div>
-  {% endif %}
+    {% if filtros.tipo == 'programa' %}
 
-  <div class="sidebox">
-    <h4>Programas</h4>
-    <ul class="filtros {% if filtros.tipo == 'programa' %}full{% else %}large{% endif %}" id="f_programas">
-      {% get_programas as progs %}
-      {% for c in progs %}
+    <div class="sidebox">
+      <h4>{% trans "Programas" %}</h4>
+      <ul class="filtros {% if filtros.tipo == 'programa' %}full{% else %}large{% endif %}" id="f_programas">
+        {% get_programas as progs %}
+        {% for c in progs %}
+            <li>
+              <a title="{{ c.slug }}" data-filtro="programa" data-val="{{ c.slug }}" class="{% if filtros.programa == c.slug %}selected{%endif %}"><img data-original="{{ c.imagen_url }}" class="lazy" width="30" height="15"> {{ c.nombre }}</a>
+              {% if filtros.programa == c.slug %}
+              <a data-filtro="programa" data-val="{{ filtros.programa }}" class="remove-filtro" title="Eliminar ete filtro"><span class="icon"><i class="icon-cross"></i></span></a>
+              {% endif %}
+            </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+  {% else %}
+
+    <div class="sidebox">
+      <h4>{% trans "Corresponsales" %}</h4>
+      <ul class="filtros large" id="f_corresponsales">
+        {% get_corresponsales as corrs %}
+        {% for c in corrs %}
+          {% if c.slug not in exclude.corresponsales %}
           <li>
-            <a title="{{ c.slug }}" data-filtro="programa" data-val="{{ c.slug }}" class="{% if filtros.programa == c.slug %}selected{%endif %}"><img data-original="{{ c.imagen_url }}" class="lazy" width="30" height="15"> {{ c.nombre }}</a>
-            {% if filtros.programa == c.slug %}
-            <a data-filtro="programa" data-val="{{ filtros.programa }}" class="remove-filtro" title="Eliminar ete filtro"><span class="icon"><i class="icon-cross"></i></span></a>
+            <a title="{{ c.nombre }}{% if c.twitter %} @{{ c.twitter }}{% endif %}" data-filtro="corresponsal" data-val="{{ c.slug }}" class="{% if filtros.corresponsal == c.slug %}selected{% endif %}">{% if c.twitter %}<img class="lazy" data-original="https://twitter.com/{{ c.twitter }}/profile_image?size=normal" height="15" width="15">{% else %}<span style="display:inline-block;width:15px;height:15px;"></span>{% endif %} {{ c.nombre }}</a>
+            {% if filtros.corresponsal == c.slug %}
+            <a data-filtro="corresponsal" class="remove-filtro" title="Eliminar ete filtro"><span class="icon"><i class="icon-cross"></i></span></a>
             {% endif %}
           </li>
-      {% endfor %}
-    </ul>
-  </div>
-
-  {% if filtros.tipo != 'programa' %}
-  <div class="sidebox">
-    <h4>Correpsonsales</h4>
-    <ul class="filtros large" id="f_corresponsales">
-      {% get_corresponsales as corrs %}
-      {% for c in corrs %}
-        {% if c.slug not in exclude.corresponsales %}
-        <li>
-          <a title="{{ c.slug }}" data-filtro="corresponsal" data-val="{{ c.slug }}" class="{% if filtros.corresponsal == c.slug %}selected{% endif %}">{% if c.twitter %}<img class="lazy" data-original="https://twitter.com/{{ c.twitter }}/profile_image?size=normal" height="15" width="15">{% endif %} {{ c.nombre }}</a>
-          {% if filtros.corresponsal == c.slug %}
-          <a data-filtro="corresponsal" class="remove-filtro" title="Eliminar ete filtro"><span class="icon"><i class="icon-cross"></i></span></a>
           {% endif %}
-        </li>
-        {% endif %}
-      {% endfor %}
-    </ul>
-  </div>
+        {% endfor %}
+      </ul>
+    </div>
 
-  <div class="sidebox">
-    <h4>Categorías</h4>
-    <ul class="filtros full">
-      {% get_categorias as cats %}
-      {% for c in cats %}
-        {% if c.slug not in exclude.categorias %}
-        <li>
-          <a title="{{ c.slug }}" data-filtro="categoria" data-val="{{ c.slug }}" class="{% if filtros.categoria == c.slug %}selected{% endif %}">{{ c.nombre }}</a>
-          {% if filtros.categoria == c.slug %}
-          <a data-filtro="categoria" class="remove-filtro" title="Eliminar ete filtro"><span class="icon"><i class="icon-cross"></i></span></a>
+    <div class="sidebox">
+      <h4>{% trans "Temas" %}</h4>
+      <ul class="filtros large">
+        {% get_temas as temas %}
+        {% for c in temas %}
+          {% if c.slug not in exclude.temas %}
+          <li>
+            <a title="{{ c.slug }}" data-filtro="tema" data-val="{{ c.slug }}" class="{% if filtros.tema == c.slug %}selected{% endif %}">{{ c.nombre }}</a>
+            {% if filtros.tema == c.slug %}
+            <a data-filtro="tema" class="remove-filtro" title="Eliminar ete filtro"><span class="icon"><i class="icon-cross"></i></span></a>
+            {% endif %}
+          </li>
           {% endif %}
-        </li>
-        {% endif %}
-      {% endfor %}
-    </ul>
-  </div>
+        {% endfor %}
+      </ul>
+    </div>
 
-  <div class="sidebox">
-    <h4>Países</h4>
-    <ul class="filtros large" id="f_paises">
-      {% get_paises as paises %}
-      {% for c in paises %}
-        {% if c.slug not in exclude.paises %}
-        <li>
-          <a title="{{ c.slug }}" data-filtro="pais" data-val="{{ c.slug }}" class="{% if filtros.pais == c.slug %}selected{% endif %}"><img height="14" width="22" class="lazy" data-original="https://flagpedia.net/data/flags/mini/{{ c.codigo|lower }}.png"> {{ c.nombre }}</a>
-          {% if filtros.pais == c.slug %}
-          <a data-filtro="pais" class="remove-filtro" title="Eliminar ete filtro"><span class="icon"><i class="icon-cross"></i></span></a>
+    <div class="sidebox">
+      <h4>{% trans "Categorías" %}</h4>
+      <ul class="filtros full">
+        {% get_categorias as cats %}
+        {% for c in cats %}
+          {% if c.slug not in exclude.categorias %}
+          <li>
+            <a title="{{ c.slug }}" data-filtro="categoria" data-val="{{ c.slug }}" class="{% if filtros.categoria == c.slug %}selected{% endif %}">{{ c.nombre }}</a>
+            {% if filtros.categoria == c.slug %}
+            <a data-filtro="categoria" class="remove-filtro" title="Eliminar ete filtro"><span class="icon"><i class="icon-cross"></i></span></a>
+            {% endif %}
+          </li>
           {% endif %}
-        </li>
-        {% endif %}
-      {% endfor %}
-    </ul>
-  </div>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="sidebox">
+      <h4>{% trans "Países" %}</h4>
+      <ul class="filtros large" id="f_paises">
+        {% get_paises as paises %}
+        {% for c in paises %}
+          {% if c.slug not in exclude.paises %}
+          <li>
+            <a title="{{ c.slug }}" data-filtro="pais" data-val="{{ c.slug }}" class="{% if filtros.pais == c.slug %}selected{% endif %}"><img height="14" width="22" class="lazy" data-original="https://flagpedia.net/data/flags/mini/{{ c.codigo|lower }}.png"> {{ c.nombre }}</a>
+            {% if filtros.pais == c.slug %}
+            <a data-filtro="pais" class="remove-filtro" title="Eliminar ete filtro"><span class="icon"><i class="icon-cross"></i></span></a>
+            {% endif %}
+          </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
 
   {% endif %}
 
@@ -150,10 +160,20 @@
 
       <div class="search">
         <span class="icon"><i class="icon-search"></i></span>
-        <input type="search" name="q" id="searchinput" value="{{ query }}" placeholder="Buscar..." />
+        <input type="search" name="q" id="searchinput" value="{{ query }}" placeholder="{% trans 'Buscar...' %}" />
       </div>
-
-      <h2 id="results-label">{% if clips|length %}Resultados de la búsqueda{% else %}Búsqueda sin resultados{% endif %}</h2>
+      <h2 id="results-label">
+        {% if clips|length %}
+          {% if filtros.tipo == 'programa' and filtros.programa %}
+            {% get_programa filtros.programa as programa %}
+            <img src="{% firstof programa.banner_url programa.imagen_url %}" class="img-responsive center">
+          {% else %}
+            {% trans "Resultados de búsqueda" %}
+          {% endif %}
+        {% else %}
+            {% trans "Búsqueda sin resultados" %}
+        {% endif %}
+      </h2>
 
       <ul class="gtco-post-list" id="main-results">
         {% include "clips/search_results.html" %}
@@ -168,7 +188,7 @@
 <script>
 (function($) {
   ajax_search = function(q) {
-    $('#results-label').text('Realizando búsqueda...')
+    $('#results-label').text('{% trans "Realizando búsqueda..." %}');
     location.href = '{% url "search" %}' + $.query.set('q', q).toString();
     // return $.ajax({
     //   url: $.query.set('query', q).toString(),
@@ -192,7 +212,14 @@
 
   $('ul.filtros a').on('click', function(ev) {
     ev.preventDefault();
-    location.href = $.query.set($(this).attr('data-filtro'), $(this).attr('data-val')).toString();
+    if ($(this).attr('data-filtro') == 'tipo') {
+      var qs = '?tipo=' + $(this).attr('data-val');
+      if ($.query.get('q'))
+        qs += '&q=' + $.query.get('q');
+      location.href = qs;
+    } else {
+      location.href = $.query.set($(this).attr('data-filtro'), $(this).attr('data-val')).toString();
+    }
   });
 
   $('a.remove-filtro').on('click', function(ev) {

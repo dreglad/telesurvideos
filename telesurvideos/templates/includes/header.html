@@ -1,4 +1,4 @@
-{% load static menu_tags %}
+{% load static menu_tags i18n %}
 <nav class="gtco-nav" role="navigation">
     <div class="container">
         <!-- <div id="heading-page">
@@ -8,7 +8,7 @@
             <!-- <div class="col-xs-2 text-left"> -->
             <div class="col-xs-12 text-center logos">
                 <div id="gtco-logo">
-                  <a href="http://telesurtv.net"><img src="{% static 'images/logo/logo1.png' %}" alt="teleSUR" class="logopic" /><img src="{% static 'images/logo/logo2.png' %}" alt="teleSUR" class="" /><span>Videos <sup>BETA</sup></span></a>
+                  <a href="/"><img src="{% static 'images/logo/logo1.png' %}" alt="teleSUR" class="logopic" /><img src="{% static 'images/logo/logo2.png' %}" alt="teleSUR" class="" /><span>Videos</span></a>
                 </div>
             </div>
             <div class="col-xs-12 text-center menu-1">
@@ -18,7 +18,7 @@
             </div>
             <div class="search" id="header-search">
                 <span class="icon"><i class="icon-search"></i></span>
-                <input type="search" data-url="{% url 'search' %}" name="q" id="q" placeholder="Buscar..." />
+                <input type="search" data-url="{% url 'search' %}" name="q" id="q" placeholder="{% trans 'Buscar...' %}" />
             </div>
         </div>
     </div>

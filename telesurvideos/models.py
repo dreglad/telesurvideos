@@ -8,6 +8,7 @@ from django.db import models
 from django.http.request import QueryDict
 from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext as _
 from multiselectfield import MultiSelectField
 
 from .templatetags import clips_tags
@@ -87,34 +88,36 @@ def tiempo_choices():
     )
 
 MOSTRAR_FECHA_CHOICES = (
-    ('rel', 'Fecha relativa (hace X tiempo)'),
-    ('f', 'Fecha completa'),
-    ('fh', 'Fecha completa y hora'),
-    ('con', 'fecha relativa si es de hoy, fecha completa en caso contrario'),
-    (None, 'No mostrar fecha'),
+    ('rel', _('Fecha relativa (hace X tiempo)')),
+    ('f', _('Fecha completa')),
+    ('fh', _('Fecha completa y hora')),
+    ('con', _('fecha relativa si es de hoy, fecha completa en caso contrario')),
+    (None, _('No mostrar fecha')),
 )
 MOSTRAR_FECHA_DEFAULT = 'con'
 
 
 class VideoListPluginModel(CMSPlugin):
     """VideoListPluginModel"""
-    layout = models.TextField(blank=True, help_text='1, q => columna completa | 2, w => media columna | 3, e => tercio de columna | 4, r => cuarto de columna | 6, t => dos tercios de columna')
-    mostrar_mas = models.TextField('mostrar más', blank=True, help_text='1, q => columna completa | 2, w => media columna | 3, e => tercio de columna | 4, r => cuarto de columna | 6, t => dos tercios de columna')
-    mostrar_titulo = models.BooleanField('mostrar_titulo', default=True)
-    titulo = models.CharField('título', max_length=255, blank=True, help_text='Título opcional del listado')
-    mostrar_descripcion = models.BooleanField('mostrar_descripción', default=True)
-    limite = models.PositiveIntegerField('límite', default=20)
-    tiempo = models.CharField(choices=tiempo_choices(), max_length=8, null=True, blank=True, help_text='Mostrar videos no más antiguos del tiempo especificado')
-    seleccionados = models.BooleanField(default=False, help_text='Filtrar sólo clips seleccionados (selección del editor)')
+    mostrar_titulos = models.BooleanField(_('mostrar títulos'), default=True)
+    mostrar_descripciones = models.BooleanField(_('mostrar descripciones'), default=True)
+    mostrar_banner = models.BooleanField(_('mostrar banner'), default=False, help_text=_('Mostrar encabezado con banner de programa'))
+    mostrar_tags = models.BooleanField(_('mostrar tags'), default=True)
+    mostrar_fecha = models.CharField(_('mostrar fecha'), choices=MOSTRAR_FECHA_CHOICES, default=MOSTRAR_FECHA_DEFAULT, max_length=3, null=True, blank=True)
+    layout = models.TextField(_('layout'), blank=True, help_text=_('1, q => columna completa | 2, w => media columna | 3, e => tercio de columna | 4, r => cuarto de columna | 6, t => dos tercios de columna'))
+    mostrar_mas = models.TextField(_('mostrar más'), blank=True, help_text=_('1, q => columna completa | 2, w => media columna | 3, e => tercio de columna | 4, r => cuarto de columna | 6, t => dos tercios de columna'))
+    titulo = models.CharField(_('título'), max_length=255, blank=True, help_text=_('Título opcional del listado'))
+    limite = models.PositiveIntegerField(_('límite'), default=20)
+    tiempo = models.CharField(_('tiempo'), choices=tiempo_choices(), max_length=8, null=True, blank=True,help_text=_('Mostrar videos no más antiguos del tiempo especificado'))
+    seleccionados = models.BooleanField(_('seleccionados'), default=False, help_text=_('Filtrar sólo clips seleccionados (selección del editor)'))
     # filtros
-    tipos = MultiSelectField(choices=lazy(tipos_choices, tuple)(), null=True, blank=True)
-    programas = MultiSelectField(choices=lazy(programas_choices, tuple)(), null=True, blank=True)
-    categorias = MultiSelectField('categorías', choices=lazy(categorias_choices, tuple)(), null=True, blank=True)
-    temas = MultiSelectField(choices=lazy(temas_choices, tuple)(), null=True, blank=True)
-    corresponsales = MultiSelectField(choices=lazy(corresponsales_choices, tuple)(), null=True, blank=True)
-    paises = MultiSelectField('países', choices=lazy(paises_choices, tuple)(), null=True, blank=True)
-    series = MultiSelectField('series', choices=lazy(series_choices, tuple)(), null=True, blank=True)
-    mostrar_fecha = models.CharField(choices=MOSTRAR_FECHA_CHOICES, default=MOSTRAR_FECHA_DEFAULT, max_length=3, null=True, blank=True)
+    tipos = MultiSelectField(_('tipos'), choices=lazy(tipos_choices, tuple)(), null=True, blank=True)
+    programas = MultiSelectField(_('programas'), choices=lazy(programas_choices, tuple)(), null=True, blank=True)
+    categorias = MultiSelectField(_('categorías'), choices=lazy(categorias_choices, tuple)(), null=True, blank=True)
+    temas = MultiSelectField(_('temas'), choices=lazy(temas_choices, tuple)(), null=True, blank=True)
+    corresponsales = MultiSelectField(_('corresponsales'), choices=lazy(corresponsales_choices, tuple)(), null=True, blank=True)
+    paises = MultiSelectField(_('países'), choices=lazy(paises_choices, tuple)(), null=True, blank=True)
+    series = MultiSelectField(_('series'), choices=lazy(series_choices, tuple)(), null=True, blank=True)
 
     def _cleaned(self, value):
         """cleaned layout value"""
@@ -161,10 +164,11 @@ class VideoListPluginModel(CMSPlugin):
         for filtro, attr in FILTROS:
             if getattr(self, attr):
                 filtros.append('<li>{}: <strong>{}</strong></li>'.format(
-                    filtro, ' ó '.join(getattr(self, attr))))
+                    filtro, _(' ó ').join(getattr(self, attr))))
 
         if self.tiempo:
-            filtros.append('<li>tiempo: <strong>{}</strong></li>'.format(self.get_tiempo_display()))
+            filtros.append('<li>{}: <strong>{}</strong></li>'.format(
+                _('tiempo'), self.get_tiempo_display()))
 
         return mark_safe((
             '<br><pre style="display:inline-block; float:left;">''{}</pre>'
@@ -174,13 +178,14 @@ class VideoListPluginModel(CMSPlugin):
             '<li>mostrar más: <strong>{}</strong></li>'
             '</ul>').format(
                 _art(self.layout),
-                self.titulo or '<i>[sin título]</i>',
+                self.titulo or '<i>[{}]</i>'.format(_('sin título')),
                 ''.join(filtros),
-                '<li>mostrar título y descripción: <strong>{} / {}</strong></li>'.format(
-                    self.mostrar_titulo and 'sí' or 'no',
-                    self.mostrar_descripcion and 'sí' or 'no'
+                '<li>{}: <strong>{} / {}</strong></li>'.format(
+                    _('mostrar títulos y descripciones'),
+                    self.mostrar_titulos and _('sí') or _('no'),
+                    self.mostrar_descripciones and _('sí') or _('no')
                 ),
                 self.get_mostrar_fecha_display(),
-                self.seleccionados and 'sí' or 'no',
-                self.mostrar_mas and 'sí' or 'no',
+                self.seleccionados and _('sí') or _('no'),
+                self.mostrar_mas and _('sí') or _('no'),
             ))

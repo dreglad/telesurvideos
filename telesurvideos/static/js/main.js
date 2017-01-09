@@ -268,13 +268,12 @@
 		});
 	};
 	var search = function(){
-		$(document).on('click mouseover','.gtco-nav .search', function(){
-			$(this).find('input').addClass('extended');
-		});
-		$(document).on('blur','.gtco-nav .search',function(){
-			console.log('ssali');
-			if($(this).find('input').val().length == 0)
-				$(this).find('input').removeClass('extended');
+		$('.gtco-nav .search').on('click mouseenter mouseover', function(){
+			var input = $(this).find('input');
+			input.addClass('extended').focus().on('blur', function() {
+				if (!input.val())
+				    input.removeClass('extended');
+			});
 		});
 	};
 	$(function(){
@@ -303,7 +302,7 @@
 
 		// Fullscreen with fixed items bugfix
 		$(document).on("webkitfullscreenchange mozfullscreenchange fullscreenchange", function( event ) {
-			$('nav, .cp-l').toggle();
+			$('nav, .cp-l, .related, #cms-top, #gtco-footer').toggle();
 		});
 
 		// List pagination
