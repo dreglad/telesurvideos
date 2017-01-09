@@ -41,8 +41,15 @@
 
     {% block extrahead %}{% endblock %}
     {% analytical_head_bottom %}
+    <script type="text/javascript">
+    var cX = cX || {}; cX.callQueue = cX.callQueue || [];
+    cX.callQueue.push(['setSiteId', '9222358407259870873']);
+    cX.callQueue.push(['sendPageViewEvent']);
+    </script>
+
+    {% include "includes/newrelic.html" %}
 </head>
-<body>
+<body class="{{ LANGUAGE_CODE }}">
 {% analytical_body_top %}
 {% cms_toolbar %}
 {% block cms_toolbar %}{% endblock %}
@@ -74,6 +81,11 @@
 <script src="{% static 'js/jquery.query-object.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
 {% endcompress js %}
+<script type="text/javascript">
+(function(d,s,e,t){e=d.createElement(s);e.type='text/java'+s;e.async='async';
+e.src='http'+('https:'===location.protocol?'s://s':'://')+'cdn.cxense.com/cx.js';
+t=d.getElementsByTagName(s)[0];t.parentNode.insertBefore(e,t);})(document,'script');
+</script>
 {% endblock %}
 {% render_block "js" %}
 
