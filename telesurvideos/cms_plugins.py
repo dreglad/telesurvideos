@@ -9,7 +9,6 @@ from django.utils.translation import ugettext_lazy as _
 from .models import VideoListPluginModel
 
 
-
 class ClipsListaPlugin(CMSPluginBase):
     """Clips lista plugin class"""
     name = _("Listado de videos teleSUR")

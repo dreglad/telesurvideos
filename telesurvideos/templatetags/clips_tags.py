@@ -45,15 +45,13 @@ def get_api(url):
     try:
         request = requests.get(BASE_API + url)
         if request.status_code == 200:
-            return request.json(object_hook=datetime_parser)
+            return request.json(object_hook=clip_parser)
         else:
             return []
-    except:
-        print "ERROR"
+    except Exception, e:
+        print "ERROR: {}".format(e.message)
         return []
 
-
-# custom templatetags and filters
 
 @register.filter
 def index(a_list, i):
@@ -65,7 +63,7 @@ def index(a_list, i):
 
 
 @register.assignment_tag
-@cacheback(lifetime=60*60*48, fetch_on_miss=True)
+@cacheback(lifetime=60*60*2, fetch_on_miss=True)
 def get_clip(slug, params=''):
     """get single clip"""
     return get_api('clip/{}/?detalle=completo&{}'.format(
@@ -74,7 +72,7 @@ def get_clip(slug, params=''):
 
 
 @register.assignment_tag
-@cacheback(lifetime=60*20, fetch_on_miss=True)
+@cacheback(lifetime=60*10, fetch_on_miss=True)
 def get_relacionados(slug, params=''):
     """get related clips"""
     return get_api('clip/?relacionados={}&detalle=completo&tiempo=3e&{}'.format(
@@ -90,28 +88,28 @@ def get_clips(params=''):
 
 
 @register.assignment_tag
-@cacheback(lifetime=60*60*48, fetch_on_miss=True)
+@cacheback(lifetime=60*60*24, fetch_on_miss=True)
 def get_series(params=''):
     """return series"""
     return get_api('serie/?ultimo=300&{}'.format(params))
 
 
 @register.assignment_tag
-@cacheback(lifetime=60*60*48, fetch_on_miss=True)
+@cacheback(lifetime=60*60, fetch_on_miss=True)
 def get_temas(params=''):
     """temas list"""
     return get_api('tema/?ultimo=300&{}'.format(params))
 
 
 @register.assignment_tag
-@cacheback(lifetime=60*60*48, fetch_on_miss=True)
+@cacheback(lifetime=60*60*24, fetch_on_miss=True)
 def get_categorias(params=''):
     """categorias list"""
     return get_api('categoria/?ultimo=300&{}'.format(params))
 
 
 @register.assignment_tag
-@cacheback(lifetime=60*60*48, fetch_on_miss=True)
+@cacheback(lifetime=60*60*12, fetch_on_miss=True)
 def get_programas(params=''):
     """programas list"""
     return get_api('programa/?detalle=completo&ultimo=300&{}'.format(params))
@@ -131,28 +129,38 @@ def get_paises(params=''):
     return get_api('pais/?&ultimo=300&{}'.format(params))
 
 
+@cacheback(lifetime=60*60*12, fetch_on_miss=True)
 @register.assignment_tag
 def get_tipos(params=''):
     """tipos list"""
     return get_api('tipo_clip/?ultimo=300&{}'.format(params))
 
 
+@cacheback(lifetime=60*60*12, fetch_on_miss=True)
 @register.assignment_tag
 def get_corresponsales(params=''):
     """corresponsales list"""
     return get_api('corresponsal/?ultimo=300&{}'.format(params))
 
+@register.assignment_tag
+@cacheback(lifetime=60*60*12, fetch_on_miss=True)
+def get_corresponsal(slug):
+    """single programa"""
+    return get_api('corresponsal/{}/'.format(slug))
+
 
 @register.assignment_tag
-def get_list_clips(videolist, pagina=0):
+# @cacheback(lifetime=60, fetch_on_miss=True)
+def get_list_clips(lista, pagina=0):
     """paginated clips"""
-    return videolist.get_clips(pagina)
+    return lista.get_clips(pagina)
 
 
 @register.assignment_tag
-def get_list_layout(videolist, pagina=0):
+# @cacheback(lifetime=60, fetch_on_miss=True)
+def get_list_layout(lista, pagina=0):
     """list layout corresponding to page"""
-    return videolist.get_layout(pagina)
+    return lista.get_layout(pagina)
 
 @register.filter
 def print_fecha(fecha, lista):
