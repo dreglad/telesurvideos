@@ -238,6 +238,7 @@ h1, h2, h3, h4, h5, h6, figure {
     top: 12px;
     // @transition(.5s);
     z-index: 10;
+    text-align: right;
     input {
       border: none;
       color: #ddd;
@@ -247,13 +248,13 @@ h1, h2, h3, h4, h5, h6, figure {
       border-radius: 5px;
       background: rgba(0, 0, 0, .1);
       width: 25px;
-      @include transition(1s);
+      transition: width 0.5s;
       &::-webkit-input-placeholder, &:-moz-placeholder, &:-ms-input-placeholder {
         color: #ddd;
       }
       &.extended {
         width: 100%;
-        @include transition(0.5s);
+        transition: width 0.5s;
       }
     }
     .icon {
@@ -1058,7 +1059,7 @@ figure {
       background-position: 50% 50%;
       width: 30%;
       height: 200px;
-      width: 257px;
+      width: 300px;
       @media screen and (max-width: $screen-sm) {
         display: block;
         width: 100%;
@@ -2327,7 +2328,7 @@ figure {
 
 .gtco-nav-toggle {
   position: fixed;
-  right: 0px;
+  right: 10px;
   top: 10px;
   z-index: 21;
   padding: 6px 0 0 0;
@@ -2674,3 +2675,4 @@ div.cms .cms-toolbar-trigger {
   left: 0;
   right: initial !important;
 }
+

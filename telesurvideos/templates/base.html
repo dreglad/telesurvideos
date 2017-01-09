@@ -9,6 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>{% block title %}{{ page_title }}{% endblock title %} - teleSUR Videos</title>
     <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta name="HandheldFriendly" content="True">
     <meta content="{% block meta_description %}{{ meta_description|default:'Videos de teleSUR, noticias, reportajes, documentales y todoas nuestras tranmisiones en video grabadas para consulta o descarga' }}{% endblock %}" name="description"/>
     <meta name="keywords" content="{% block meta_keyworkds %}videos de telesur, television venezolana, telesurtv, venezuela, noticias, canal{% endblock %}"/>
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon"  />
@@ -47,7 +48,7 @@
     cX.callQueue.push(['sendPageViewEvent']);
     </script>
 
-    {% include "includes/newrelic.html" %}
+
 </head>
 <body class="{{ LANGUAGE_CODE }}">
 {% analytical_body_top %}
@@ -56,13 +57,13 @@
 
 {% block page %}
 <div class="gtco-loader"></div>
-<div id="page">
+<main id="page">
     {% block header %}{% endblock %}
 
     {% block content %}{% endblock %}
 
     {% block footer %}{% endblock %}
-</div>
+</main>
 {% endblock page %}
 
 {% block arrowup %}
@@ -79,6 +80,7 @@
 <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
 <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
 <script src="{% static 'js/jquery.query-object.js' %}"></script>
+<script src="{% static 'js/jquery.mobile.custom.min.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
 {% endcompress js %}
 <script type="text/javascript">
