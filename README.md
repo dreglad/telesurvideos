@@ -18,10 +18,13 @@ Cualquier sistema con las versiones más recientes de:
   ```
 
 ## Uso
-  - Frontend: http://127.0.0.1:8080/
-  - Backend: http://127.0.0.1:8080/?edit
-    - Usuario por defecto: *admin*
-    - Contraseña: *telesur*
+  - Frontend:
+   - Español: http://127.0.0.1:8080/
+   - English: http://127.0.0.1:8081/
+  - Backend: (credenciales por defecto: *admin/telesur*)
+   - Español: http://127.0.0.1:8080/?edit
+   - English: http://127.0.0.1:8081/?edit
+
 
 
   [1]: https://www.virtualbox.org/ "Oracle Virtualbox"
