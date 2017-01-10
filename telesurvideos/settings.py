@@ -141,7 +141,8 @@ TEMPLATES = [
                 'django.core.context_processors.tz',
                 'sekizai.context_processors.sekizai',
                 'django.core.context_processors.static',
-                'cms.context_processors.cms_settings'
+                'cms.context_processors.cms_settings',
+                'telesurvideos.context_processors.newrelic',
             ],
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
@@ -205,10 +206,16 @@ COMPRESS_ENABLED = True
 COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'django_libsass.SassCompiler'),
 )
+COMPRESS_CSS_FILTERS = [
+    'compressor.filters.css_default.CssAbsoluteFilter',
+    #'compressor.filters.datauri.CssDataUriFilter',
+    'compressor.filters.cssmin.rCSSMinFilter',
+]
 
 # telesurvideos
 
 VIDEOS_ANALYTICS = ''
+NEWRELIC_APPLICATION_ID = ''
 VIDEOS_FLOWPLAYER_KEY = ''
 VIDEOS_PAGE_SIZE = 10
 VIDEOS_EXCLUDE_CATEGORIAS = (

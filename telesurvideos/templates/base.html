@@ -47,7 +47,7 @@
     cX.callQueue.push(['setSiteId', '9222358407259870873']);
     cX.callQueue.push(['sendPageViewEvent']);
     </script>
-    {% include "includes/newrelic.html" %}
+    {% if NEWRELIC_APPLICATION_ID %}{% include "includes/newrelic.html" %} {%endif %}
 </head>
 <body class="{{ LANGUAGE_CODE }}">
 {% analytical_body_top %}
