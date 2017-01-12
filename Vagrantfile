@@ -89,7 +89,7 @@ Vagrant.configure("2") do |config|
     pip install -q --upgrade -r /vagrant/requirements.txt
 
     echo "\nMigrating database...\n\n"
-    /vagrant/manage.py migrate
+    /vagrant/manage.py migrate --settings telesurvideos.settings_es
 
     echo "\nRunning django development server at port 8080...\n\n"
     python /vagrant/manage.py runserver 0.0.0.0:8080 --settings telesurvideos.settings_es &
