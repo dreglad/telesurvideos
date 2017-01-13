@@ -73,20 +73,20 @@
               <div class="col-lg-6 col-md-12 animate-box">
                 {% block player %}
                 <div id="player-wrapper" {% block video_wrapper_attrs %}class="video"{% endblock %}>
-                  <video id="player" poster="{{ clip.thumbnail_uniforme }}"
+                  <video id="player" poster="{{ clip.thumbnail_grande }}"
                          {% block videoattrs %}controls webkit-playsinline="true" playsinline="true"{% if not player or request.GET.autoplay or request.GET.auto_play %} autoplay{% endif %}{% endblock %}>
                     {% if clip.hls_url %}
                     <source src="{{ clip.hls_url }}" type="application/x-mpegurl">
                     {% endif %}
                     <source src="{{ clip.archivo_subtitulado_url|default:clip.archivo_url }}" type="video/mp4">
-                    {# comment #}
+                    {% comment %}
                     {% if clip.subtitulos %}
                     <track kind="subtitles" default srclang="{{ request.LANGUAGE_CODE }}" label="{{ request.LANGUAGE_CODE }}" src="{{ clip.subtitulos }}"/>
                     {% endif %}
                     {% if clip.vtt_url %}
                       <track kind="metadata" src="{{ clip.vtt_url }}"/> #}
                     {% endif %}
-                    {# endcomment #}
+                    {% endcomment %}
                   </video>
                 </div>
                 {% endblock player %}

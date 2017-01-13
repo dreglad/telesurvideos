@@ -31,7 +31,7 @@ def clip_parser(dct):
         except:
             pass
 
-        if 'idioma' in dct:
+        if 'idioma' in dct and not dct.get('aspectratio'):
             if dct['idioma'] != 'en' or (dct.get('programa') and (dct['programa']['idioma'] == 'es' or dct['programa'].get('slug') in ['know-your-body', 'just-cause'])):
                 dct['width'] = 640
                 dct['height'] = 480
@@ -67,7 +67,7 @@ def index(sequence, i):
 
 
 @register.assignment_tag
-@cacheback(lifetime=60*60*2, fetch_on_miss=True)
+@cacheback(lifetime=60*5, fetch_on_miss=True)
 def get_clip(slug, params='', lang=None):
     """get single clip"""
     return get_api('clip/{}/?detalle=completo&{}'.format(
@@ -94,7 +94,6 @@ def get_clips(params=''):
         qdict = QueryDict('', mutable=True)
         qdict.update(params)
         params = qdict.urlencode()
-    print params
     return get_api('clip/?detalle=completo&{}'.format(params))
 
 

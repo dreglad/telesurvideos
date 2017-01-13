@@ -62,7 +62,7 @@ class ProgramaView(TemplateView):
                     'programa': context['programa']['slug'],
                     'tipo': 'programa',
                     'primero': primero,
-                    'ultimo': primero + page_size,
+                    'ultimo': primero + page_size - 1,
                 })
             ),
         })

@@ -23,18 +23,18 @@ urlpatterns = [
         TemplateView.as_view(template_name='opensearch.xml', content_type='application/opensearchdescription+xml'),
         name='opensearch'),
 
-    # Translators: search URL, should be prefixed with en/
+    # Translators: search URL
     url(r'^{}$'.format(_('busqueda/')), SearchView.as_view(), name="search"),
-    # Translators: list URL, should be prefixed with en/
+    # Translators: list URL
     url(r'^{}(?P<list_type>clip|programa)/(?P<list_id>\d+)/(?P<pagina>\d+)/$'.format(_('lista/')), ListView.as_view(), name="list"),
-    # Translators: video URL, should be prefixed with en/
+    # Translators: video URL
     url(r'^{}(?P<clip_id>\d+)/(?P<clip_slug>.+)/$'.format(_('video/')), VideoView.as_view(), name="video"),
+    # Translators: Shows URL
     url(r'^{}(?P<programa_slug>.+)/(?P<pagina>\d+)/$'.format(_('programas/')), ProgramaView.as_view(), name="programa"),
     url(r'^{}(?P<programa_slug>.+)/$'.format(_('programas/')), ProgramaView.as_view(), name="programa"),
     url(r'^v/(?P<clip_slug>.+)/$', RedirectVideoView.as_view(), name="redirect-video"),
-    # Translators: player URL, should be prefixed with en/
+    # Translators: player URL
     url(r'^{}(?P<clip_id>\d+)/(?P<clip_slug>.+)/$'.format(_('player/')), VideoView.as_view(), {'player': True }, name="player"),
-
 ]
 
 urlpatterns += patterns('',

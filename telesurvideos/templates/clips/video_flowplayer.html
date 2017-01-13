@@ -1,5 +1,5 @@
 {% extends player|yesno:"clips/player.html,clips/video.html" %}
-{% load static compress %}
+{% load static compress i18n %}
 
 {% block stylesheets %}
 {# <link rel="stylesheet" href="{% static 'flowplayer/skin/minimalist.css' %}"> #}
@@ -7,7 +7,7 @@
 {{ block.super }}
 {% endblock %}
 
-{% block video_wrapper_attrs %}data-ratio="{{ clip.aspectratio }}" class="fp-full"{% endblock %}
+{% block video_wrapper_attrs %}data-ratio="{{ clip.aspectratio }}" class="fp-slim"{% endblock %}
 
 {% block videoattrs %}{{ block.super }} data-title="{# clip.titulo #}"{% endblock %}
 
@@ -26,12 +26,15 @@
 {% compress js inline %}
 <script>
 (function($) {
-  flowplayer(function (api) {
+  flowplayer(function (api, root) {
     api.embedCode = function () {
       return '{{ clip.embed_tag_inline|safe }}';
     };
+    api.on("ready", function() {
+      $(".fp-share-menu strong:first").text('{% trans "Compartir" %}');
+      $(".fp-qsel-menu strong:first").text('{% trans "Calidad" %}');
+    });
   });
-  embedCode: window.videoEmbedCode,
   $('#player-wrapper').flowplayer({
     {% if not player or request.GET.autoplay or request.GET.auto_play %}
     autoplay: true,
@@ -47,10 +50,11 @@
     analytics: '{{ VIDEOS_ANALYTICS }}',
     {% endif %}
     twitter: false,
+    subtitles: [],
     ima: {
       locale: "{{ LANGUAGE_CODE }}",
       ads: [{
-        time: 5,
+        time: 4,
         adTag: "https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/138871148/telesurtv.dv.vasttag&ciu_szs=160x600,300x250,300x600,728x90&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=[referrer_url]&description_url=http%3A%2F%2Fwww.telesurtv.net%2F&correlator=[timestamp]"
       }]
     }

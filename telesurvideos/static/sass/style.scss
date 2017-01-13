@@ -2714,8 +2714,11 @@ padding: 20px;
 }
 
 .flowplayer .fp-controls {
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
 }
-
 
 // cms
 .cms-icon-logo:before, div.cms .cms-toolbar-item-logo a:before { 
