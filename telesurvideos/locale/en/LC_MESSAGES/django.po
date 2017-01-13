@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-09 11:35-0600\n"
+"POT-Creation-Date: 2017-01-13 05:42-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,91 +18,63 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: telesurvideos/cms_plugins.py:14
+#: telesurvideos/cms_plugins.py:16
+msgid "Listado de programas teleSUR"
+msgstr "teleSUR Shows listing"
+
+#: telesurvideos/cms_plugins.py:17 telesurvideos/cms_plugins.py:30
+msgid "teleSUR Videos"
+msgstr "teleSUR Videos"
+
+#: telesurvideos/cms_plugins.py:29
 msgid "Listado de videos teleSUR"
 msgstr "teleSUR videos listing"
 
-#: telesurvideos/cms_plugins.py:26
+#: telesurvideos/cms_plugins.py:39
 msgid "Opciones de despliegue"
 msgstr "Display settings"
 
-#: telesurvideos/cms_plugins.py:33
+#: telesurvideos/cms_plugins.py:46
 msgid "Filtros varios"
 msgstr "Attribute filters"
 
-#: telesurvideos/cms_plugins.py:37
+#: telesurvideos/cms_plugins.py:50
 msgid "Filtrar por tipo"
 msgstr "Filter by type"
 
-#: telesurvideos/cms_plugins.py:41
+#: telesurvideos/cms_plugins.py:54
 msgid "Filtrar por programa"
 msgstr "Filter by show"
 
-#: telesurvideos/cms_plugins.py:45
+#: telesurvideos/cms_plugins.py:58
 msgid "Filtrar por categoria"
 msgstr "Filter by category"
 
-#: telesurvideos/cms_plugins.py:49
+#: telesurvideos/cms_plugins.py:62
 msgid "Filtrar por corresponsal"
 msgstr "Filter by correspondant"
 
-#: telesurvideos/cms_plugins.py:53
+#: telesurvideos/cms_plugins.py:66
 msgid "Filtrar por tema"
 msgstr "Filter by topic"
 
-#: telesurvideos/cms_plugins.py:57
+#: telesurvideos/cms_plugins.py:70
 msgid "Filtrar por serie"
 msgstr "Filter by series"
 
-#: telesurvideos/models.py:91
-msgid "Fecha relativa (hace X tiempo)"
-msgstr "Relative date (X time ago)"
+#: telesurvideos/models.py:53
+msgid "título"
+msgstr "title"
 
-#: telesurvideos/models.py:92
-msgid "Fecha completa"
-msgstr "Full date"
+#: telesurvideos/models.py:53
+msgid "Título opcional del listado"
+msgstr "Optional title for this listing"
 
-#: telesurvideos/models.py:93
-msgid "Fecha completa y hora"
-msgstr "Full date and time"
-
-#: telesurvideos/models.py:94
-msgid "fecha relativa si es de hoy, fecha completa en caso contrario"
-msgstr "Relative if date is today, full date otherwise"
-
-#: telesurvideos/models.py:95
-msgid "No mostrar fecha"
-msgstr "Don't display date"
-
-#: telesurvideos/models.py:102
-msgid "mostrar títulos"
-msgstr "display video titles"
-
-#: telesurvideos/models.py:103
-msgid "mostrar descripciones"
-msgstr "display video descriptions"
-
-#: telesurvideos/models.py:104
-msgid "mostrar banner"
-msgstr "show banner"
-
-#: telesurvideos/models.py:104
-msgid "Mostrar encabezado con banner de programa"
-msgstr "Display first clip's banner image header"
-
-#: telesurvideos/models.py:105
-msgid "mostrar tags"
-msgstr "show tags"
-
-#: telesurvideos/models.py:106
-msgid "mostrar fecha"
-msgstr "show date"
-
-#: telesurvideos/models.py:107
+#: telesurvideos/models.py:54
 msgid "layout"
 msgstr "layout"
 
-#: telesurvideos/models.py:107 telesurvideos/models.py:108
+#: telesurvideos/models.py:54 telesurvideos/models.py:55
 msgid ""
 "1, q => columna completa | 2, w => media columna | 3, e => tercio de columna "
 "| 4, r => cuarto de columna | 6, t => dos tercios de columna"
@@ -110,67 +82,119 @@ msgstr ""
 "1, q => full column | 2, w => half column | 3, e => third of column| 4, r => "
 "one fourth of column | 6, t => two thirds of column"
 
-#: telesurvideos/models.py:108 telesurvideos/templates/clips/lista.html:55
+#: telesurvideos/models.py:55 telesurvideos/templates/clips/list.html:24
 msgid "mostrar más"
 msgstr "show more"
 
-#: telesurvideos/models.py:109
-msgid "título"
-msgstr "title"
+#: telesurvideos/models.py:56
+msgid "mostrar títulos"
+msgstr "display video titles"
 
-#: telesurvideos/models.py:109
-msgid "Título opcional del listado"
-msgstr "Optional title for this listing"
+#: telesurvideos/models.py:57
+msgid "mostrar descripciones"
+msgstr "display video descriptions"
 
-#: telesurvideos/models.py:110
-msgid "límite"
-msgstr "Limit"
+#: telesurvideos/models.py:76
+msgid "Mostrar logotipo del programa"
+msgstr "Display Show logo"
 
-#: telesurvideos/models.py:111 telesurvideos/models.py:171
-msgid "tiempo"
-msgstr "time"
+#: telesurvideos/models.py:77
+msgid "Mostrar banner del programa"
+msgstr "Display Show banner"
 
-#: telesurvideos/models.py:111
-msgid "Mostrar videos no más antiguos del tiempo especificado"
-msgstr "Show videos no older that this time"
+#: telesurvideos/models.py:78
+msgid "Mostrar título del programa "
+msgstr "Display Show title"
 
-#: telesurvideos/models.py:112
-msgid "seleccionados"
-msgstr "selected"
+#: telesurvideos/models.py:82
+msgid "mostrar programa"
+msgstr "display show"
 
-#: telesurvideos/models.py:112
-msgid "Filtrar sólo clips seleccionados (selección del editor)"
-msgstr "Filter by selected videos (Editor's Choice)"
+#: telesurvideos/models.py:83
+msgid "mostrar horarios"
+msgstr "display schedule"
 
-#: telesurvideos/models.py:114
+#: telesurvideos/models.py:84 telesurvideos/models.py:134
 msgid "tipos"
 msgstr "types"
 
-#: telesurvideos/models.py:115
+#: telesurvideos/models.py:84
+msgid "Filtrar únicamente los tipos de programa seleccionado"
+msgstr "Filter by the selected Show types"
+
+#: telesurvideos/models.py:120
+msgid "Fecha relativa (hace X tiempo)"
+msgstr "Relative date (X time ago)"
+
+#: telesurvideos/models.py:121
+msgid "Fecha completa"
+msgstr "Full date"
+
+#: telesurvideos/models.py:122
+msgid "Fecha completa y hora"
+msgstr "Full date and time"
+
+#: telesurvideos/models.py:123
+msgid "fecha relativa si es de hoy, fecha completa en caso contrario"
+msgstr "Relative if date is today, full date otherwise"
+
+#: telesurvideos/models.py:124
+msgid "No mostrar fecha"
+msgstr "Don't display date"
+
+#: telesurvideos/models.py:128
+msgid "mostrar banner"
+msgstr "show banner"
+
+#: telesurvideos/models.py:128
+msgid "Mostrar encabezado con banner de programa correspondiente al primer video"
+msgstr "Display first clip's banner heading"
+
+#: telesurvideos/models.py:129
+msgid "mostrar tags"
+msgstr "show tags"
+
+#: telesurvideos/models.py:130
+msgid "mostrar fecha"
+msgstr "show date"
+
+#: telesurvideos/models.py:131
+msgid "límite"
+msgstr "Limit"
+
+#: telesurvideos/models.py:132
+msgid "seleccionados"
+msgstr "selected"
+
+#: telesurvideos/models.py:132
+msgid "Filtrar sólo clips seleccionados (selección del editor)"
+msgstr "Filter by selected videos (Editor's Choice)"
+
+#: telesurvideos/models.py:135
 msgid "programas"
 msgstr "shows"
 
-#: telesurvideos/models.py:116
+#: telesurvideos/models.py:136
 msgid "categorías"
 msgstr "categories"
 
-#: telesurvideos/models.py:117
+#: telesurvideos/models.py:137
 msgid "temas"
 msgstr "topics"
 
-#: telesurvideos/models.py:118
+#: telesurvideos/models.py:138
 msgid "corresponsales"
 msgstr "correspondants"
 
-#: telesurvideos/models.py:119
+#: telesurvideos/models.py:139
 msgid "países"
 msgstr "countries"
 
-#: telesurvideos/models.py:120
+#: telesurvideos/models.py:140
 msgid "series"
 msgstr "series"
 
-#: telesurvideos/models.py:167
+#: telesurvideos/models.py:171
 msgid " ó "
 msgstr " or "
 
@@ -192,11 +216,11 @@ msgstr "yes"
 msgid "no"
 msgstr "no"
 
-#: telesurvideos/settings.py:228
+#: telesurvideos/settings.py:237
 msgid "Simple"
 msgstr "Simple"
 
-#: telesurvideos/settings.py:229
+#: telesurvideos/settings.py:238
 msgid "Sin header ni footer"
 msgstr "Without header and footer"
 
@@ -208,54 +232,54 @@ msgstr "en"
 msgid "es"
 msgstr "es"
 
-#: telesurvideos/templates/clips/search.html:20
-msgid "Filtros seleccionados"
-msgstr "Selected filters"
-
-#: telesurvideos/templates/clips/search.html:24
-msgid "Búsqueda"
-msgstr "Search"
-
-#: telesurvideos/templates/clips/search.html:43
-msgid "Quitar todos los filtros"
-msgstr "Remove all filters"
-
-#: telesurvideos/templates/clips/search.html:51
-msgid "Tipos de contenido"
-msgstr "Video type"
-
-#: telesurvideos/templates/clips/search.html:70
-msgid "Programas"
-msgstr "Shows"
-
-#: telesurvideos/templates/clips/search.html:87
-msgid "Corresponsales"
-msgstr "Correspondants"
-
-#: telesurvideos/templates/clips/search.html:104
-msgid "Temas"
-msgstr "Topics"
-
-#: telesurvideos/templates/clips/search.html:121
-msgid "Categorías"
-msgstr "Categories"
-
-#: telesurvideos/templates/clips/search.html:138
-msgid "Países"
-msgstr "Countries"
-
-#: telesurvideos/templates/clips/search.html:163
+#: telesurvideos/templates/clips/search.html:22
 #: telesurvideos/templates/includes/header.html:21
 msgid "Buscar..."
 msgstr "Search..."
 
-#: telesurvideos/templates/clips/search.html:171
+#: telesurvideos/templates/clips/search.html:30
 msgid "Resultados de búsqueda"
 msgstr "Search results"
 
-#: telesurvideos/templates/clips/search.html:174
+#: telesurvideos/templates/clips/search.html:33
 msgid "Búsqueda sin resultados"
 msgstr "No results"
+
+#: telesurvideos/templates/clips/search.html:47
+msgid "Filtros seleccionados"
+msgstr "Selected filters"
+
+#: telesurvideos/templates/clips/search.html:51
+msgid "Búsqueda"
+msgstr "Search"
+
+#: telesurvideos/templates/clips/search.html:70
+msgid "Quitar todos los filtros"
+msgstr "Remove all filters"
+
+#: telesurvideos/templates/clips/search.html:78
+msgid "Tipos de contenido"
+msgstr "Video type"
+
+#: telesurvideos/templates/clips/search.html:97
+msgid "Programas"
+msgstr "Shows"
+
+#: telesurvideos/templates/clips/search.html:114
+msgid "Corresponsales"
+msgstr "Correspondants"
+
+#: telesurvideos/templates/clips/search.html:131
+msgid "Temas"
+msgstr "Topics"
+
+#: telesurvideos/templates/clips/search.html:148
+msgid "Categorías"
+msgstr "Categories"
+
+#: telesurvideos/templates/clips/search.html:165
+msgid "Países"
+msgstr "Countries"
 
 #: telesurvideos/templates/clips/search.html:191
 msgid "Realizando búsqueda..."
@@ -265,64 +289,65 @@ msgstr "Performing search..."
 msgid "Mostrar más resultados"
 msgstr "Load more results"
 
-#: telesurvideos/templates/clips/video.html:95
+#: telesurvideos/templates/clips/video.html:100
 msgid "Tipo"
 msgstr "Type"
 
-#: telesurvideos/templates/clips/video.html:99
+#: telesurvideos/templates/clips/video.html:104
+#: telesurvideos/templates/includes/tags.html:4
 msgid "Programa"
 msgstr "Show"
 
-#: telesurvideos/templates/clips/video.html:104
+#: telesurvideos/templates/clips/video.html:109
 msgid "Corresponsal"
 msgstr "Correspondant"
 
-#: telesurvideos/templates/clips/video.html:109
+#: telesurvideos/templates/clips/video.html:114
 msgid "Tema"
 msgstr "Topic"
 
-#: telesurvideos/templates/clips/video.html:113
+#: telesurvideos/templates/clips/video.html:118
 msgid "Categoría"
 msgstr "Category"
 
-#: telesurvideos/templates/clips/video.html:118
 #: telesurvideos/templates/clips/video.html:123
+#: telesurvideos/templates/clips/video.html:128
 msgid "País"
 msgstr "Country"
 
 #. Translators: Single video page, full date
-#: telesurvideos/templates/clips/video.html:132
+#: telesurvideos/templates/clips/video.html:137
 msgid "l j \\d\\e F \\d\\e Y"
 msgstr "l, F jS, Y"
 
-#: telesurvideos/templates/clips/video.html:136
-#: telesurvideos/templates/clips/video.html:137
-#: telesurvideos/templates/clips/video.html:138
-#: telesurvideos/templates/clips/video.html:139
+#: telesurvideos/templates/clips/video.html:141
+#: telesurvideos/templates/clips/video.html:142
+#: telesurvideos/templates/clips/video.html:143
+#: telesurvideos/templates/clips/video.html:144
 msgid "Compartir en"
 msgstr "Share on"
 
-#: telesurvideos/templates/clips/video.html:164
+#: telesurvideos/templates/clips/video.html:169
 msgid "Videos relacionados"
 msgstr "Related videos"
 
 #. Translators: Full date format within current year
-#: telesurvideos/templatetags/clips_tags.py:176
+#: telesurvideos/templatetags/clips_tags.py:188
 msgid "j \\d\\e F"
 msgstr "F jS"
 
 #. Translators: Full date format not in current year
-#: telesurvideos/templatetags/clips_tags.py:179
+#: telesurvideos/templatetags/clips_tags.py:191
 msgid "j \\d\\e F \\d\\e Y"
 msgstr "F jS, Y"
 
 #. Translators: Full date & time format within current year
-#: telesurvideos/templatetags/clips_tags.py:184
+#: telesurvideos/templatetags/clips_tags.py:196
 msgid "j \\d\\e F, H:i \\h\\r\\s."
 msgstr "F jS, H:i \\h\\r\\s."
 
 #. Translators: Full date & time format not within current year
-#: telesurvideos/templatetags/clips_tags.py:187
+#: telesurvideos/templatetags/clips_tags.py:199
 msgid "j \\d\\e F \\d\\e Y, H:i \\h\\r\\s."
 msgstr "F jS, Y \\h\\r\\s."
 
@@ -341,11 +366,25 @@ msgstr "xn/list/"
 msgid "video/"
 msgstr "xn/video/"
 
+#: telesurvideos/urls.py:32 telesurvideos/urls.py:33
+msgid "programas/"
+msgstr "shows/"
+
 #. Translators: player URL, should be prefixed with en/
-#: telesurvideos/urls.py:33
+#: telesurvideos/urls.py:36
 msgid "player/"
 msgstr "xn/player/"
 
-#: telesurvideos/views.py:27
+#: telesurvideos/views.py:29 telesurvideos/views.py:82
 msgid "Video no existente"
 msgstr "Video not found"
+
+#: telesurvideos/views.py:45
+msgid "Programa no existente"
+msgstr "Show not found"
+
+#~ msgid "tiempo"
+#~ msgstr "time"
+
+#~ msgid "Mostrar videos no más antiguos del tiempo especificado"
+#~ msgstr "Show videos no older that this time"
