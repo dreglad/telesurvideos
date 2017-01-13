@@ -1,20 +1,23 @@
 {% extends player|yesno:"clips/player.html,clips/video.html" %}
 {% load static compress %}
 
-{% block video_wrapper_attrs %}class="no-volume"{% endblock %}
-
-{% block stylesheets %}{{ block.super }}
-<link rel="stylesheet" href="{% static 'flowplayer/skin/minimalist.css' %}">
-<link rel="stylesheet" href="//releases.flowplayer.org/quality-selector/flowplayer.quality-selector.css">
+{% block stylesheets %}
+{# <link rel="stylesheet" href="{% static 'flowplayer/skin/minimalist.css' %}"> #}
+<link rel="stylesheet" href="//releases.flowplayer.org/7.0.0/skin/skin.css">
+{{ block.super }}
 {% endblock %}
 
-{% block videoattrs %}{% if not player or request.GET.autoplay or request.GET.auto_play %}autoplay{% endif %} webkit-playsinline="true"  playsinline="true"{% endblock %}
+{% block video_wrapper_attrs %}data-ratio="{{ clip.aspectratio }}" class="fp-full"{% endblock %}
+
+{% block videoattrs %}{{ block.super }} data-title="{# clip.titulo #}"{% endblock %}
 
 {% block bottom_scripts %}{{ block.super }}
 {% if VIDEOS_FLOWPLAYER_KEY %}
-<script src="//releases.flowplayer.org/6.0.5/commercial/flowplayer.min.js"></script>
+{# <script src="//releases.flowplayer.org/6.0.5/commercial/flowplayer.min.js"></script> #}
+<script src="//releases.flowplayer.org/7.0.0/commercial/flowplayer.min.js"></script>
 {% else %}
-<script src="//releases.flowplayer.org/6.0.5/flowplayer.min.js"></script>
+{# <script src="//releases.flowplayer.org/6.0.5/flowplayer.min.js"></script> #}
+<script src="//releases.flowplayer.org/7.0.0/flowplayer.min.js"></script>
 {% endif %}
 <script src="//releases.flowplayer.org/hlsjs/flowplayer.hlsjs.min.js"></script>
 <script src="//s0.2mdn.net/instream/html5/ima3.js"></script>
@@ -23,7 +26,13 @@
 {% compress js inline %}
 <script>
 (function($) {
-  $('#player').flowplayer({
+  flowplayer(function (api) {
+    api.embedCode = function () {
+      return '{{ clip.embed_tag_inline|safe }}';
+    };
+  });
+  embedCode: window.videoEmbedCode,
+  $('#player-wrapper').flowplayer({
     {% if not player or request.GET.autoplay or request.GET.auto_play %}
     autoplay: true,
     {% endif %}
@@ -37,6 +46,7 @@
     {% if VIDEOS_ANALYTICS %}
     analytics: '{{ VIDEOS_ANALYTICS }}',
     {% endif %}
+    twitter: false,
     ima: {
       locale: "{{ LANGUAGE_CODE }}",
       ads: [{
