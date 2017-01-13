@@ -41,11 +41,15 @@ def _art(layout):
     return "╔═══════════════════════╗\n{}\n╚═══════════════════════╝".format(
         ASCII_LINES['SEP'].join(lines))
 
+FILTROS_EXTRA = (
+    {'slug': 'no_es_nulo', 'nombre': _('Tiene cualquiera')},
+    {'slug': 'es_nulo', 'nombre': _('No tiene')},
+)
 
 def choices_for_filtro(filtro):
     """choices function"""
     fnc = getattr(clips_tags, 'get_%s' % filtro)
-    return lazy(lambda: [(dct['slug'], dct['nombre']) for dct in fnc()], tuple)()
+    return lazy(lambda: [(dct['slug'], dct['nombre']) for dct in FILTROS_EXTRA + tuple(fnc())], tuple)()
 
 
 class BaseListPluginModel(CMSPlugin):

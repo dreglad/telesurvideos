@@ -1,12 +1,12 @@
 {% extends "clips/list.html" %}
-{% load static clips_tags %}
+{% load static clips_tags i18n %}
 
 {% block list_header %}
 {% if instance.titulo %}<h2 class="list-title {{ instance.list_type }}">{{ instance.titulo }}</h2>{% endif %}
 {% endblock %}
 
 {% block item %}
-<a itemprop="mainEntityOfPage" class="programa-item" title="Programa: {{ item.nombre }}" href="{% url 'programa' item.slug %}">
+<a itemprop="mainEntityOfPage" class="programa-item" title="{% trans 'Programa' %}: {{ item.nombre }}" href="{% url 'programa' item.slug %}">
 
   {% if instance.mostrar_programa == 'logo' and item.imagen_url %}
   <div class="entry-img programa imagen" style="background-image: url({% static item.imagen_url %})"><span>{{ item.nombre }}</span></div>
@@ -16,8 +16,9 @@
   <h3 class="programa">{{ item.nombre }}</h3>
   {% endif %}
 
-  {% if instance.mostrar_titulos or instance.mostrar_descripciones %}
+  {% if instance.mostrar_horarios or instance.mostrar_titulos or instance.mostrar_descripciones %}
   <div class="entry-desc">
+    {% if instance.mostrar_horarios %}<h5>{{ item.horario.strip }}</h5>{% endif %}
     {% if instance.mostrar_titulos %}<h3 itemprop="name">{{ item.nombre|truncatewords:12 }}</h3>{% endif %}
     {% if instance.mostrar_descripciones %}<p>{{ item.descripcion|truncatewords:45 }}</p>{% endif %}
   </div>

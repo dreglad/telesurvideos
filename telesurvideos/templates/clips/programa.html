@@ -1,6 +1,7 @@
 {% extends "simple.html" %}
+{% load i18n %}
 
-{% block title %}Programa: {{ programa.nombre }}{% endblock %}
+{% block title %}{% trans "Programa" %}: {{ programa.nombre }}{% endblock %}
 
 {% block meta_description %}{{ programa.descripcion.strip }}{% endblock %}
 
