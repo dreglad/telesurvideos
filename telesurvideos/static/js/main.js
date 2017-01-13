@@ -172,7 +172,7 @@
 
 			}
 
-		} , { offset: '85%' } );
+		} , { offset: '100%' } );
 	};
 
 
@@ -335,7 +335,6 @@
 		});
 
 		$('#page').on('swipe',function(ev){
-			console.log('sjfnkjsnf');
 			$('body').toggleClass('offcanvas');
 		})
 

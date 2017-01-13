@@ -10,7 +10,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView
 
-from .views import SearchView, VideoView, VideoListView
+from .views import ListView, ProgramaView, RedirectVideoView, SearchView, VideoView
 
 admin.autodiscover()
 
@@ -26,9 +26,12 @@ urlpatterns = [
     # Translators: search URL, should be prefixed with en/
     url(r'^{}$'.format(_('busqueda/')), SearchView.as_view(), name="search"),
     # Translators: list URL, should be prefixed with en/
-    url(r'^{}(?P<lista_id>\d+)/(?P<pagina>\d+)/$'.format(_('lista/')), VideoListView.as_view(), name="video_list"),
+    url(r'^{}(?P<list_type>clip|programa)/(?P<list_id>\d+)/(?P<pagina>\d+)/$'.format(_('lista/')), ListView.as_view(), name="list"),
     # Translators: video URL, should be prefixed with en/
     url(r'^{}(?P<clip_id>\d+)/(?P<clip_slug>.+)/$'.format(_('video/')), VideoView.as_view(), name="video"),
+    url(r'^{}(?P<programa_slug>.+)/(?P<pagina>\d+)/$'.format(_('programas/')), ProgramaView.as_view(), name="programa"),
+    url(r'^{}(?P<programa_slug>.+)/$'.format(_('programas/')), ProgramaView.as_view(), name="programa"),
+    url(r'^v/(?P<clip_slug>.+)/$', RedirectVideoView.as_view(), name="redirect-video"),
     # Translators: player URL, should be prefixed with en/
     url(r'^{}(?P<clip_id>\d+)/(?P<clip_slug>.+)/$'.format(_('player/')), VideoView.as_view(), {'player': True }, name="player"),
 

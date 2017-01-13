@@ -11,7 +11,7 @@
   </a>
   <div class="post-meta">
     <p class="seccion">
-      {% include "includes/tags.html" %}
+      {% include "includes/tags.html" with item=clip %}
     </p>
     <small class="date-posted"> | {{ clip.duracion|print_duration }} | {{ clip.fecha.date }}</small>
   </div>

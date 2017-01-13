@@ -13,22 +13,13 @@ from multiselectfield import MultiSelectField
 
 from .templatetags import clips_tags
 
-FILTROS = (
-    ('tipo', 'tipos'), ('programa', 'programas'),
-    ('categoria', 'categorias'), ('pais', 'paises'),
-    ('serie', 'series'), ('corresponsal', 'corresponsales'),
-    ('tema', 'temas'),
-)
 
 ASCII_LINES = {
-    "L": "║",
-    "SEP": "\n╠═══════════════════════╣\n",
-    "L1": "           1           ║", 
-    "L2": "     2     ║",
-    "L3": "   3   ║",
-    "L4": "  4  ║",
-    "L6": "        6      ║",
+    "L": "║", "SEP": "\n╠═══════════════════════╣\n",
+    "L1": "           1           ║", "L2": "     2     ║",
+    "L3": "   3   ║", "L4": "  4  ║", "L6": "        6      ║",
 }
+
 def _art(layout):
     """ASCII art layout"""
     lines = []
@@ -50,110 +41,123 @@ def _art(layout):
     return "╔═══════════════════════╗\n{}\n╚═══════════════════════╝".format(
         ASCII_LINES['SEP'].join(lines))
 
-def tipos_choices():
-    """tipos choices"""
-    return [(c['slug'], c['nombre']) for c in clips_tags.get_tipos()]
 
-def corresponsales_choices():
-    """corresponsales choices"""
-    return [(c['slug'], c['nombre']) for c in clips_tags.get_corresponsales()]
-
-def programas_choices():
-    """programas choices"""
-    return [(c['slug'], c['nombre']) for c in clips_tags.get_programas()]
-
-def series_choices():
-    """series choices"""
-    return [(c['slug'], c['nombre']) for c in clips_tags.get_series()]
-
-def paises_choices():
-    """países choices"""
-    return [(c['slug'], c['nombre']) for c in clips_tags.get_paises()]
-
-def temas_choices():
-    """temas choices"""
-    return [(c['slug'], c['nombre']) for c in clips_tags.get_temas()]
-
-def categorias_choices():
-    """categorías choices"""
-    return [(c['slug'], c['nombre']) for c in clips_tags.get_categorias()]
-
-def tiempo_choices():
-    """tiempo choices"""
-    return (
-        (None, '- Sin restricción -'),
-        ('1h', '1 hora'), ('3h', '3 horas'), ('12h', '12 horas'), ('1d', '1 día'),
-        ('2d', '2 días'), ('3d', '3 días'), ('1s', '1 semana'), ('2s', '2 semanas'),
-        ('1e', '1 mes'), ('2e', '2 meses'), ('1a', '1 año'), ('2', '2 años'),
-    )
-
-MOSTRAR_FECHA_CHOICES = (
-    ('rel', _('Fecha relativa (hace X tiempo)')),
-    ('f', _('Fecha completa')),
-    ('fh', _('Fecha completa y hora')),
-    ('con', _('fecha relativa si es de hoy, fecha completa en caso contrario')),
-    (None, _('No mostrar fecha')),
-)
-MOSTRAR_FECHA_DEFAULT = 'con'
+def choices_for_filtro(filtro):
+    """choices function"""
+    fnc = getattr(clips_tags, 'get_%s' % filtro)
+    return lazy(lambda: [(dct['slug'], dct['nombre']) for dct in fnc()], tuple)()
 
 
-class VideoListPluginModel(CMSPlugin):
-    """VideoListPluginModel"""
-    mostrar_titulos = models.BooleanField(_('mostrar títulos'), default=True)
-    mostrar_descripciones = models.BooleanField(_('mostrar descripciones'), default=True)
-    mostrar_banner = models.BooleanField(_('mostrar banner'), default=False, help_text=_('Mostrar encabezado con banner de programa'))
-    mostrar_tags = models.BooleanField(_('mostrar tags'), default=True)
-    mostrar_fecha = models.CharField(_('mostrar fecha'), choices=MOSTRAR_FECHA_CHOICES, default=MOSTRAR_FECHA_DEFAULT, max_length=3, null=True, blank=True)
+class BaseListPluginModel(CMSPlugin):
+    """Base List Plugin Model"""
+    titulo = models.CharField(_('título'), max_length=255, blank=True, help_text=_('Título opcional del listado'))
     layout = models.TextField(_('layout'), blank=True, help_text=_('1, q => columna completa | 2, w => media columna | 3, e => tercio de columna | 4, r => cuarto de columna | 6, t => dos tercios de columna'))
     mostrar_mas = models.TextField(_('mostrar más'), blank=True, help_text=_('1, q => columna completa | 2, w => media columna | 3, e => tercio de columna | 4, r => cuarto de columna | 6, t => dos tercios de columna'))
-    titulo = models.CharField(_('título'), max_length=255, blank=True, help_text=_('Título opcional del listado'))
-    limite = models.PositiveIntegerField(_('límite'), default=20)
-    tiempo = models.CharField(_('tiempo'), choices=tiempo_choices(), max_length=8, null=True, blank=True,help_text=_('Mostrar videos no más antiguos del tiempo especificado'))
-    seleccionados = models.BooleanField(_('seleccionados'), default=False, help_text=_('Filtrar sólo clips seleccionados (selección del editor)'))
-    # filtros
-    tipos = MultiSelectField(_('tipos'), choices=lazy(tipos_choices, tuple)(), null=True, blank=True)
-    programas = MultiSelectField(_('programas'), choices=lazy(programas_choices, tuple)(), null=True, blank=True)
-    categorias = MultiSelectField(_('categorías'), choices=lazy(categorias_choices, tuple)(), null=True, blank=True)
-    temas = MultiSelectField(_('temas'), choices=lazy(temas_choices, tuple)(), null=True, blank=True)
-    corresponsales = MultiSelectField(_('corresponsales'), choices=lazy(corresponsales_choices, tuple)(), null=True, blank=True)
-    paises = MultiSelectField(_('países'), choices=lazy(paises_choices, tuple)(), null=True, blank=True)
-    series = MultiSelectField(_('series'), choices=lazy(series_choices, tuple)(), null=True, blank=True)
+    mostrar_titulos = models.BooleanField(_('mostrar títulos'), default=True)
+    mostrar_descripciones = models.BooleanField(_('mostrar descripciones'), default=True)
 
-    def _cleaned(self, value):
-        """cleaned layout value"""
-        return str(value).translate(string.maketrans(",.|;\n\r ", '       ')).replace(' ', '')
+    @property
+    def list_type(self):
+        """must implement"""
+        raise NotImplementedError
 
     def get_layout(self, pagina=0):
         """proper layout"""
-        attr = pagina and 'mostrar_mas' or 'layout'
-        return self._cleaned(getattr(self, attr))
+        layout = str(getattr(self, pagina and 'mostrar_mas' or 'layout'))
+        return layout.translate(string.maketrans(",.|;\n\r ", '       ')).replace(' ', '')
+
+    class Meta:
+        abstract = True
+
+
+class ProgramaListPluginModel(BaseListPluginModel):
+    """Programa List Plugin Model"""
+    MOSTRAR_PROGRAMA_CHOICES = (
+        ('logo', _('Mostrar logotipo del programa')),
+        ('banner', _('Mostrar banner del programa')),
+        ('titulo', _('Mostrar título del programa ')),
+    )
+    MOSTRAR_PROGRAMA_DEFAULT = 'logo'
+
+    mostrar_programa = models.CharField(_('mostrar programa'), choices=MOSTRAR_PROGRAMA_CHOICES, default=MOSTRAR_PROGRAMA_DEFAULT, max_length=8, null=True, blank=True)
+    mostrar_horarios = models.BooleanField(_('mostrar horarios'), default=False)
+    tipos = MultiSelectField(_('tipos'), choices=choices_for_filtro('tipos_programa'), null=True, blank=True, help_text=_('Filtrar únicamente los tipos de programa seleccionado'))
 
     @property
-    def cleaned_mostrar_mas(self):
-        return self._cleaned(self.mostrar_mas)
+    def list_type(self):
+        return 'programa'
 
-    @property
-    def cleaned_layout(self):
-        """cleaned layout"""
-        return self._cleaned(self.layout)
-
-    def get_clips(self, pagina=0):
-        """obtiene clips que representan a este objeto"""
+    def get_items(self, pagina=0):
+        """obtiene programas que representan a este objeto"""
         opts = QueryDict('', mutable=True)
 
-        for filtro, attr in FILTROS:
-            for val in getattr(self, attr):
-                opts.appendlist(filtro, val)
-        if self.tiempo:
-            opts.update({'tiempo': self.tiempo})
-        if self.seleccionados:
-            opts.update({'seleccionado': True})
+        if self.tipos:
+            for tipo in self.tipos:
+                opts.appendlist('tipo_programa', tipo)
 
-        primeros = len(self.cleaned_layout)
+        primeros = len(self.get_layout(0))
         if pagina == 0:
             opts.update({'ultimo': primeros})
         else:
-            segundos = len(self.cleaned_mostrar_mas)
+            segundos = len(self.get_layout(1))
+            opts.update({'primero': primeros + 1 + (segundos * (pagina - 1))})
+            opts.update({'ultimo': opts['primero'] + (segundos-1)})
+
+        print(opts.urlencode())
+        print('aaa')
+        return clips_tags.get_programas(opts)
+
+
+class VideoListPluginModel(BaseListPluginModel):
+    """Video List Plugin Model"""
+    FILTROS = (
+        ('tipo', 'tipos'), ('programa', 'programas'),
+        ('categoria', 'categorias'), ('pais', 'paises'), ('serie', 'series'),
+        ('corresponsal', 'corresponsales'), ('tema', 'temas'),
+    )
+
+    MOSTRAR_FECHA_CHOICES = (
+        ('rel', _('Fecha relativa (hace X tiempo)')),
+        ('f', _('Fecha completa')),
+        ('fh', _('Fecha completa y hora')),
+        ('con', _('fecha relativa si es de hoy, fecha completa en caso contrario')),
+        (None, _('No mostrar fecha')),
+    )
+    MOSTRAR_FECHA_DEFAULT = 'con'
+
+    mostrar_banner = models.BooleanField(_('mostrar banner'), default=False, help_text=_('Mostrar encabezado con banner de programa correspondiente al primer video'))
+    mostrar_tags = models.BooleanField(_('mostrar tags'), default=True)
+    mostrar_fecha = models.CharField(_('mostrar fecha'), choices=MOSTRAR_FECHA_CHOICES, default=MOSTRAR_FECHA_DEFAULT, max_length=3, null=True, blank=True)
+    limite = models.PositiveIntegerField(_('límite'), default=20)
+    seleccionados = models.BooleanField(_('seleccionados'), default=False, help_text=_('Filtrar sólo clips seleccionados (selección del editor)'))
+    # filtros
+    tipos = MultiSelectField(_('tipos'), choices=choices_for_filtro('tipos_clip'), null=True, blank=True)
+    programas = MultiSelectField(_('programas'), choices=choices_for_filtro('programas'), null=True, blank=True)
+    categorias = MultiSelectField(_('categorías'), choices=choices_for_filtro('categorias'), null=True, blank=True)
+    temas = MultiSelectField(_('temas'), choices=choices_for_filtro('temas'), null=True, blank=True)
+    corresponsales = MultiSelectField(_('corresponsales'), choices=choices_for_filtro('corresponsales'), null=True, blank=True)
+    paises = MultiSelectField(_('países'), choices=choices_for_filtro('paises'), null=True, blank=True)
+    series = MultiSelectField(_('series'), choices=choices_for_filtro('series'), null=True, blank=True)
+
+    @property
+    def list_type(self):
+        return 'clip'
+
+    def get_items(self, pagina=0):
+        """obtiene clips que representan a este objeto"""
+        opts = QueryDict('', mutable=True)
+
+        for filtro, attr in self.FILTROS:
+            for val in getattr(self, attr):
+                opts.appendlist(filtro, val)
+        if self.seleccionados:
+            opts.update({'seleccionado': True})
+
+        primeros = len(self.get_layout(0))
+        if pagina == 0:
+            opts.update({'ultimo': primeros})
+        else:
+            segundos = len(self.get_layout(1))
             opts.update({'primero': primeros + 1 + (segundos * (pagina - 1))})
             opts.update({'ultimo': opts['primero'] + (segundos-1)})
 
@@ -161,14 +165,10 @@ class VideoListPluginModel(CMSPlugin):
 
     def __unicode__(self):
         filtros = []
-        for filtro, attr in FILTROS:
+        for filtro, attr in self.FILTROS:
             if getattr(self, attr):
                 filtros.append('<li>{}: <strong>{}</strong></li>'.format(
                     filtro, _(' ó ').join(getattr(self, attr))))
-
-        if self.tiempo:
-            filtros.append('<li>{}: <strong>{}</strong></li>'.format(
-                _('tiempo'), self.get_tiempo_display()))
 
         return mark_safe((
             '<br><pre style="display:inline-block; float:left;">''{}</pre>'

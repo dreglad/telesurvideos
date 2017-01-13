@@ -10,16 +10,18 @@ from cacheback.decorators import cacheback
 from django import template
 from django.conf import settings
 from django.contrib.humanize.templatetags.humanize import naturaltime 
+from django.http.request import QueryDict
 from django.template import defaultfilters, Node, TemplateSyntaxError, VariableDoesNotExist
 from django.utils.translation import ugettext as _
 
 
 register = template.Library()
 
-if settings.SITE_ID == 1: # es
-    BASE_API = 'http://multimedia.telesurtv.net/api/'
-elif settings.SITE_ID == 2: #en
-    BASE_API = 'http://multimedia.telesurtv.net/en/api/'
+BASE_API = {
+    'es': 'http://multimedia.telesurtv.net/api/',
+    'en': 'http://multimedia.telesurtv.net/en/api/',
+    'pt': 'http://multimedia.telesurtv.net/pt/api/',
+}
 
 def clip_parser(dct):
     """convert from JSON"""
@@ -40,10 +42,12 @@ def clip_parser(dct):
     return dct
 
 @cacheback(lifetime=60, fetch_on_miss=True)
-def get_api(url):
+def get_api(path, lang=None):
     """gets API parsed JSON response"""
     try:
-        request = requests.get(BASE_API + url)
+        url = BASE_API[lang or settings.LANGUAGE_CODE]
+        request = requests.get(url + path)
+        print 'request to ', url + path
         if request.status_code == 200:
             return request.json(object_hook=clip_parser)
         else:
@@ -54,20 +58,20 @@ def get_api(url):
 
 
 @register.filter
-def index(a_list, i):
-    """gets the i-th element from a_list sequence"""
+def index(sequence, i):
+    """gets the i-th element from sequence"""
     try:
-        return a_list[int(i)]
+        return sequence[int(i)]
     except IndexError:
         pass
 
 
 @register.assignment_tag
 @cacheback(lifetime=60*60*2, fetch_on_miss=True)
-def get_clip(slug, params=''):
+def get_clip(slug, params='', lang=None):
     """get single clip"""
     return get_api('clip/{}/?detalle=completo&{}'.format(
-        urllib.quote(slug), params
+        urllib.quote(slug), params, lang=None
         ))
 
 
@@ -84,6 +88,13 @@ def get_relacionados(slug, params=''):
 @cacheback(lifetime=60*2, fetch_on_miss=True)
 def get_clips(params=''):
     """return clips"""
+    if isinstance(params, QueryDict):
+        params = params.urlencode()
+    elif isinstance(params, dict):
+        qdict = QueryDict('', mutable=True)
+        qdict.update(params)
+        params = qdict.urlencode()
+    print params
     return get_api('clip/?detalle=completo&{}'.format(params))
 
 
@@ -112,7 +123,14 @@ def get_categorias(params=''):
 @cacheback(lifetime=60*60*12, fetch_on_miss=True)
 def get_programas(params=''):
     """programas list"""
-    return get_api('programa/?detalle=completo&ultimo=300&{}'.format(params))
+    if isinstance(params, QueryDict):
+        params = params.urlencode()
+    elif isinstance(params, dict):
+        qdict = QueryDict('', mutable=True)
+        qdict.update(params)
+        params = qdict.urlencode()
+    return get_api('programa/?detalle=completo&ultimo=300&idioma={}&{}'.format(
+        settings.LANGUAGE_CODE, params))
 
 
 @register.assignment_tag
@@ -131,7 +149,14 @@ def get_paises(params=''):
 
 @cacheback(lifetime=60*60*12, fetch_on_miss=True)
 @register.assignment_tag
-def get_tipos(params=''):
+def get_tipos_programa(params=''):
+    """tipos list"""
+    return get_api('tipo_programa/?ultimo=300&{}'.format(params))
+
+
+@cacheback(lifetime=60*60*12, fetch_on_miss=True)
+@register.assignment_tag
+def get_tipos_clip(params=''):
     """tipos list"""
     return get_api('tipo_clip/?ultimo=300&{}'.format(params))
 
@@ -148,19 +173,6 @@ def get_corresponsal(slug):
     """single programa"""
     return get_api('corresponsal/{}/'.format(slug))
 
-
-@register.assignment_tag
-# @cacheback(lifetime=60, fetch_on_miss=True)
-def get_list_clips(lista, pagina=0):
-    """paginated clips"""
-    return lista.get_clips(pagina)
-
-
-@register.assignment_tag
-# @cacheback(lifetime=60, fetch_on_miss=True)
-def get_list_layout(lista, pagina=0):
-    """list layout corresponding to page"""
-    return lista.get_layout(pagina)
 
 @register.filter
 def print_fecha(fecha, lista):
@@ -198,7 +210,7 @@ def title_for_search(context):
     filtros = context['filtros']
     title = ''
     if filtros.get('tipo'):
-        tipo = filter(lambda x: x['slug'] == filtros['tipo'], get_tipos())
+        tipo = filter(lambda x: x['slug'] == filtros['tipo'], get_tipos_clip())
         if tipo:
             title += tipo[0]['nombre_plural'] + ' '
             if filtros['tipo'] == 'programa' and filtros.get('programa'):

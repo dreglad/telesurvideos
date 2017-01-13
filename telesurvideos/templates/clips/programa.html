@@ -1,0 +1,35 @@
+{% extends "simple.html" %}
+
+{% block title %}Programa: {{ programa.nombre }}{% endblock %}
+
+{% block meta_description %}{{ programa.descripcion.strip }}{% endblock %}
+
+{% block content %}
+<div id="gtco-main">
+  <div class="container">
+    <div class="row row-pb-md">
+      <div class="col-md-12">
+        <ul class="gtco-post-list">
+          <li class="banner full" style="padding-bottom: 1.5em;">
+            {% if programa.banner_url and 'placeholder.gif' not in programa.banner_url %}
+            <img alt="{{ programa.nombre }}" src="{{ programa.banner_url }}" />
+            {% elif programa.imagen_url %}
+            <img alt="{{ programa.nombre }}" src="{{ programa.imagen_url }}" />
+            {% else %}
+            <h2>{{ programa.nombre }}</h2>
+            {% endif %}
+          </li>
+          <li class="banner entry one-third" style="padding-top:2px; text-align: center; height: auto;">
+            <h2>{{ programa.nombre }}</h1>
+            <h5>{{ programa.horario }}</h5>
+          </li>
+          <li class="banner entry two-third" style="text-align: left; padding:0 1em; height: auto;">
+            <p>{{ programa.descripcion.strip }}</p>
+          </li>
+        </ul>
+        {% include "clips/clip_list.html" %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,21 +1,25 @@
-{% extends clips/video.html %}
+{% extends player|yesno:"clips/player.html,clips/video.html" %}
+{% load static compress %}
 
-{% block extrahead %}
+{% block stylesheets %}{{ block.super }}
 <link href="{% static 'videojs/video-js.min.css' %}" rel="stylesheet">
 {% endblock %}
 
-{% block player %}
-<div id="thevideo"></div>
-<script>
-    var player = new Clappr.Player(
-      {source: "{{ clip.hls_url }}", parentId: "thevideo"}
-    );
-</script>
-{% endblock %}
-
-{% block extrabody %}{{ block.super }}
+{% block bottom_scripts %}{{ block.super }}
+{% compress js %}
 <script src="{% static 'videojs/video.min.js' %}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/4.0.2/videojs-contrib-hls.min.js"></script>
-<script src="{% static 'js/videojs.thumbnails.js' %}"></script>
-<script src="{% static 'js/videojs-contrib-quality-levels.min.js' %}"></script>
+{# <script src="{% static 'js/videojs.thumbnails.js' %}"></script> #}
+{% endcompress %}
+{# <script src="{% static 'js/videojs-contrib-quality-levels.min.js' %}"></script> #}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/4.0.3/videojs-contrib-hls.min.js"></script>
+<script>
+    videojs.options.flash.swf = '{% static "videojs/video-js.swf" %}';// "http://example.com/path/to/video-js.swf"
+    //videojs("player", {}, function(){
+    //  // Player (this) is initialized and ready.
+    //});
+    videojs("player", {}, function(){
+      // Player (this) is initialized and ready.
+      //this.play();
+    });
+</script>
 {% endblock %}

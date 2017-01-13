@@ -240,7 +240,10 @@ CMS_PERMISSION = True
 
 CMS_PLACEHOLDER_CONF = {
     None: {
-        "plugins": ['ClipsListaPlugin', 'TextPlugin', 'PicturePlugin', 'LinkPlugin'],
+        "plugins": [
+            'ClipsListaPlugin', 'ProgramaListaPlugin', 'TextPlugin',
+            'PicturePlugin', 'LinkPlugin'
+        ],
         'text_only_plugins': ['LinkPlugin', 'PicturePlugin'],
     }
 }

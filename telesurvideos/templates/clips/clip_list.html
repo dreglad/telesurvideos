@@ -1,0 +1,45 @@
+{% extends "clips/list.html" %}
+{% load static clips_tags %}
+
+{% block list_header %}
+{% if instance.titulo %}<h2>{{ instance.titulo }}</h2>{% endif %}
+{% endblock %}
+
+{% block first_item_top %}
+{% if instance.mostrar_banner %}
+<li class="banner full">
+  <a href="{% url 'search' %}?tipo=programa&programa={{ item.programa.slug }}">
+    {% if item.programa.banner_url and 'placeholder.gif' not in item.programa.banner_url %}
+    <img src="{{ item.programa.banner_url }}" />
+    {% elif item.programa.imagen_url %}
+    <img src="{{ item.programa.imagen_url }}" />
+    {% else %}
+    <h2>{{ item.programa.nombre }}</h2>
+    {% endif %}
+  </a>
+</li>
+{% endif %}
+{% endblock %}
+
+{% block item %}
+<a itemprop="mainEntityOfPage" href="{% url 'video' item.id item.slug %}">
+  {% if not instance.mostrar_titulos or l in "12346" %}<i class="icon icon-play"></i>{% endif %}
+  <div class="entry-img" style="background-image: url({% static item.thumbnail_grande %})"></div>
+  <div class="entry-desc{% if instance.mostrar_titulos and l not in '12346' %} untitled{% endif %}">
+    {% if instance.mostrar_titulos %}<h3 itemprop="name">{{ item.titulo.strip|truncatewords:12 }}</h3>{% endif %}
+    {% if instance.mostrar_descripciones or l == '1' %}<p>{{ item.descripcion.strip|truncatewords:45 }}</p>{% endif %}
+  </div>
+</a>
+{% if instance.mostrar_tags or instance.mostrar_fecha %}
+<div class="post-meta">
+  {% if instance.mostrar_tags %}
+  <p class="seccion">{% include "includes/tags.html" %}</p>
+  {% endif %}
+  {% if instance.mostrar_fecha %}
+  <br />
+  <small class="date-posted">{{ item.duracion|print_duration }}</small> | 
+  <em><small class="date-posted">{{ item.fecha|print_fecha:instance|capfirst }}</small></em>
+  {% endif %}
+</div>
+{% endif %}
+{% endblock %}

@@ -6,15 +6,28 @@ from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 from django.utils.translation import ugettext_lazy as _
 
-from .models import VideoListPluginModel
+from .models import ProgramaListPluginModel, VideoListPluginModel
+
+
+class ProgramaListaPlugin(CMSPluginBase):
+    """Clips lista plugin class"""
+    model = ProgramaListPluginModel
+    render_template = "clips/programa_list.html"
+    name = _("Listado de programas teleSUR")
+    module = _("teleSUR Videos")
+    page_only = True
+    admin_preview = True
+    cache = False
+
+plugin_pool.register_plugin(ProgramaListaPlugin)
 
 
 class ClipsListaPlugin(CMSPluginBase):
-    """Clips lista plugin class"""
-    name = _("Listado de videos teleSUR")
-    module = "Videos multimedia"
+    """Cliplista plugin class"""
     model = VideoListPluginModel
-    render_template = "clips/lista.html"
+    render_template = "clips/clip_list.html"
+    name = _("Listado de videos teleSUR")
+    module = _("teleSUR Videos")
     page_only = True
     admin_preview = True
     cache = False
@@ -32,7 +45,7 @@ class ClipsListaPlugin(CMSPluginBase):
         }),
         (_('Filtros varios'), {
             'classes': ('collapse',),
-            'fields': ('seleccionados', 'tiempo'),
+            'fields': ('seleccionados',),
         }),
         (_('Filtrar por tipo'), {
             'classes': ('collapse',),
@@ -59,5 +72,4 @@ class ClipsListaPlugin(CMSPluginBase):
             'fields': ('series',),
         }),
     )
-
 plugin_pool.register_plugin(ClipsListaPlugin)

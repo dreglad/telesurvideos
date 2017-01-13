@@ -4,7 +4,7 @@
 
 {% block meta_keyworkds %}{{ clip.tags }} {{ clip.hashtags }}{% if clip.tipo.slug == "programa" %} grabación, programa completo, sin comerciales, telesur, tv{% endif %}{% endblock %}
 
-{% block meta_description %}{{ clip.descripcion.strip }}{% endblock %}
+{% block meta_description %}{{ clip.tipo.nombre }}. {% if clip.descripcion.strip %}{{ clip.descripcion.strip }}{% elif clip.programa %}{{ clip.programa.descripcion.strip }}{% endif %}{% endblock %}
 
 {% block socialmeta %}{{ block.super }}
 <meta property="og:title" content="{% if clip.tipo.slug == 'programa' %}'{{ clip.programa.nombre.strip }}', emisión del {{ clip.fecha.date|date:'l j \d\e F \d\e Y' }}{% else %}{{ clip.titulo.strip }}{% endif %}"/>
@@ -52,6 +52,7 @@
 {% endblock %}
 
 {% block content %}
+
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -71,15 +72,19 @@
             <div class="row">
               <div class="col-lg-6 col-md-12 animate-box">
                 {% block player %}
-                <div data-ratio="{{ clip.aspectratio }}" id="player" {% block video_wrapper_attrs %}class="video"{% endblock %}>
-                  <video data-title="{{ clip.titulo }}" {% block videoattrs %}autoplay controls{% endblock %} poster="{{ clip.thumbnail_grande }}">
+                <div id="player-wrapper" {% block video_wrapper_attrs %}class="video"{% endblock %}>
+                  <video id="player" poster="{{ clip.thumbnail_uniforme }}"
+                         {% block videoattrs %}controls webkit-playsinline="true" playsinline="true"{% if not player or request.GET.autoplay or request.GET.auto_play %} autoplay{% endif %}{% endblock %}>
                     {% if clip.hls_url %}
                     <source src="{{ clip.hls_url }}" type="application/x-mpegurl">
                     {% endif %}
                     <source src="{{ clip.archivo_subtitulado_url|default:clip.archivo_url }}" type="video/mp4">
                     {# comment #}
+                    {% if clip.subtitulos %}
+                    <track kind="subtitles" default srclang="{{ request.LANGUAGE_CODE }}" label="{{ request.LANGUAGE_CODE }}" src="{{ clip.subtitulos }}"/>
+                    {% endif %}
                     {% if clip.vtt_url %}
-                      <track kind="metadata" src="{{ clip.vtt_url }}"></track> #}
+                      <track kind="metadata" src="{{ clip.vtt_url }}"/> #}
                     {% endif %}
                     {# endcomment #}
                   </video>
@@ -88,7 +93,7 @@
               </div>
               <div class="col-lg-6 col-md-12 cp-l animate-box">
                 {% if clip.tipo.slug == 'programa' and clip.programa and clip.programa.banner_url %}
-                <a title="{{ clip.programa.nombre }}" href="{% url 'search' %}?tipo=programa&programa={{ clip.programa.slug }}"><img src="{{ clip.programa.banner_url }}" alt="{{ clip.programa.nombre }}" class="banner img-responsive" /></a>
+                <a title="{{ clip.programa.nombre }}" href="{% url 'programa' programa_slug=clip.programa.slug %}"><img src="{{ clip.programa.banner_url }}" alt="{{ clip.programa.nombre }}" class="banner img-responsive" /></a>
                 {% else %}
                 <ul class="nav video-info">
                   <li class="seccion">
@@ -96,7 +101,7 @@
                   </li>
                   {% if clip.programa %}
                   <li class="seccion">
-                    <a title="{% trans 'Programa' %}" href="{% url 'search' %}?tipo=programa&programa={{ clip.programa.slug }}"><span class="label label-default">{{ clip.programa.nombre }}</span></a>
+                    <a title="{% trans 'Programa' %}" href="{% url 'programa' programa_slug=clip.programa.slug %}"><span class="label label-default">{{ clip.programa.nombre }}</span></a>
                   </li>
                   {% endif %}
                   {% if clip.corresponsal %}
@@ -139,7 +144,7 @@
                   <li><a title="{% trans 'Compartir en' %} Whatsapp" href="whatsapp://send?text={{ clip.navegador_url }}"><img width="25" height="25" style="display: inline-block; margin-top:-16px;" src="{% static 'images/whatsapp-24.png' %}" href="#"></a></li>
                 </ul>
 
-                <p class="description">{{ clip.descripcion.strip }}</p>
+                <p class="description">{% if clip.descripcion.strip %}{{ clip.descripcion.strip }}{% elif clip.programa %}{{ clip.programa.descripcion.strip }}{% endif %}</p>
               </div>
               </div>
             </div>
@@ -182,4 +187,16 @@
     {% endif %}
   </div>
 </div>
+<script>window.videoEmbedCode = '{{ clip.embed_tag_inline|safe }}'</script>
+{% if request.user %}
+<script>
+
+document.onkeydown = function(evt) {
+    evt = evt || window.event;
+    if (evt.ctrlKey && evt.keyCode == 90) {
+      location.href = 'http://captura-telesur.openmultimedia.biz/admin/clips/clip/{{ clip.id }}/';
+    }
+};
+</script>
+{% endif %}
 {% endblock content %}
