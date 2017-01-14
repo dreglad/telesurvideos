@@ -11,15 +11,35 @@
 
 {% block videoattrs %}{{ block.super }} data-title="{# clip.titulo #}"{% endblock %}
 
+{% block player %}{{ block.super }}
+{% if clip.thumbnails_interval %}
+{% compress js %}
+<script>
+var padLeft = function(nr, n, str) {
+    return Array(n-String(nr).length+1).join(str||'0')+nr;
+}
+window.thumbnail_conf = {
+  interval:  {{ clip.thumbnails_interval }},
+  template: '{{ clip.thumbnails_base }}/tv{time}.jpg',
+  time_format: function(time) {
+    num = Math.floor(time/{{ clip.thumbnails_interval }});
+    if (num > 1) num = num - 1;
+    return padLeft(time, 3);
+  }
+}
+</script>
+{% endcompress %}
+{% endif %}
+{% endblock %}
+
 {% block bottom_scripts %}{{ block.super }}
 {% if VIDEOS_FLOWPLAYER_KEY %}
-{# <script src="//releases.flowplayer.org/6.0.5/commercial/flowplayer.min.js"></script> #}
 <script src="//releases.flowplayer.org/7.0.0/commercial/flowplayer.min.js"></script>
 {% else %}
-{# <script src="//releases.flowplayer.org/6.0.5/flowplayer.min.js"></script> #}
 <script src="//releases.flowplayer.org/7.0.0/flowplayer.min.js"></script>
 {% endif %}
 <script src="//releases.flowplayer.org/hlsjs/flowplayer.hlsjs.min.js"></script>
+<script src="//releases.flowplayer.org/thumbnails/flowplayer.thumbnails.min.js"></script>
 <script src="//s0.2mdn.net/instream/html5/ima3.js"></script>
 <script src="//releases.flowplayer.org/vast/telesurtv.net/vast.min.js"></script>
 {# <script src="//releases.flowplayer.org/thumbnails/flowplayer.thumbnails.min.js"></script> #}
@@ -35,6 +55,7 @@
       $(".fp-qsel-menu strong:first").text('{% trans "Calidad" %}');
     });
   });
+
   $('#player-wrapper').flowplayer({
     {% if not player or request.GET.autoplay or request.GET.auto_play %}
     autoplay: true,
@@ -50,6 +71,7 @@
     analytics: '{{ VIDEOS_ANALYTICS }}',
     {% endif %}
     twitter: false,
+    thumbnails: thumbnail_conf,
     subtitles: [],
     ima: {
       locale: "{{ LANGUAGE_CODE }}",
