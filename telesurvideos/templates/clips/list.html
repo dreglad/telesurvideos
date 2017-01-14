@@ -18,7 +18,7 @@
 {% endfor %}
 </ul>
 {% if instance.mostrar_mas and items|length == layout|length %}
-  <div class="text-center pagination" id="pag-{{ instance.id }}">
+  <div class="text-center list pagination" id="pag-{{ instance.id }}">
     <a href="{% if instance.list_type == 'episode' %}{% url 'programa' programa_slug=programa.slug pagina=pagina|default:0|add:1 %}{% else %}{% url 'list' list_type=instance.list_type list_id=instance.id pagina=pagina|default:0|add:1 %}{% endif %}"
        role="button" class="more btn">{% trans "mostrar más" %}{% if instance.titulo %} {{ instance.titulo }}{% endif %}...</a>
   </div>

@@ -303,7 +303,7 @@
 		});
 
 		// List pagination
-		$(document).on('click', 'div.pagination a.more', function(ev) {
+		$(document).on('click', 'div.list.pagination a.more', function(ev) {
 		    ev.preventDefault();
 		    var link = $(this);
 		    link.attr('disabled', 'disabled').text('Cargando más videos...');
