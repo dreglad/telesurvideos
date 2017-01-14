@@ -112,7 +112,7 @@ def get_temas(params=''):
 
 
 @register.assignment_tag
-@cacheback(lifetime=60*60*24, fetch_on_miss=True)
+@cacheback(lifetime=60*60*12, fetch_on_miss=True)
 def get_categorias(params=''):
     """categorias list"""
     return get_api('categoria/?ultimo=300&{}'.format(params))
@@ -133,14 +133,14 @@ def get_programas(params=''):
 
 
 @register.assignment_tag
-@cacheback(lifetime=60*60*24, fetch_on_miss=True)
+@cacheback(lifetime=60*60*12, fetch_on_miss=True)
 def get_programa(slug):
     """single programa"""
     return get_api('programa/{}/'.format(slug))
 
 
 @register.assignment_tag
-@cacheback(lifetime=60*60*48, fetch_on_miss=True)
+@cacheback(lifetime=60*60*24, fetch_on_miss=True)
 def get_paises(params=''):
     """países list"""
     return get_api('pais/?&ultimo=300&{}'.format(params))
@@ -167,7 +167,7 @@ def get_corresponsales(params=''):
     return get_api('corresponsal/?ultimo=300&{}'.format(params))
 
 @register.assignment_tag
-@cacheback(lifetime=60*60*12, fetch_on_miss=True)
+@cacheback(lifetime=60*60*24, fetch_on_miss=True)
 def get_corresponsal(slug):
     """single programa"""
     return get_api('corresponsal/{}/'.format(slug))
