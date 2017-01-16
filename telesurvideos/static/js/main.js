@@ -303,7 +303,7 @@
 		});
 
 		// List pagination
-		$(document).on('click', 'div.list.pagination a.more', function(ev) {
+		$(document).on('click', 'div.list.pag a.more', function(ev) {
 		    ev.preventDefault();
 		    var link = $(this);
 		    link.attr('disabled', 'disabled').text('Cargando más videos...');
@@ -314,7 +314,7 @@
 		});
 
 		// Search pagination
-		$(document).on('click', '#extra-results .pagination a', function(ev) {
+		$(document).on('click', '#extra-results .pag a', function(ev) {
 		    ev.preventDefault();
 		    $(this).text('Cargando más resultados...');
 		    $(this).attr('disabled', 'disabled');
@@ -339,5 +339,3 @@
 		})
 
 	});
-
-

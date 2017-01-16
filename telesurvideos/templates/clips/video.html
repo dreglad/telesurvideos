@@ -4,7 +4,7 @@
 
 {% block meta_keyworkds %}{{ clip.tags }} {{ clip.hashtags }}{% if clip.tipo.slug == "programa" %} grabación, programa completo, sin comerciales, telesur, tv{% endif %}{% endblock %}
 
-{% block meta_description %}{{ clip.tipo.nombre }}. {% if clip.descripcion.strip %}{{ clip.descripcion.strip }}{% elif clip.programa %}{{ clip.programa.descripcion.strip }}{% endif %}{% endblock %}
+{% block meta_description %}{% if clip.descripcion.strip %}{{ clip.descripcion.strip }}{% elif clip.programa %}{{ clip.programa.descripcion.strip }}{% endif %} {{ clip.tipo.nombre }} {{ clip.fecha|date }}{% endblock %}
 
 {% block socialmeta %}{{ block.super }}
 <meta property="og:title" content="{% if clip.tipo.slug == 'programa' %}'{{ clip.programa.nombre.strip }}', emisión del {{ clip.fecha.date|date:'l j \d\e F \d\e Y' }}{% else %}{{ clip.titulo.strip }}{% endif %}"/>
@@ -65,7 +65,7 @@
 <div id="gtco-main-solo">
   <div class="container">
     
-    <div class="row row-pb-md">
+    <div class="row row-pb-md art">
       <div class="col-md-12">
         <article>
           <div class="text-left content-article">

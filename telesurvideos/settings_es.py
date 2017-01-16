@@ -30,10 +30,11 @@ VIDEOS_EXCLUDE_PAISES = ()
 VIDEOS_EXCLUDE_SERIES = ()
 
 try:
-    from local_settings_es import *
+    from local_settings import *
 except ImportError:
     pass
+
 try:
-    from local_settings import *
+    from local_settings_es import *
 except ImportError:
     pass

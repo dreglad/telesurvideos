@@ -95,13 +95,13 @@ $form-group-margin-bottom: 30px !default;
 
 }
 
-// Import 
+// Import
 @import 'bootstrap/mixins';
 @import 'bootstrap/variables';
 
 /* =======================================================
 *
-* 	Template Style 
+* 	Template Style
 *
 * ======================================================= */
 
@@ -207,6 +207,10 @@ h1, h2, h3, h4, h5, h6, figure {
     margin: 0;
     text-transform: uppercase;
     font-weight: bold;
+
+    a {
+      padding: 0;
+    }
 
     img {
       display: inline-block;
@@ -413,7 +417,7 @@ h1, h2, h3, h4, h5, h6, figure {
           text-align: right;
         }
       }
-    
+
     .search {
       // top: 10px;
       input.extended {
@@ -567,10 +571,11 @@ h1, h2, h3, h4, h5, h6, figure {
 
 // entry
 #gtco-main,
+#search-result,
 #gtco-main-solo {
   width: 100%;
   float: left;
-  margin-top: 4em;
+  margin-top: 5.5em;
 
   .ruta {
     padding-right: 40px;
@@ -579,7 +584,7 @@ h1, h2, h3, h4, h5, h6, figure {
 
 #gtco-main-solo {
   .related {
-    // margin: 0.5em;
+    padding-top: 1em;
 
     .entry-desc {
       margin:0;
@@ -613,8 +618,8 @@ h1, h2, h3, h4, h5, h6, figure {
     }
   }
   article {
-    padding: 2em;
     width: 100%;
+    padding: 1em;
     @media screen and (max-width: $screen-sm) {
       padding: 0;
       padding-bottom: 20px;
@@ -623,7 +628,6 @@ h1, h2, h3, h4, h5, h6, figure {
       padding-top: 0;
       .cp-l {
         @media screen and (max-width: $screen-lg) {
-          padding-top: 1em;
           padding-left: 40px;
           padding-right: 40px;
         }
@@ -650,9 +654,14 @@ h1, h2, h3, h4, h5, h6, figure {
     margin-bottom: 10px;
     display: block;
     float: left;
-    width: 70%;
+    width: 60%;
+
+    @media screen and (max-width: $screen-xs) {
+      width: 100%;
+    }
+
     font-size: 15px;
-    line-height: 15px;
+    
   }
   p.description {
     text-align: justify;
@@ -670,7 +679,7 @@ article {
   text-align: center;
   float: left;
   margin-bottom: 0px;
-  padding: 3em;
+  padding: 0 3em;
   background: $brand-white;
   position: relative;
 
@@ -880,7 +889,7 @@ figure {
     }
 
     &.programa {
-     min-height: auto; 
+     min-height: auto;
     }
 
     .post-meta {
@@ -988,6 +997,7 @@ figure {
       // height: 150px;
     }
 
+
     &.programa {
 
       span {
@@ -1017,11 +1027,34 @@ figure {
     line-height: 1.9;
   }
 
+ 
+  &.one-fourth {
+    .entry-img {
+      @media screen and (max-width: $screen-sm) {
+        min-height: 280px;
+      }
+    }
+  }
+
   &.one-half {
     .entry-img {
       height: 410px;
+
+      @media screen and (max-width: $screen-sm) {
+        min-height: 280px;
+       height: 410px;
+      }
     }
   }
+
+  &.two-third {
+    .entry-img {
+      @media screen and (max-width: $screen-sm) {
+        min-height: 280px;
+      }
+    }
+  }
+
   &.full {
     display: table;
     width: 100%;
@@ -1048,6 +1081,7 @@ figure {
       @media screen and (max-width: $screen-sm) {
         display: block;
         width: 100%;
+        height: 280px;
       }
     }
     .entry-desc {
@@ -1208,7 +1242,7 @@ figure {
   }
 }
 
-.pagination {
+.pag {
   display: block;
   a {
     background: none;
@@ -1422,11 +1456,12 @@ figure {
 #gtco-about,
 #gtco-team,
 #gtco-contact,
+#search-result,
 #gtco-footer {
-  padding: 5em 0;
+  padding: 4em 0;
   clear: both;
   @media screen and (max-width: $screen-sm) {
-    padding: 2em 0;
+    padding: 0.5em 0;
   }
 }
 
@@ -2552,7 +2587,11 @@ figure {
 }
 
 .row-pb-md {
-  padding-bottom: 2em !important;
+  padding-bottom: 2em;
+}
+
+.art {
+  padding-bottom: 0;
 }
 
 ._5lm5 {
@@ -2560,7 +2599,7 @@ figure {
 }
 
 .row-pb-sm {
-  padding-bottom: 2em !important;
+  padding-bottom: 2em;
 }
 
 .gtco-loader {
@@ -2606,14 +2645,23 @@ figure {
   white-space: normal;
 }
 
+#search-result {
+  margin-top: 8em;
+  @media screen and (max-width: $screen-sm) {
+    margin-top: 6em;
+  }
+}
+
 #sidebar {
+  // padding: 4em 1em;
+  @media screen and (max-width: $screen-sm) {
+    padding: 0.5em 0;
+  }
   width: 30%;
   float: left;
-  padding: 20px;
-  margin-top: 7em;
+  margin-top: 8em;
   @media screen and (max-width: $screen-xs) {
     width: 100%;
-    margin-top: 0;
   }
   .sidebox {
     margin-bottom: 20px;
@@ -2675,12 +2723,9 @@ figure {
 #search-result {
   width: 70%;
   float: left;
-  padding: 20px 10px 20px 40px;
-  margin-top: 7em;
+  padding: 0 20px;
   @media screen and (max-width: $screen-xs) {
     width: 100%;
-    margin-top: 5em;
-padding: 20px;
   }
   .search {
     margin-bottom: 20px;
@@ -2709,6 +2754,37 @@ padding: 20px;
   }
 }
 
+// ENGLOSH
+
+body.en {
+  .entry .entry-img {
+    min-height: 145px;
+  }  
+
+  .entry.one-half .entry-img {
+    height: 310px;
+
+    @media screen and (max-width: $screen-sm) {
+      height: 200px;
+    }
+    
+  }  
+
+  .entry.full .entry-img {
+    height: 320px;
+  }  
+}
+
+
+
+.flowplayer .fp-engine {
+  top: -4px;
+}
+
+.flowplayer {
+  z-index: 9999;
+}
+
 .flowplayer .fp-color {
   background-color: #c11717;
 }
@@ -2721,10 +2797,10 @@ padding: 20px;
 }
 
 // cms
-.cms-icon-logo:before, div.cms .cms-toolbar-item-logo a:before { 
+.cms-icon-logo:before, div.cms .cms-toolbar-item-logo a:before {
   content: none !important;
 }
-.cms-icon-logo:before, div.cms .cms-toolbar-item-logo { 
+.cms-icon-logo:before, div.cms .cms-toolbar-item-logo {
   margin-left: 20px;
 }
 
@@ -2736,4 +2812,3 @@ div.cms .cms-toolbar-trigger {
   left: 0;
   right: initial !important;
 }
-

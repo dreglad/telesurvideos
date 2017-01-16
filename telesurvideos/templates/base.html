@@ -14,7 +14,7 @@
     <meta name="keywords" content="{% block meta_keyworkds %}videos de telesur, television venezolana, telesurtv, venezuela, noticias, canal{% endblock %}"/>
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon"  />
     <link rel="search" type="application/opensearchdescription+xml" href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url 'opensearch' %}" title="Búsqueda de videos en teleSUR" />
-    
+
     {% block socialmeta %}
     <meta property="og:site_name" content="teleSUR Videos"/>
     <meta property="fb:app_id" content="380208352371240">
@@ -81,7 +81,7 @@
 <script src="{% static 'js/jquery.query-object.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
 {% endcompress js %}
-<script src="{% static 'js/jquery.mobile.custom.min.js' %}"></script>
+{# <script src="{% static 'js/jquery.mobile.custom.min.js' %}"></script> #}
 <script type="text/javascript">
 (function(d,s,e,t){e=d.createElement(s);e.type='text/java'+s;e.async='async';
 e.src='http'+('https:'===location.protocol?'s://s':'://')+'cdn.cxense.com/cx.js';

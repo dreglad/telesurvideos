@@ -41,7 +41,7 @@ def clip_parser(dct):
             dct['aspectratio'] = dct['height'] / float(dct['width'])
     return dct
 
-@cacheback(lifetime=60, fetch_on_miss=True)
+@cacheback(lifetime=60*2, fetch_on_miss=True)
 def get_api(path, lang=None):
     """gets API parsed JSON response"""
     try:
@@ -65,27 +65,22 @@ def index(sequence, i):
     except IndexError:
         pass
 
-
 @register.assignment_tag
-@cacheback(lifetime=60*5, fetch_on_miss=True)
 def get_clip(slug, params='', lang=None):
     """get single clip"""
     return get_api('clip/{}/?detalle=completo&{}'.format(
-        urllib.quote(slug), params, lang=None
+        urllib.quote(slug), params, lang=settings.LANGUAGE_CODE
         ))
 
 
 @register.assignment_tag
-@cacheback(lifetime=60*10, fetch_on_miss=True)
 def get_relacionados(slug, params=''):
     """get related clips"""
     return get_api('clip/?relacionados={}&detalle=completo&tiempo=3e&{}'.format(
-        urllib.quote(slug), params
+        urllib.quote(slug), params, lang=settings.LANGUAGE_CODE
         ))
 
-
 @register.assignment_tag
-@cacheback(lifetime=60*2, fetch_on_miss=True)
 def get_clips(params=''):
     """return clips"""
     if isinstance(params, QueryDict):
@@ -94,32 +89,26 @@ def get_clips(params=''):
         qdict = QueryDict('', mutable=True)
         qdict.update(params)
         params = qdict.urlencode()
-    return get_api('clip/?detalle=completo&{}'.format(params))
+    return get_api('clip/?detalle=completo&{}'.format(params), lang=settings.LANGUAGE_CODE)
 
 
 @register.assignment_tag
-@cacheback(lifetime=60*60*24, fetch_on_miss=True)
 def get_series(params=''):
     """return series"""
-    return get_api('serie/?ultimo=300&{}'.format(params))
-
+    return get_api('serie/?ultimo=300&{}'.format(params), lang=settings.LANGUAGE_CODE)
 
 @register.assignment_tag
-@cacheback(lifetime=60*60, fetch_on_miss=True)
 def get_temas(params=''):
     """temas list"""
-    return get_api('tema/?ultimo=300&{}'.format(params))
-
+    return get_api('tema/?ultimo=300&{}'.format(params), lang=settings.LANGUAGE_CODE)
 
 @register.assignment_tag
-@cacheback(lifetime=60*60*12, fetch_on_miss=True)
 def get_categorias(params=''):
     """categorias list"""
-    return get_api('categoria/?ultimo=300&{}'.format(params))
+    return get_api('categoria/?ultimo=300&{}'.format(params), lang=settings.LANGUAGE_CODE)
 
 
 @register.assignment_tag
-@cacheback(lifetime=60*60*12, fetch_on_miss=True)
 def get_programas(params=''):
     """programas list"""
     if isinstance(params, QueryDict):
@@ -133,44 +122,35 @@ def get_programas(params=''):
 
 
 @register.assignment_tag
-@cacheback(lifetime=60*60*12, fetch_on_miss=True)
 def get_programa(slug):
     """single programa"""
-    return get_api('programa/{}/'.format(slug))
-
+    return get_api('programa/{}/'.format(slug), lang=settings.LANGUAGE_CODE)
 
 @register.assignment_tag
-@cacheback(lifetime=60*60*24, fetch_on_miss=True)
 def get_paises(params=''):
     """países list"""
-    return get_api('pais/?&ultimo=300&{}'.format(params))
+    return get_api('pais/?&ultimo=300&{}'.format(params), lang=settings.LANGUAGE_CODE)
 
-
-@cacheback(lifetime=60*60*12, fetch_on_miss=True)
 @register.assignment_tag
 def get_tipos_programa(params=''):
     """tipos list"""
-    return get_api('tipo_programa/?ultimo=300&{}'.format(params))
+    return get_api('tipo_programa/?ultimo=300&{}'.format(params), lang=settings.LANGUAGE_CODE)
 
-
-@cacheback(lifetime=60*60*12, fetch_on_miss=True)
 @register.assignment_tag
 def get_tipos_clip(params=''):
     """tipos list"""
-    return get_api('tipo_clip/?ultimo=300&{}'.format(params))
+    return get_api('tipo_clip/?ultimo=300&{}'.format(params), lang=settings.LANGUAGE_CODE)
 
-
-@cacheback(lifetime=60*60*12, fetch_on_miss=True)
 @register.assignment_tag
 def get_corresponsales(params=''):
     """corresponsales list"""
-    return get_api('corresponsal/?ultimo=300&{}'.format(params))
+    return get_api('corresponsal/?ultimo=300&{}'.format(params), lang=settings.LANGUAGE_CODE)
+
 
 @register.assignment_tag
-@cacheback(lifetime=60*60*24, fetch_on_miss=True)
 def get_corresponsal(slug):
     """single programa"""
-    return get_api('corresponsal/{}/'.format(slug))
+    return get_api('corresponsal/{}/'.format(slug), lang=settings.LANGUAGE_CODE)
 
 
 @register.filter

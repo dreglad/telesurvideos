@@ -12,9 +12,10 @@
 {% block videoattrs %}{{ block.super }} data-title="{# clip.titulo #}"{% endblock %}
 
 {% block player %}{{ block.super }}
-{% if clip.thumbnails_interval %}
 {% compress js %}
 <script>
+window.thumbnail_conf = {};
+{% if clip.thumbnails_interval %}
 var padLeft = function(nr, n, str) {
     return Array(n-String(nr).length+1).join(str||'0')+nr;
 }
@@ -27,9 +28,9 @@ window.thumbnail_conf = {
     return padLeft(time, 3);
   }
 }
+{% endif %}
 </script>
 {% endcompress %}
-{% endif %}
 {% endblock %}
 
 {% block bottom_scripts %}{{ block.super }}
