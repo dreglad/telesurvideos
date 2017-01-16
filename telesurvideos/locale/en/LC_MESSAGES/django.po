@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-13 13:19-0600\n"
+"POT-Creation-Date: 2017-01-15 22:54-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -225,11 +225,11 @@ msgstr "yes"
 msgid "no"
 msgstr "no"
 
-#: telesurvideos/settings.py:237
+#: telesurvideos/settings.py:239
 msgid "Simple"
 msgstr "Simple"
 
-#: telesurvideos/settings.py:238
+#: telesurvideos/settings.py:240
 msgid "Sin header ni footer"
 msgstr "Without header and footer"
 
@@ -243,7 +243,7 @@ msgstr "es"
 
 #: telesurvideos/templates/clips/programa.html:4
 #: telesurvideos/templates/clips/programa_list.html:9
-#: telesurvideos/templates/clips/video.html:105
+#: telesurvideos/templates/clips/video.html:104
 #: telesurvideos/templates/includes/tags.html:4
 msgid "Programa"
 msgstr "Show"
@@ -305,68 +305,80 @@ msgstr "Performing search..."
 msgid "Mostrar más resultados"
 msgstr "Load more results"
 
-#: telesurvideos/templates/clips/video.html:101
+#: telesurvideos/templates/clips/video.html:100
 msgid "Tipo"
 msgstr "Type"
 
-#: telesurvideos/templates/clips/video.html:110
+#: telesurvideos/templates/clips/video.html:109
 msgid "Corresponsal"
 msgstr "Correspondant"
 
-#: telesurvideos/templates/clips/video.html:115
+#: telesurvideos/templates/clips/video.html:114
 msgid "Tema"
 msgstr "Topic"
 
-#: telesurvideos/templates/clips/video.html:119
+#: telesurvideos/templates/clips/video.html:118
 msgid "Categoría"
 msgstr "Category"
 
-#: telesurvideos/templates/clips/video.html:124
-#: telesurvideos/templates/clips/video.html:129
+#: telesurvideos/templates/clips/video.html:123
+#: telesurvideos/templates/clips/video.html:128
 msgid "País"
 msgstr "Country"
 
 #. Translators: Single video page, full date
-#: telesurvideos/templates/clips/video.html:138
+#: telesurvideos/templates/clips/video.html:137
 msgid "l j \\d\\e F \\d\\e Y"
 msgstr "l, F jS, Y"
 
+#: telesurvideos/templates/clips/video.html:141
 #: telesurvideos/templates/clips/video.html:142
 #: telesurvideos/templates/clips/video.html:143
 #: telesurvideos/templates/clips/video.html:144
-#: telesurvideos/templates/clips/video.html:145
 msgid "Compartir en"
 msgstr "Share on"
 
-#: telesurvideos/templates/clips/video.html:170
+#: telesurvideos/templates/clips/video.html:169
 msgid "Videos relacionados"
 msgstr "Related videos"
 
-#: telesurvideos/templates/clips/video_flowplayer.html:34
+#: telesurvideos/templates/clips/video_flowplayer.html:55
 msgid "Compartir"
 msgstr "Share"
 
-#: telesurvideos/templates/clips/video_flowplayer.html:35
+#: telesurvideos/templates/clips/video_flowplayer.html:56
 msgid "Calidad"
 msgstr "Quality"
 
+#: telesurvideos/templates/includes/header.html:11
+msgid "http://www.telesurtv.net/"
+msgstr "http://www.telesurtv.net/en"
+
+#: telesurvideos/templates/includes/header.html:11
+msgid "Ir al sitio web principal de teleSUR"
+msgstr "Go to teleSUR Home Page"
+
+#: telesurvideos/templates/includes/header.html:11
+msgid "Inicio"
+msgstr "Home"
+
 #. Translators: Full date format within current year
-#: telesurvideos/templatetags/clips_tags.py:187
+#: telesurvideos/templatetags/clips_tags.py:167
 msgid "j \\d\\e F"
 msgstr "F jS"
 
 #. Translators: Full date format not in current year
-#: telesurvideos/templatetags/clips_tags.py:190
+#: telesurvideos/templatetags/clips_tags.py:170
 msgid "j \\d\\e F \\d\\e Y"
 msgstr "F jS, Y"
 
 #. Translators: Full date & time format within current year
-#: telesurvideos/templatetags/clips_tags.py:195
+#: telesurvideos/templatetags/clips_tags.py:175
 msgid "j \\d\\e F, H:i \\h\\r\\s."
 msgstr "F jS, H:i \\h\\r\\s."
 
 #. Translators: Full date & time format not within current year
-#: telesurvideos/templatetags/clips_tags.py:198
+#: telesurvideos/templatetags/clips_tags.py:178
 msgid "j \\d\\e F \\d\\e Y, H:i \\h\\r\\s."
 msgstr "F jS, Y \\h\\r\\s."
 
