@@ -2173,7 +2173,7 @@ figure {
   right: 0;
   top: 0;
   bottom: 0;
-  padding: 10px 30px 30px 30px;
+  padding: 10px 20px 30px 20px;
   overflow-y: auto;
   display: none;
   @include translateX(270px);
@@ -2245,7 +2245,11 @@ figure {
         > a {
           display: block;
           position: relative;
-          &:after {
+          i{
+            padding: 10px;
+            margin-top: -7px;
+          }
+          /*&:after {
             position: absolute;
             right: 0px;
             @include icomoon;
@@ -2253,7 +2257,7 @@ figure {
             font-size: 20px;
             color: rgba(255, 255, 255, .2);
             @include transition(.5s);
-          }
+          }*/
         }
         &.active, &.selected {
           a {
