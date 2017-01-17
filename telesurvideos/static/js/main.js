@@ -282,6 +282,15 @@
                 location.href= $(this).attr('data-url') + (q ? '?q='+q : '');
             }
         });
+		$(document).on('click', '.toggle-filtros', function(e){
+			$('.sidebox:not(:first-of-type) h4').slideToggle();
+		});
+
+		$(document).on('click', '.sidebox:not(:first-of-type) h4', function(e){
+			if ( isMobile.any()) {
+				$(this).siblings('.filtros').slideToggle();
+			}
+		});
 
 		loaderPage();
 		mobileMenuOutsideClick();

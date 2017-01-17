@@ -1,16 +1,23 @@
 $screen-xs: 480px !default;
+$screen-sm: 768px !default;
 #sidebar {
     .filtros {
         &.large {
-            height: 360px;
-            @media screen and (max-width: $screen-xs) {
+            height: 300px;
+            @media screen and (max-width: $screen-sm) {
                 height: 200px;
+            }
+            @media screen and (max-width: $screen-xs) {
+                height: auto !important;
             }
         }
         &.full {
             height: auto !important;
-            @media screen and (max-width: $screen-xs) {
+            @media screen and (max-width: $screen-sm) {
                 height: 200px !important;
+            }
+            @media screen and (max-width: $screen-xs) {
+                height: auto !important;
             }
         }
     }

@@ -860,7 +860,7 @@ figure {
     }
     display: block;
     padding: 0;
-    margin: 0 0 1em 2%;
+    margin: 0 0 1.5% 2%;
     list-style: none;
     min-height: 190px;
     background-position: center center;
@@ -992,7 +992,7 @@ figure {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    min-height: 190px;
+    min-height: 200px;
     @media screen and (max-width: $screen-sm) {
       // height: 150px;
     }
@@ -1056,7 +1056,7 @@ figure {
   }
 
   &.full {
-    display: table;
+    //display: table;
     width: 100%;
     h3 {
       font-size: 35px;
@@ -2318,7 +2318,7 @@ figure {
   height: 25px;
   cursor: pointer;
   text-decoration: none;
-
+text-align: center;
   &.active i {
     &::before, &::after {
       background: $brand-darker;
@@ -2640,28 +2640,36 @@ figure {
   -o-box-shadow: 4px 11px 35px -14px rgba(0, 0, 0, 0.5);
   box-shadow: 4px 11px 35px -14px rgba(0, 0, 0, 0.5);
   color: #666 !important;
-  margin-bottom: 1em;
+  margin-bottom: 1.5em;
+  margin-top: 1.5em;
   text-transform: uppercase;
   white-space: normal;
 }
 
 #search-result {
   margin-top: 8em;
+  clear: none;
   @media screen and (max-width: $screen-sm) {
     margin-top: 6em;
+  }
+  @media screen and (max-width: $screen-xs) {
+    margin-top: 2em;
   }
 }
 
 #sidebar {
   // padding: 4em 1em;
-  @media screen and (max-width: $screen-sm) {
-    padding: 0.5em 0;
-  }
   width: 30%;
   float: left;
   margin-top: 8em;
+  padding-left: 1.5em;
+  @media screen and (max-width: $screen-sm) {
+    margin-top: 6em;
+  }
+
   @media screen and (max-width: $screen-xs) {
     width: 100%;
+    padding: 0 1.5em;
   }
   .sidebox {
     margin-bottom: 20px;
@@ -2669,6 +2677,7 @@ figure {
     width: 100%;
     padding: 0;
     background: #fff;
+    padding-bottom: 10px;
     -webkit-box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.07);
     -moz-box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.07);
     box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.07);
@@ -2705,13 +2714,55 @@ figure {
         min-height: 30px;
         a {
           padding: 10px 0;
+          color: $brand-darker;
+          &:hover{
+            font-weight: bold;
+          }
         }
       }
-
+      @media screen and (max-width: $screen-xs) {
+        display: none;
+        li {
+          min-height: 40px;
+        }
+      }
+    }
+    @media screen and (max-width: $screen-xs) {
+      padding-bottom: 0;
+      margin-bottom: 0;
+      &:not(:first-of-type){
+        h4 {
+          display: none;
+          position: relative;
+          &:after{
+              position: absolute;
+              right: 7px;
+              font-family: 'icomoon';
+              speak: none;
+              font-style: normal;
+              font-weight: normal;
+              font-variant: normal;
+              text-transform: none;
+              line-height: 1;
+              -webkit-font-smoothing: antialiased;
+              -moz-osx-font-smoothing: grayscale;
+              content: "\e921";
+              font-size: 20px;
+              color: rgba(255, 255, 255, 0.5);
+              -webkit-transition: 0.5s;
+              -o-transition: 0.5s;
+              transition: 0.5s;
+          }
+        }
+      }
     }
   }
 }
-
+.toggle-filtros {
+  width: 100%;
+  float: left;
+  margin: 10px 0;
+}
 #results-label {
   img {
     width: 100%;
@@ -2723,7 +2774,7 @@ figure {
 #search-result {
   width: 70%;
   float: left;
-  padding: 0 20px;
+  padding: 0 1.5em;
   @media screen and (max-width: $screen-xs) {
     width: 100%;
   }

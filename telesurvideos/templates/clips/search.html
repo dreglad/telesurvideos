@@ -13,33 +13,6 @@
 {% endcompress %}{% endblock %}
 
 {% block content %}
-<div id="search-result" class="pag">
-  <div class="row row-pb-md">
-    <div class="col-md-12">
-
-      <div class="search">
-        <span class="icon"><i class="icon-search"></i></span>
-        <input type="search" name="q" id="searchinput" value="{{ query }}" placeholder="{% trans 'Buscar...' %}" />
-      </div>
-      <h2 id="results-label">
-        {% if clips|length %}
-          {% if filtros.tipo == 'programa' and filtros.programa %}
-            {% get_programa filtros.programa as programa %}
-            <img src="{% firstof programa.banner_url programa.imagen_url %}" class="img-responsive center">
-          {% else %}
-            {% trans "Resultados de búsqueda" %}
-          {% endif %}
-        {% else %}
-            {% trans "Búsqueda sin resultados" %}
-        {% endif %}
-      </h2>
-
-      <ul class="gtco-post-list" id="main-results">
-        {% include "clips/search_results.html" %}
-      </ul>
-    </div>
-  </div>
-</div>
 <div id="sidebar">
   {% if filtros|length > 2 %}
   <div class="sidebox auto-height p-md">
@@ -73,7 +46,7 @@
     {% endif %}
   </div>
   {% endif %}
-
+  <a href="#" class="btn btn-info toggle-filtros visible-xs"><i class="icon-funnel"></i> Mostrar filtros</a>
   <div class="sidebox">
     <h4>{% trans "Tipos de contenido" %}</h4>
     <ul class="filtros full">
@@ -181,6 +154,34 @@
   {% endif %}
 
 </div>
+<div id="search-result" class="pag">
+  <div class="row row-pb-md">
+    <div class="col-md-12">
+
+      <div class="search">
+        <span class="icon"><i class="icon-search"></i></span>
+        <input type="search" name="q" id="searchinput" value="{{ query }}" placeholder="{% trans 'Buscar...' %}" />
+      </div>
+      <h2 id="results-label">
+        {% if clips|length %}
+          {% if filtros.tipo == 'programa' and filtros.programa %}
+            {% get_programa filtros.programa as programa %}
+            <img src="{% firstof programa.banner_url programa.imagen_url %}" class="img-responsive center">
+          {% else %}
+            {% trans "Resultados de búsqueda" %}
+          {% endif %}
+        {% else %}
+            {% trans "Búsqueda sin resultados" %}
+        {% endif %}
+      </h2>
+
+      <ul class="gtco-post-list" id="main-results">
+        {% include "clips/search_results.html" %}
+      </ul>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
 
 {% block extrabody %}{{ block.super }}
