@@ -55,10 +55,11 @@ def choices_for_filtro(filtro):
 class BaseListPluginModel(CMSPlugin):
     """Base List Plugin Model"""
     titulo = models.CharField(_('título'), max_length=255, blank=True, help_text=_('Título opcional del listado'))
-    layout = models.TextField(_('layout'), blank=True, help_text=_('1, q => columna completa | 2, w => media columna | 3, e => tercio de columna | 4, r => cuarto de columna | 6, t => dos tercios de columna'))
-    mostrar_mas = models.TextField(_('mostrar más'), blank=True, help_text=_('1, q => columna completa | 2, w => media columna | 3, e => tercio de columna | 4, r => cuarto de columna | 6, t => dos tercios de columna'))
+    layout = models.TextField(_('layout'), default='4444', help_text=_('1, q => columna completa | 2, w => media columna | 3, e => tercio de columna | 4, r => cuarto de columna | 6, t => dos tercios de columna'))
+    mostrar_mas = models.TextField(_('mostrar más'), default='4444', blank=True, help_text=_('1, q => columna completa | 2, w => media columna | 3, e => tercio de columna | 4, r => cuarto de columna | 6, t => dos tercios de columna'))
     mostrar_titulos = models.BooleanField(_('mostrar títulos'), default=True)
     mostrar_descripciones = models.BooleanField(_('mostrar descripciones'), default=True)
+    elementos = models.TextField(_('elementos'), blank=True, help_text=_('Lista con slug o ID numérico separado por comas, en caso de no especificarse ninguno, se usará el filtrado dinámico especificado.'))
 
     @property
     def list_type(self):
@@ -146,6 +147,17 @@ class VideoListPluginModel(BaseListPluginModel):
     @property
     def list_type(self):
         return 'clip'
+
+    @property
+    def cleaned_elementos(self):
+        """cleaned elementos"""
+        return [s.strip() for s in self.elementos.splitlines()]
+
+    def fetch_elementos(self):
+        for item in cleaned_elementos:
+            digits = [int(s) for s in str.split('/') if s.isdigit()]
+            if digits:
+                clip = clips_tags.get_clip({'id': digits[0]})
 
     def get_items(self, pagina=0):
         """obtiene clips que representan a este objeto"""

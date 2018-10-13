@@ -2,8 +2,29 @@
 {% load static compress i18n %}
 
 {% block stylesheets %}
-{# <link rel="stylesheet" href="{% static 'flowplayer/skin/minimalist.css' %}"> #}
 <link rel="stylesheet" href="//releases.flowplayer.org/7.0.0/skin/skin.css">
+{% compress css %}
+<style type="text/css">
+  .flowplayer .fp-engine {
+  top: -4px;
+}
+
+.flowplayer {
+  z-index: 9999;
+}
+
+.flowplayer .fp-color {
+  background-color: #c11717;
+}
+
+.flowplayer .fp-controls {
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.6);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+}
+</style>
+{% endcompress %}
 {{ block.super }}
 {% endblock %}
 
@@ -36,14 +57,13 @@ window.thumbnail_conf = {
 {% block bottom_scripts %}{{ block.super }}
 {% if VIDEOS_FLOWPLAYER_KEY %}
 <script src="//releases.flowplayer.org/7.0.0/commercial/flowplayer.min.js"></script>
+<script src="//s0.2mdn.net/instream/html5/ima3.js"></script>
+<script src="//releases.flowplayer.org/vast/telesurtv.net/vast.min.js"></script>
 {% else %}
 <script src="//releases.flowplayer.org/7.0.0/flowplayer.min.js"></script>
 {% endif %}
 <script src="//releases.flowplayer.org/hlsjs/flowplayer.hlsjs.min.js"></script>
 <script src="//releases.flowplayer.org/thumbnails/flowplayer.thumbnails.min.js"></script>
-<script src="//s0.2mdn.net/instream/html5/ima3.js"></script>
-<script src="//releases.flowplayer.org/vast/telesurtv.net/vast.min.js"></script>
-{# <script src="//releases.flowplayer.org/thumbnails/flowplayer.thumbnails.min.js"></script> #}
 {% compress js inline %}
 <script>
 (function($) {

@@ -588,6 +588,7 @@ h1, h2, h3, h4, h5, h6, figure {
 
     .entry-desc {
       margin:0;
+      padding-bottom: 20px;
     }
     p { margin-bottom: 0 }
   }
@@ -607,7 +608,7 @@ h1, h2, h3, h4, h5, h6, figure {
       font-size: 1.3rem;
     }
   }
-  h2 {
+  h2, h1 {
     margin: 0.25em 0;
     font-size: 35px;
 
@@ -846,7 +847,7 @@ figure {
       }
       img {
         width: 100%;
-        max-height: 150px;
+        max-height: 148px;
         height: auto;
         display: block;
       }
@@ -860,7 +861,6 @@ figure {
     }
     display: block;
     padding: 0;
-    margin: 0 0 1.5% 2%;
     list-style: none;
     min-height: 190px;
     background-position: center center;
@@ -874,9 +874,20 @@ figure {
     -webkit-box-shadow: 0px 10px 20px -12px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 0px 10px 20px -12px rgba(0, 0, 0, 0.5);
     box-shadow: 0px 10px 20px -12px rgba(0, 0, 0, 0.5);
+
+    margin: 0 0 1em 1.9%;
+
+    @media screen and (max-width: $screen-lg) {
+      margin-left: 2%;
+    }
     @media screen and (max-width: $screen-sm) {
       margin-left: 0;
     }
+    @media screen and (max-width: $screen-xs) {
+      margin-left: 0;
+    }
+
+
     &:hover {
       text-decoration: none;
       -webkit-box-shadow: 0px 14px 25px -2px rgba(0, 0, 0, 0.14);
@@ -909,7 +920,7 @@ figure {
     &.two-third {
       width: 64.6%;
       h3 {
-        font-size: 30px;
+        font-size: 25px;
       }
       @media screen and (max-width: $screen-md) {
         width: 48%;
@@ -921,6 +932,12 @@ figure {
     &.one-third {
       width: 31.3%;
 
+      .post-meta p.seccion {
+        @media screen and (min-width: $screen-md) {
+          display: none;
+        }
+      }
+
       @media screen and (max-width: $screen-md) {
         width: 48%;
       }
@@ -931,7 +948,7 @@ figure {
     &.one-fourth {
       width: 23%;
       h3 {
-        font-size: 20px;
+        font-size: 18px;
       }
       @media screen and (max-width: $screen-md) {
         width: 48%;
@@ -943,7 +960,7 @@ figure {
     &.one-half {
       width: 48%;
       h3 {
-        font-size: 30px;
+        font-size: 24px;
       }
       @media screen and (max-width: $screen-sm) {
         width: 100%;
@@ -971,7 +988,7 @@ figure {
     }
   }
   h3 {
-    font-size: 25px;
+    font-size: 22px;
     line-height: 1.2;
   }
   @media screen and (max-width: $screen-sm) {
@@ -988,6 +1005,7 @@ figure {
     color: rgba(255, 255, 255, .7);;
     transition: all .1s;
   }
+
   .entry-img {
     background-size: cover;
     background-repeat: no-repeat;
@@ -1003,7 +1021,7 @@ figure {
       span {
         display: none;
       }
-      min-height: 85px;
+      min-height: 130px;
 
       @media screen and (max-width: $screen-md) {
         min-height: 140px;
@@ -1012,7 +1030,7 @@ figure {
         min-height: 200px;
       }
       @media screen and (max-width: $screen-xs) {
-        min-height: 150px;
+        min-height: 170px;
       }
     }
 
@@ -1020,7 +1038,8 @@ figure {
 
   .entry-desc {
     padding: 20px;
-    margin-bottom: 50px;
+    padding-bottom: 0;
+    margin-bottom: 70px;
   }
   p, small {
     color: lighten($brand-black, 10%);
@@ -1041,8 +1060,8 @@ figure {
       height: 410px;
 
       @media screen and (max-width: $screen-sm) {
-        min-height: 280px;
-       height: 410px;
+        height: 280px;
+        // height: 410px;
       }
     }
   }
@@ -1061,7 +1080,7 @@ figure {
     h3 {
       font-size: 35px;
       @media screen and (max-width: $screen-md) {
-        font-size: 30px;
+        font-size: 28px;
       }
     }
     @media screen and (max-width: $screen-sm) {
@@ -1088,6 +1107,7 @@ figure {
       background: $brand-white;
       padding: 20px;
       padding-top: 15px;
+      padding-bottom: 0;
       display: table-cell;
       width: 50%;
       margin-bottom: 40px;
@@ -1105,12 +1125,42 @@ figure {
       }
     }
   }
+
+  .entry-img {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    min-height: 190px;
+    @media screen and (max-width: $screen-sm) {
+      // height: 150px;
+    }
+
+    &.programa {
+
+      span {
+        display: none;
+      }
+      min-height: 130px;
+
+      @media screen and (max-width: $screen-md) {
+        min-height: 140px;
+      }
+      @media screen and (max-width: $screen-sm) {
+        min-height: 200px;
+      }
+      @media screen and (max-width: $screen-xs) {
+        min-height: 170px;
+      }
+    }
+
+  }
+
   #search-result &.full {
     display: table;
     width: 100%;
     min-height: 200px;
     h3 {
-      font-size: 20px;
+      font-size: 22px;
     }
     .icon {
       left: 10px;
@@ -1133,6 +1183,7 @@ figure {
     .entry-desc {
       background: $brand-white;
       padding: 20px;
+      padding-bottom: 0;
       display: table-cell;
       width: 70%;
       margin-bottom: 40px;
@@ -1151,8 +1202,10 @@ figure {
     }
   }
   &.video {
+    min-height: 140px;
     h3 {
       color: lighten($brand-white, 10%);
+      text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
     }
     .post-meta {
       margin-left: 0;
@@ -1174,10 +1227,10 @@ figure {
       display: block;
       width: 100%;
       height: 60%;
-      background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 1)); /* For Safari 5.1 to 6.0 */
-      background: -o-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 1)); /* For Opera 11.1 to 12.0 */
-      background: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 1)); /* For Firefox 3.6 to 15 */
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 1)); /* Standard syntax (must be last) */
+      background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)); /* For Safari 5.1 to 6.0 */
+      background: -o-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)); /* For Opera 11.1 to 12.0 */
+      background: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)); /* For Firefox 3.6 to 15 */
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)); /* Standard syntax (must be last) */
       margin-bottom: 0;
 
       &.untitled {
@@ -2734,29 +2787,28 @@ text-align: center;
     @media screen and (max-width: $screen-xs) {
       padding-bottom: 0;
       margin-bottom: 0;
-      &:not(:first-of-type){
-        h4 {
-          display: none;
-          position: relative;
-          &:after{
-              position: absolute;
-              right: 7px;
-              font-family: 'icomoon';
-              speak: none;
-              font-style: normal;
-              font-weight: normal;
-              font-variant: normal;
-              text-transform: none;
-              line-height: 1;
-              -webkit-font-smoothing: antialiased;
-              -moz-osx-font-smoothing: grayscale;
-              content: "\e921";
-              font-size: 20px;
-              color: rgba(255, 255, 255, 0.5);
-              -webkit-transition: 0.5s;
-              -o-transition: 0.5s;
-              transition: 0.5s;
-          }
+      
+      h4 {
+        display: none;
+        position: relative;
+        &:after{
+            position: absolute;
+            right: 7px;
+            font-family: 'icomoon';
+            speak: none;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            content: "\e921";
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.5);
+            -webkit-transition: 0.5s;
+            -o-transition: 0.5s;
+            transition: 0.5s;
         }
       }
     }
@@ -2811,45 +2863,51 @@ text-align: center;
 
 // ENGLOSH
 
-body.en {
-  .entry .entry-img {
-    min-height: 145px;
-  }  
+body {
+  .entry .icon {
+    display: none;
+  }
 
-  .entry.one-half .entry-img {
-    height: 310px;
+  .entry p.seccion .label {
+    font-size: 60%;
+  }
+
+  .entry .entry-img {
+    min-height: 148px;
+
+    &.programa {
+      min-height: 110px;
+    }
 
     @media screen and (max-width: $screen-sm) {
-      height: 200px;
+      height: 206px;
     }
-    
+  }
+
+  .entry.one-fourth {
+    min-height: 148px;
+  }
+
+  .entry.one-half .entry-img {
+    @media screen and (min-width: $screen-lg) {
+      height: 310px;
+    }
   }  
 
   .entry.full .entry-img {
     height: 320px;
-  }  
+  }
+
+  .entry.one-third .entry-img {
+    height: 200px;
+  }
+
+
+  // .gtco-post-list li {
+  //   min-height: 141px;
+  // }
 }
 
-
-
-.flowplayer .fp-engine {
-  top: -4px;
-}
-
-.flowplayer {
-  z-index: 9999;
-}
-
-.flowplayer .fp-color {
-  background-color: #c11717;
-}
-
-.flowplayer .fp-controls {
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.6);
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
-}
 
 // cms
 .cms-icon-logo:before, div.cms .cms-toolbar-item-logo a:before {

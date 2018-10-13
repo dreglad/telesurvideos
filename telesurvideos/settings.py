@@ -153,9 +153,11 @@ TEMPLATES = [
     },
 ]
 
+CACHEBACK_VERIFY_CACHE_WRITE=False
+
 MIDDLEWARE_CLASSES = (
+    # 'django.middleware.cache.UpdateCacheMiddleware',
     'htmlmin.middleware.HtmlMinifyMiddleware',
-    'htmlmin.middleware.MarkRequestMiddleware',
     'cms.middleware.utils.ApphookReloadMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -168,7 +170,9 @@ MIDDLEWARE_CLASSES = (
     'cms.middleware.user.CurrentUserMiddleware',
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
-    'cms.middleware.language.LanguageCookieMiddleware',
+    #'cms.middleware.language.LanguageCookieMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
+    'htmlmin.middleware.MarkRequestMiddleware',
 )
 
 CACHES = {
@@ -208,7 +212,7 @@ COMPRESS_PRECOMPILERS = (
 )
 COMPRESS_CSS_FILTERS = [
     'compressor.filters.css_default.CssAbsoluteFilter',
-    #'compressor.filters.datauri.CssDataUriFilter',
+    #'gsor.filters.datauri.CssDataUriFilter',
     'compressor.filters.cssmin.rCSSMinFilter',
 ]
 
@@ -217,6 +221,7 @@ COMPRESS_CSS_FILTERS = [
 VIDEOS_ANALYTICS = ''
 NEWRELIC_APPLICATION_ID = ''
 VIDEOS_FLOWPLAYER_KEY = ''
+CXENSE_SITE_ID = None
 VIDEOS_PAGE_SIZE = 10
 VIDEOS_EXCLUDE_CATEGORIAS = (
     'con-nombre-de-mujer', 'zona-verde', 'al-pulso-de-venezuela',

@@ -26,8 +26,8 @@
   {% if not instance.mostrar_titulos or l in "12346" %}<i class="icon icon-play"></i>{% endif %}
   <div class="entry-img" style="background-image: url({% static item.thumbnail_grande %})"></div>
   <div class="entry-desc{% if instance.mostrar_titulos and l not in '12346' %} untitled{% endif %}">
-    {% if instance.mostrar_titulos %}<h3 itemprop="name">{{ item.titulo.strip|truncatewords:12 }}</h3>{% endif %}
-    {% if instance.mostrar_descripciones or l == '1' %}<p>{{ item.descripcion.strip|truncatewords:45 }}</p>{% endif %}
+    {% if instance.mostrar_titulos %}<h3 itemprop="name">{{ item.titulo.strip|truncatewords:15 }}</h3>{% endif %}
+    {% if instance.mostrar_descripciones or l == '1' %}<p>{{ item.descripcion.strip|truncatewords:40 }}</p>{% endif %}
   </div>
 </a>
 {% if instance.mostrar_tags or instance.mostrar_fecha %}

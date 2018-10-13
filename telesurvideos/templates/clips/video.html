@@ -1,5 +1,5 @@
 {% extends "simple.html" %}
-{% load cms_tags humanize static i18n %}
+{% load cms_tags humanize static i18n compress %}
 {% block title %}{% if clip.tipo.slug == "programa" %}"{{ clip.programa.nombre }}", emisión del {{ clip.fecha.date|date:"l j \d\e F \d\e Y" }}{% else %}{{ clip.titulo }}{% endif %}{% endblock %}
 
 {% block meta_keyworkds %}{{ clip.tags }} {{ clip.hashtags }}{% if clip.tipo.slug == "programa" %} grabación, programa completo, sin comerciales, telesur, tv{% endif %}{% endblock %}

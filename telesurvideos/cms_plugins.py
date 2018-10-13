@@ -43,7 +43,11 @@ class ClipsListaPlugin(CMSPluginBase):
                 'mostrar_banner', 'layout', 'mostrar_mas',
             ),
         }),
-        (_('Filtros varios'), {
+        (_('Contenido especifífico'), {
+            'classes': ('wide',),
+            'fields': ('elementos',),
+        }),
+        (_('Filtrar por selección del editor'), {
             'classes': ('collapse',),
             'fields': ('seleccionados',),
         }),

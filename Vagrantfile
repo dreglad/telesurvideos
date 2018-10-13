@@ -49,7 +49,7 @@ Vagrant.configure("2") do |config|
     # vb.gui = true
 
     # Customize the amount of memory on the VM:
-    vb.memory = "512"
+    vb.memory = "756"
   end
   #
   # View the documentation for the provider you are using for more
@@ -62,6 +62,11 @@ Vagrant.configure("2") do |config|
   #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
   # end
 
+
+
+  # config.vm.provision "ansible_local" do |ansible|
+  #   ansible.playbook = "playbook.yml"
+  # end
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
